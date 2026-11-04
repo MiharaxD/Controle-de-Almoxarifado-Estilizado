@@ -6,7 +6,7 @@ Primeira versão completa em `Almoxarifado TI.html`: Painel (com computadores, m
 Carga inicial: patrimônios da planilha importados (ativos e descartados), catálogo de itens e toners com mínimos e quantidades zeradas, protocolos começando no nº 1. 13 patrimônios marcados "Conferir" por inconsistências da planilha (números repetidos, presentes no Descarte e ativos ao mesmo tempo, impressora 000039 repetida, impressora sem própria/locada, projetor com 7 dígitos).
 
 ## Pendências
-1. Projeto sem commits no git (repositório na pasta pai `Projetos/`).
+Nenhuma. O repositório git fica na pasta pai `Projetos/`; faça commit só dos caminhos desta pasta.
 
 ## Limitações conhecidas
 - Dados só no navegador daquele PC; limpar dados do navegador apaga tudo. A proteção é o backup `.json` (o painel avisa após 7 dias sem backup).
