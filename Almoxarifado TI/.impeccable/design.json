@@ -1,0 +1,180 @@
+{
+  "schemaVersion": 2,
+  "generatedAt": "2026-11-03T17:30:00-03:00",
+  "title": "Design System: Almoxarifado TI",
+  "extensions": {
+    "colorMeta": {
+      "night-petrol": { "role": "neutral", "displayName": "Noite Petróleo", "canonical": "#0A1113", "tonalRamp": ["#05090A", "#0A1113", "#0E181B", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "night-petrol-2": { "role": "neutral", "displayName": "Noite Petróleo 2", "canonical": "#0E181B", "tonalRamp": ["#05090A", "#0A1113", "#0E181B", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "surface": { "role": "neutral", "displayName": "Superfície", "canonical": "#121D20", "tonalRamp": ["#05090A", "#0A1113", "#0E181B", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "surface-2": { "role": "neutral", "displayName": "Superfície 2", "canonical": "#182629", "tonalRamp": ["#05090A", "#0A1113", "#0E181B", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "surface-3": { "role": "neutral", "displayName": "Superfície 3", "canonical": "#213337", "tonalRamp": ["#05090A", "#0A1113", "#0E181B", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "well": { "role": "neutral", "displayName": "Poço", "canonical": "#0C1517", "tonalRamp": ["#05090A", "#0A1113", "#0C1517", "#121D20", "#182629", "#213337", "#375155", "#5E7A7E"] },
+      "border": { "role": "neutral", "displayName": "Filete", "canonical": "#253A3E", "tonalRamp": ["#0E181B", "#182629", "#253A3E", "#2E474B", "#375155", "#4A6669", "#6B8689", "#9AB0B2"] },
+      "border-strong": { "role": "neutral", "displayName": "Filete Forte", "canonical": "#375155", "tonalRamp": ["#0E181B", "#182629", "#253A3E", "#2E474B", "#375155", "#4A6669", "#6B8689", "#9AB0B2"] },
+      "cream": { "role": "neutral", "displayName": "Creme", "canonical": "#F0E7D3", "tonalRamp": ["#2A2620", "#4A453A", "#6E685A", "#979282", "#B3AC99", "#C7BEA8", "#DDD3BD", "#F0E7D3"] },
+      "cream-2": { "role": "neutral", "displayName": "Creme 2", "canonical": "#C7BEA8", "tonalRamp": ["#2A2620", "#4A453A", "#6E685A", "#979282", "#B3AC99", "#C7BEA8", "#DDD3BD", "#F0E7D3"] },
+      "cream-3": { "role": "neutral", "displayName": "Creme 3", "canonical": "#979282", "tonalRamp": ["#2A2620", "#4A453A", "#6E685A", "#979282", "#B3AC99", "#C7BEA8", "#DDD3BD", "#F0E7D3"] },
+      "sage": { "role": "neutral", "displayName": "Sálvia", "canonical": "#94B9A4", "tonalRamp": ["#17221C", "#2A3D33", "#41594C", "#5C7868", "#779886", "#94B9A4", "#B6D2C2", "#DDECE3"] },
+      "gaslamp": { "role": "primary", "displayName": "Verde Gaslamp", "canonical": "#74E3A4", "tonalRamp": ["#03160C", "#0B3A22", "#14603A", "#228A55", "#3FB878", "#74E3A4", "#A8EEC6", "#DDF8E8"] },
+      "gaslamp-fg": { "role": "primary", "displayName": "Verde-Breu", "canonical": "#03160C", "tonalRamp": ["#03160C", "#0B3A22", "#14603A", "#228A55", "#3FB878", "#74E3A4", "#A8EEC6", "#DDF8E8"] },
+      "amber": { "role": "secondary", "displayName": "Âmbar de Alerta", "canonical": "#F3AE48", "tonalRamp": ["#2A1A04", "#4E320A", "#7A4F12", "#A66E1E", "#D08E30", "#F3AE48", "#F8CC88", "#FCE8C8"] },
+      "stamp-red": { "role": "secondary", "displayName": "Vermelho-Carimbo", "canonical": "#F2746C", "tonalRamp": ["#2A0A08", "#56140F", "#A8261F", "#C83A31", "#E2554C", "#F2746C", "#F7A7A1", "#FCDAD7"] },
+      "danger-ink": { "role": "secondary", "displayName": "Tinta Vermelha Escura", "canonical": "#A8261F", "tonalRamp": ["#2A0A08", "#56140F", "#A8261F", "#C83A31", "#E2554C", "#F2746C", "#F7A7A1", "#FCDAD7"] },
+      "ice": { "role": "tertiary", "displayName": "Azul-Gelo", "canonical": "#9AD6F2", "tonalRamp": ["#0A1E28", "#163C4E", "#255E7A", "#3A82A4", "#62AED2", "#9AD6F2", "#C3E7F7", "#E7F5FC"] },
+      "tower-violet": { "role": "tertiary", "displayName": "Roxo de Torre", "canonical": "#C3A8F5", "tonalRamp": ["#1A1028", "#33224E", "#4F377A", "#6E52A6", "#9478D0", "#C3A8F5", "#DACBF9", "#F0E9FD"] },
+      "overlay": { "role": "neutral", "displayName": "Véu Noturno", "canonical": "rgba(3, 8, 9, .74)" }
+    },
+    "typographyMeta": {
+      "display": { "displayName": "Título-cartaz", "purpose": "Título de página em caixa alta com sobreimpressão danger-ink 2px 2px 0 e halo verde; entra com clip-path ao trocar de aba." },
+      "headline": { "displayName": "Título de camada", "purpose": "Títulos de modal e gaveta, caixa alta, sobreimpressão 1.5px; a 19-20px/400 também na marca e no estado vazio." },
+      "numeral": { "displayName": "Numeral", "purpose": "Números grandes de KPI (46px) e toner (36px); condensada porque os algarismos da serifa de cartaz não servem para ler dados." },
+      "title": { "displayName": "Título de cartão", "purpose": "Cabeçalho de cartão, caixa alta, precedido de losango verde." },
+      "body": { "displayName": "Corpo", "purpose": "Texto corrido, células (14px), subtítulos (13px)." },
+      "label": { "displayName": "Rótulo", "purpose": "Rótulos de campo, cabeçalhos de tabela, grupos de navegação, botões, navegação; caixa alta espaçada .08-.24em." },
+      "mono": { "displayName": "Patrimônio", "purpose": "Números de patrimônio, numeração de linhas e modo texto do lançamento." }
+    },
+    "shadows": [
+      { "name": "shadow-1", "value": "0 2px 6px rgba(0, 0, 0, .35)", "purpose": "Cartões e atalhos em repouso." },
+      { "name": "shadow-2", "value": "0 22px 56px rgba(0, 0, 0, .6), 0 3px 10px rgba(0, 0, 0, .45)", "purpose": "Modal, dropdowns, toasts, lightbox e cartas em hover." },
+      { "name": "well-inset", "value": "inset 0 2px 4px rgba(0, 0, 0, .35)", "purpose": "Campos e segmentados afundados." },
+      { "name": "glow-hover", "value": "0 6px 18px -8px var(--accent-glow)", "purpose": "Brilho deslocado e desfocado de botões e chips em hover." },
+      { "name": "glow-lift", "value": "0 10px 26px -12px var(--accent-glow)", "purpose": "Brilho de KPIs e toners em hover, somado a shadow-2." },
+      { "name": "glow-primary", "value": "0 0 22px -8px var(--accent-glow), inset 0 1px 0 rgba(255, 255, 255, .35)", "purpose": "Botão principal em repouso." },
+      { "name": "focus-ring", "value": "0 0 0 3px var(--accent-soft), 0 0 18px -6px var(--accent-glow)", "purpose": "Campo em foco, junto do contorno verde." },
+      { "name": "drawer", "value": "-28px 0 70px rgba(0, 0, 0, .55)", "purpose": "Gaveta lateral." },
+      { "name": "misregistration", "value": "text-shadow: 2px 2px 0 color-mix(in srgb, var(--danger-ink) 80%, transparent)", "purpose": "Sobreimpressão do título-cartaz; única sombra dura do sistema, só em texto de cartaz." }
+    ],
+    "motion": [
+      { "name": "out", "value": "cubic-bezier(.16, 1, .3, 1)", "purpose": "Entradas e respostas de hover." },
+      { "name": "in", "value": "cubic-bezier(.7, 0, .84, 0)", "purpose": "Saídas de camada, mais curtas que as entradas." },
+      { "name": "card-drop", "value": "300ms out: translate 0 28px, rotate -3.5deg, scale .94 para repouso", "purpose": "Modal pousando como carta." },
+      { "name": "card-lift", "value": "180ms in: sobe 14px, gira 1.5deg, some", "purpose": "Saída do modal." },
+      { "name": "drawer-in", "value": "300ms out: clip-path inset(0 0 0 40%) e 60px", "purpose": "Gaveta deslizando; sai em 220ms." },
+      { "name": "unfold", "value": "180-220ms out: clip-path de cima e -6px", "purpose": "Dropdowns e details." },
+      { "name": "toast-in", "value": "280ms out: 48px da direita, rotate 2.5deg", "purpose": "Toast; sai em 200ms." },
+      { "name": "carimbo", "value": "220ms out após 100ms: scale 2.6 para 1, rotate -22deg para -9deg; modal thud 120ms", "purpose": "Selo REGISTRADO batendo no modal." },
+      { "name": "page-enter", "value": "rise 260ms, poster 320ms, deal 300ms, fill 300ms, escalonado até 70ms", "purpose": "Entrada de página, só ao trocar de aba." },
+      { "name": "reduced-motion", "value": "fade 150ms só em overlay, modal, gaveta, toast, lightbox e dropdowns", "purpose": "prefers-reduced-motion: todo o resto para." }
+    ],
+    "breakpoints": [
+      { "name": "md", "value": "1100px" },
+      { "name": "sm", "value": "860px" },
+      { "name": "xs", "value": "520px" }
+    ]
+  },
+  "components": [
+    {
+      "name": "Botão principal",
+      "kind": "button",
+      "refersTo": "button-primary",
+      "description": "Ação principal do contexto, verde gaslamp com colchetes angulares que se afastam no hover.",
+      "html": "<button class=\"ds-btn ds-btn-primary\">Registrar protocolo</button>",
+      "css": ".ds-btn { position: relative; display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 38px; padding: 0 15px; border-radius: 2px; border: 1px solid #375155; font: 600 14px/1 \"Bahnschrift Condensed\", Bahnschrift, \"Arial Narrow\", sans-serif; font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: box-shadow .2s, transform .12s cubic-bezier(.16,1,.3,1), filter .15s; } .ds-btn-primary { background: linear-gradient(180deg, color-mix(in srgb, #74E3A4 88%, #fff), #74E3A4); border-color: #74E3A4; color: #03160C; box-shadow: 0 0 22px -8px rgba(116,227,164,.30), inset 0 1px 0 rgba(255,255,255,.35); } .ds-btn-primary::before, .ds-btn-primary::after { content: \"\"; position: absolute; top: -5px; bottom: -5px; width: 7px; border: 1.5px solid #74E3A4; opacity: .75; pointer-events: none; transition: translate .25s cubic-bezier(.16,1,.3,1), opacity .2s; } .ds-btn-primary::before { left: -6px; border-right: 0; } .ds-btn-primary::after { right: -6px; border-left: 0; } .ds-btn-primary:hover { filter: brightness(1.06); box-shadow: 0 0 28px -4px rgba(116,227,164,.30), inset 0 1px 0 rgba(255,255,255,.35); } .ds-btn-primary:hover::before { translate: -3px 0; opacity: 1; } .ds-btn-primary:hover::after { translate: 3px 0; opacity: 1; } .ds-btn:active { transform: translateY(1px) scale(.98); } .ds-btn:focus-visible { outline: 2px solid #74E3A4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Botão padrão",
+      "kind": "button",
+      "refersTo": "button",
+      "description": "Etiqueta em relevo; acende verde no hover.",
+      "html": "<button class=\"ds-btn-def\">Exportar</button>",
+      "css": ".ds-btn-def { display: inline-flex; align-items: center; min-height: 38px; padding: 0 15px; border-radius: 2px; border: 1px solid #375155; background: linear-gradient(180deg, #213337, #182629); color: #F0E7D3; font: 600 14px/1 \"Bahnschrift Condensed\", Bahnschrift, \"Arial Narrow\", sans-serif; font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; box-shadow: inset 0 1px 0 rgba(240,231,211,.06); transition: border-color .15s, color .15s, box-shadow .2s, transform .12s cubic-bezier(.16,1,.3,1); } .ds-btn-def:hover { border-color: rgba(116,227,164,.38); color: #74E3A4; box-shadow: inset 0 1px 0 rgba(240,231,211,.06), 0 6px 18px -8px rgba(116,227,164,.30); } .ds-btn-def:active { transform: translateY(1px) scale(.98); } .ds-btn-def:focus-visible { outline: 2px solid #74E3A4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Botão de perigo",
+      "kind": "button",
+      "refersTo": "button-danger",
+      "description": "Ação destrutiva em tinta vermelho-carimbo.",
+      "html": "<button class=\"ds-btn-danger\">Desfazer protocolo</button>",
+      "css": ".ds-btn-danger { display: inline-flex; align-items: center; min-height: 38px; padding: 0 15px; border-radius: 2px; border: 1px solid rgba(242,116,108,.40); background: linear-gradient(180deg, color-mix(in srgb, #F2746C 9%, #182629), #182629); color: #F2746C; font: 600 14px/1 \"Bahnschrift Condensed\", Bahnschrift, \"Arial Narrow\", sans-serif; font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; cursor: pointer; transition: border-color .15s, background-color .15s; } .ds-btn-danger:hover { border-color: #F2746C; background: rgba(242,116,108,.10); } .ds-btn-danger:focus-visible { outline: 2px solid #74E3A4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Campo",
+      "kind": "input",
+      "refersTo": "input",
+      "description": "Poço afundado com rótulo sálvia; foco verde com anel e brilho.",
+      "html": "<label class=\"ds-f\">Patrimônio<input class=\"ds-input\" placeholder=\"000123\"></label>",
+      "css": ".ds-f { display: flex; flex-direction: column; gap: 5px; font: 600 12px/1.2 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; color: #94B9A4; } .ds-input { height: 38px; padding: 0 11px; border: 1px solid #375155; border-radius: 2px; background: #0C1517; color: #F0E7D3; font: 400 14px Bahnschrift, \"Segoe UI\", sans-serif; letter-spacing: 0; text-transform: none; box-shadow: inset 0 2px 4px rgba(0,0,0,.35); caret-color: #74E3A4; transition: border-color .15s, box-shadow .2s; } .ds-input::placeholder { color: #979282; } .ds-input:hover { border-color: color-mix(in srgb, #74E3A4 30%, #375155); } .ds-input:focus { outline: none; border-color: #74E3A4; box-shadow: inset 0 2px 4px rgba(0,0,0,.35), 0 0 0 3px rgba(116,227,164,.10), 0 0 18px -6px rgba(116,227,164,.30); }"
+    },
+    {
+      "name": "Item de navegação",
+      "kind": "nav",
+      "refersTo": "nav-item",
+      "description": "Item condensado do menu lateral; o ativo gira -1 grau e acende o losango verde.",
+      "html": "<nav class=\"ds-nav\"><a href=\"#\">Painel</a><a href=\"#\" aria-current=\"page\">Lançar</a><a href=\"#\">Patrimônios</a></nav>",
+      "css": ".ds-nav { display: flex; flex-direction: column; gap: 2px; padding: 6px 12px; background: #0E181B; } .ds-nav a { position: relative; display: flex; align-items: center; min-height: 38px; padding: 0 10px; border-radius: 2px; color: #C7BEA8; text-decoration: none; font: 500 15px/1 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .05em; text-transform: uppercase; background: linear-gradient(90deg, rgba(116,227,164,.10), transparent) no-repeat 0 0 / 0 100%; transition: background-size .28s cubic-bezier(.16,1,.3,1), color .15s; } .ds-nav a:hover { background-size: 100% 100%; color: #F0E7D3; } .ds-nav a::before { content: \"\"; position: absolute; left: -9px; top: 50%; width: 7px; height: 7px; margin-top: -3.5px; background: #74E3A4; rotate: 45deg; scale: 0; box-shadow: 0 0 10px #74E3A4; transition: scale .25s cubic-bezier(.16,1,.3,1); } .ds-nav a[aria-current=\"page\"] { color: #74E3A4; background-image: linear-gradient(90deg, color-mix(in srgb, #74E3A4 18%, transparent), color-mix(in srgb, #74E3A4 3%, transparent)); background-size: 100% 100%; box-shadow: inset 0 0 0 1px rgba(116,227,164,.38); rotate: -1deg; } .ds-nav a[aria-current=\"page\"]::before { scale: 1; } .ds-nav a:focus-visible { outline: 2px solid #74E3A4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Chip de filtro",
+      "kind": "chip",
+      "refersTo": "chip",
+      "description": "Filtro condensado; selecionado vira verde sólido.",
+      "html": "<button class=\"ds-chip\">Notebooks <b>42</b></button><button class=\"ds-chip\" aria-pressed=\"true\">Monitores <b>18</b></button>",
+      "css": ".ds-chip { display: inline-flex; align-items: center; gap: 6px; min-height: 30px; padding: 0 11px; margin-right: 6px; border-radius: 2px; border: 1px solid #253A3E; background: #182629; color: #C7BEA8; font: 600 13px/1 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .06em; text-transform: uppercase; cursor: pointer; transition: border-color .2s, color .15s, box-shadow .25s; } .ds-chip b { color: #F0E7D3; font-variant-numeric: tabular-nums; } .ds-chip:hover { border-color: rgba(116,227,164,.38); color: #F0E7D3; box-shadow: 0 4px 14px -6px rgba(116,227,164,.30); } .ds-chip[aria-pressed=\"true\"] { background: #74E3A4; border-color: #74E3A4; color: #03160C; } .ds-chip[aria-pressed=\"true\"] b { color: #03160C; } .ds-chip:focus-visible { outline: 2px solid #74E3A4; outline-offset: 2px; }"
+    },
+    {
+      "name": "Carimbo de status",
+      "kind": "custom",
+      "refersTo": "badge-stamp",
+      "description": "Assinatura: status como carimbo de tinta torto, mascarado por ruído.",
+      "html": "<span class=\"ds-badge ds-ok\">Ok</span> <span class=\"ds-badge ds-low\">Baixo</span> <span class=\"ds-badge ds-zero\">Zerado</span> <span class=\"ds-badge ds-tr\">Transferência</span>",
+      "css": ".ds-badge { display: inline-flex; align-items: center; height: 22px; padding: 0 8px; border-radius: 2px; font: 700 12px/1 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .1em; text-transform: uppercase; white-space: nowrap; border: 1.5px solid currentColor; background: color-mix(in srgb, currentColor 9%, transparent); rotate: -2deg; -webkit-mask: var(--ink-mask) 0 0 / 90px 30px; mask: var(--ink-mask) 0 0 / 90px 30px; } .ds-ok { color: #74E3A4; } .ds-low { color: #F3AE48; rotate: 1.5deg; } .ds-zero { color: #F2746C; } .ds-tr { color: #C3A8F5; rotate: 1.5deg; }"
+    },
+    {
+      "name": "Cartão Déco",
+      "kind": "card",
+      "refersTo": "card",
+      "description": "Cartão com moldura interna, cantoneiras verdes e cabeçalho de filete duplo com meio-tom.",
+      "html": "<section class=\"ds-card\"><header><h2>Protocolos recentes</h2></header><div class=\"ds-body\">Nº 0412 · Saída · 3 itens</div></section>",
+      "css": ".ds-card { position: relative; background: linear-gradient(180deg, #121D20, #0E181B); border: 1px solid #253A3E; border-radius: 3px; box-shadow: 0 2px 6px rgba(0,0,0,.35); color: #F0E7D3; font: 15px/1.5 Bahnschrift, \"Segoe UI\", sans-serif; } .ds-card::before { content: \"\"; position: absolute; inset: 3px; border: 1px solid color-mix(in srgb, #375155 60%, transparent); border-radius: 1px; pointer-events: none; } .ds-card::after { content: \"\"; position: absolute; inset: -1px; pointer-events: none; background: linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 0 0 / 12px 1px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 0 0 / 1px 12px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 100% 0 / 12px 1px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 100% 0 / 1px 12px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 0 100% / 12px 1px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 0 100% / 1px 12px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 100% 100% / 12px 1px, linear-gradient(rgba(116,227,164,.55), rgba(116,227,164,.55)) 100% 100% / 1px 12px; background-repeat: no-repeat; } .ds-card > header { padding: 13px 16px; border-bottom: 3px double #375155; background: radial-gradient(rgba(240,231,211,.1) 1px, transparent 1.5px) 0 0 / 5px 5px, linear-gradient(180deg, #182629, transparent); } .ds-card h2 { display: flex; align-items: center; gap: 10px; margin: 0; font: 600 15px/1.2 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .14em; text-transform: uppercase; } .ds-card h2::before { content: \"\"; width: 7px; height: 7px; background: #74E3A4; rotate: 45deg; } .ds-body { padding: 16px; }"
+    },
+    {
+      "name": "Selo REGISTRADO",
+      "kind": "custom",
+      "description": "Assinatura: carimbo de filete duplo que bate no modal ao registrar um protocolo.",
+      "html": "<div class=\"ds-selo-wrap\"><div class=\"ds-selo\">Registrado</div><h2>Protocolo nº 0412</h2></div>",
+      "css": ".ds-selo-wrap { position: relative; padding: 28px 18px 16px; background: linear-gradient(180deg, #121D20, #0E181B); border: 1px solid #375155; border-radius: 3px; } .ds-selo-wrap h2 { margin: 0; color: #F0E7D3; font: 600 24px/1.05 \"Playfair Display\", \"Sitka Banner\", Georgia, serif; text-transform: uppercase; letter-spacing: .02em; text-shadow: 1.5px 1.5px 0 color-mix(in srgb, #A8261F 75%, transparent); } .ds-selo { position: absolute; top: -14px; right: 24px; padding: 6px 12px 5px; border: 3px double #74E3A4; border-radius: 3px; color: #74E3A4; font: 700 20px/1 \"Bahnschrift Condensed\", Bahnschrift, sans-serif; font-stretch: condensed; letter-spacing: .22em; text-transform: uppercase; rotate: -9deg; background: color-mix(in srgb, #74E3A4 8%, transparent); -webkit-mask: var(--ink-mask) 0 0 / 90px 30px; mask: var(--ink-mask) 0 0 / 90px 30px; animation: ds-carimbo .22s .1s cubic-bezier(.16,1,.3,1) backwards; } @keyframes ds-carimbo { 0% { opacity: 0; scale: 2.6; rotate: -22deg; } 60% { opacity: 1; scale: .92; rotate: -8deg; } 100% { scale: 1; rotate: -9deg; } } @media (prefers-reduced-motion: reduce) { .ds-selo { animation: none; } }"
+    }
+  ],
+  "narrative": {
+    "northStar": "O Cartaz Carimbado da Cidade Noturna",
+    "overview": "O almoxarifado é um cartaz Art Déco impresso à noite, inspirado no dossiê de Deadlock fornecido pelo usuário: noite azul-petróleo quase preta, um céu com brilho verde \"gaslamp\" no canto superior direito, meio-tom de pontos e grão de papel por cima de tudo. O texto é creme, como tinta clara sobre papel escuro. Cada protocolo é carimbado e cada status é um carimbo de tinta torto. A imersão é total e o tema é só escuro; não existe variante clara.\n\nO mundo vive na casca (menu lateral com emblema de bússola e skyline Déco ao pé, molduras de filete duplo, cantos marcados em verde, losangos), nos carimbos e nos títulos-cartaz. A operação continua densa e rápida: tabelas, formulários e listas ficam onde o usuário espera, e nenhum efeito atrasa digitar e registrar. O movimento é curto (120 a 350 ms), físico e de papel: cartas que pousam, gavetas que deslizam, menus que desdobram, carimbos que batem.\n\nO sistema recusa o painel SaaS cinza com um acento verde: o verde aqui é luz de lampião, raro e luminoso, e a cor de status é tinta, não pílula.",
+    "keyCharacteristics": [
+      "Só tema escuro, noite azul-petróleo com céu verde e meio-tom de pontos.",
+      "Títulos em serifa de cartaz caixa alta com sobreimpressão vermelha.",
+      "Rótulos, navegação, botões e números grandes em grotesca condensada caixa alta espaçada.",
+      "Status como carimbos tortos com tinta falhada; selo \"REGISTRADO\" no fim do protocolo.",
+      "Molduras Art Déco de filete duplo, cantos verdes e losangos como marcadores.",
+      "Brilho gaslamp reservado a ação, foco, estado ativo e medidores.",
+      "Cartas levemente giradas que se endireitam ao passar o mouse."
+    ],
+    "rules": [
+      { "name": "The Lampião Rule", "body": "O verde gaslamp com brilho (glow) aparece só em botão principal, losango do item ativo, foco, medidores e hover (sombra deslocada com desfoque). Uma superfície em repouso nunca brilha.", "section": "colors" },
+      { "name": "The Ink-Per-Movement Rule", "body": "Cada tipo de movimento tem uma única tinta, via `--ink`: Entrada verde, Saída azul-gelo, Transferência roxo, Descarte vermelho. A mesma tinta pinta o carimbo, o segmentado ativo, o losango do ícone e o hover do atalho.", "section": "colors" },
+      { "name": "The Token-Only Rule", "body": "Cores só por tokens de `:root`, misturadas com `color-mix()` quando preciso. Nenhum hex solto em componente.", "section": "colors" },
+      { "name": "The Unambiguous Zero Rule", "body": "Todo número que se lê como dado (KPI, quantidade, contador) vai em Bahnschrift Condensed ou Cascadia Mono, nunca na serifa de cartaz: os algarismos da Playfair têm alto contraste e não servem para ler dados.", "section": "typography" },
+      { "name": "The Poster-Only Serif Rule", "body": "A serifa de cartaz (Playfair Display embutida como Cartaz) é só para títulos-cartaz (página, modal, gaveta, marca, estado vazio). Rótulos, botões e navegação nunca usam a serifa.", "section": "typography" },
+      { "name": "The Patrimônio Rule", "body": "Patrimônio sempre em mono com zeros à esquerda; \"S.P.\" em Bahnschrift itálico cream-3, para ler como ausência, não como número.", "section": "typography" },
+      { "name": "The Steady Grid Rule", "body": "O mundo inclina peças (cartas, carimbos, KPIs, toners) entre .4° e 2°, mas a grade nunca inclina. Linhas de tabela, campos e colunas ficam retos.", "section": "layout" },
+      { "name": "The Lit-On-Demand Rule", "body": "Superfícies ficam apagadas em repouso. O brilho verde aparece como resposta a estado: hover, foco, ativo, ou ao próprio botão principal.", "section": "elevation" },
+      { "name": "The Misregistration Rule", "body": "A única sombra dura (offset sem desfoque) do sistema é a sobreimpressão em danger-ink dos títulos-cartaz, que imita impressão desalinhada. Ela não se estende a caixas.", "section": "elevation" }
+    ],
+    "dos": [
+      "Do use a tinta do movimento via `--ink` (Entrada verde, Saída azul-gelo, Transferência roxo, Descarte vermelho) em carimbos, segmentados e ícones.",
+      "Do mostre status como carimbo torto com `--ink-mask`; reserve o reto e sem máscara para o neutro.",
+      "Do ponha números de dado em Bahnschrift Condensed ou Cascadia Mono com algarismos tabulares.",
+      "Do emoldure cartões e modais com filete interno e cantoneiras verdes, e divida cabeçalhos com filete duplo de 3px.",
+      "Do mantenha o movimento entre 120 e 350 ms, saída mais rápida que entrada, e a entrada de página só na troca de aba.",
+      "Do use losangos como marcadores e como fundo de ícones SVG de traço."
+    ],
+    "donts": [
+      "Don't crie tema claro nem variante clara; o mundo é só escuro.",
+      "Don't use a serifa de cartaz para números, rótulos, botões ou navegação.",
+      "Don't deixe uma superfície em repouso brilhar em verde; o brilho é estado.",
+      "Don't use fontes web, CDN ou arquivos ao lado; só fontes do Windows ou uma fonte embutida no próprio arquivo.",
+      "Don't arredonde em pílula nem passe de 3px em cartões e controles.",
+      "Don't incline linhas de tabela, campos ou colunas; inclinar é para peças soltas.",
+      "Don't use logos ou nomes da Valve."
+    ]
+  }
+}

@@ -1,0 +1,18 @@
+# Decisões ativas
+
+- **Arquivo HTML único e offline, em 1 PC, sem login.** Por quê: uso local pela TI, sem servidor. Proíbe: dependências externas (CDN, fontes web), backend, autenticação.
+- **Persistência no IndexedDB com fallback para localStorage; backup manual em `.json`.** Por quê: único armazenamento durável sem servidor. Exige: manter backups antigos restauráveis.
+- **Fotos de patrimônio (até 8 por bem) ficam fora de `db`, em chaves `foto:<id>`, reduzidas para JPEG de 1280 px.** Por quê: `db` é regravado inteiro a cada alteração e precisa continuar leve. Exige: incluir as fotos no backup e limpar as órfãs (`fotosGc`). No fallback para localStorage não há fotos.
+- **Patrimônio aceita 5 ou 6 dígitos, mantém zeros à esquerda e não aceita duplicados.** Por quê: a planilha tem números dos dois tamanhos. Exige: validar sempre por `validatePatNum`.
+- **Têm patrimônio:** CPU, notebook, monitor, impressora, projetor, roteador, estabilizador, TV, relógio de ponto, caixa de som (e o que estiver em `categorias`). Demais itens são controlados só por quantidade.
+- **S.P. (sem patrimônio) é permitido, e o nº da locadora é um campo separado.** Por quê: impressoras locadas e bens sem etiqueta. Proíbe: guardar nº de locadora no campo `num`.
+- **Estoque e movimentações começam zerados; patrimônios vêm da planilha.** Por quê: pedido do usuário para começar do zero com os mesmos itens.
+- **Local = unidade + setor opcional.** O estoque da TI é a unidade `Estoque TI`. SEMASC foi unificada como SASC.
+- **Um protocolo agrupa vários itens, numerado automaticamente** (próximo número editável em Configurações). Responsável = nome de quem recebeu.
+- **Tipos de movimento: Entrada, Saída, Transferência, Descarte.** Entrada põe itens e patrimônios no `Estoque TI` (só ela cadastra patrimônio novo); Saída leva do `Estoque TI` para uma unidade; Transferência só move patrimônio que já está fora do `Estoque TI`; Descarte dá baixa definitiva. Regras em `allowedInDraft`.
+- **Lançamento por texto usa as mesmas regras do formulário.** Cada linha é interpretada contra o `db`; linhas seguidas com mesmo tipo, data, local, origem, pessoa e obs viram um protocolo. Entrada com local = devolução daquela unidade; nº inexistente só vira cadastro novo em Entrada e exige categoria. Nada é gravado se alguma linha tiver erro. Por quê: digitar rápido sem abrir mão das validações. Proíbe: gravar parcialmente um lote.
+- **Desfazer só o protocolo mais recente.** Por quê: desfazer fora de ordem quebraria estoque e localização. Proíbe: desfazer protocolos antigos.
+- **Toners por modelo + cor, com histórico de consumo por unidade.**
+- **Recibo impresso: duas vias em Saída e Transferência.**
+- **Visual Art Déco noturno (dossiê Deadlock, imersão total, só tema escuro):** noite azul-petróleo com meio-tom, texto creme, verde "gaslamp" para ação, status como carimbos, títulos-cartaz em serifa, animações rápidas (120 a 350 ms) em menus, modais, gaveta, toasts e botões, com carimbo ao registrar protocolo. Por quê: pedido do usuário. Proíbe: tema claro, logos ou nomes da Valve, animação que atrase o lançamento. Detalhes em `DESIGN.md`.
+- **Correções de dados feitas na carga:** "Concordla" → "Concórdia", modelos de impressora padronizados, duplicados mantêm o registro de protocolo mais recente, patrimônio que aparece no Descarte vira descartado; todos esses ficam marcados "Conferir".
