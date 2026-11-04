@@ -5,7 +5,7 @@ Controle de estoque, toners e patrimônios da TI da SASC. App web offline de arq
 Os dados iniciais vieram da planilha `Controle de almoxarifado TI SASC.xlsx`.
 
 ## Comandos
-- Gerar o entregável (Windows PowerShell 5.1): `& ".\build.ps1"` → junta `src/app.html` + `src/seed.json` em `Almoxarifado TI.html`.
+- Gerar o entregável (Windows PowerShell 5.1): `& ".\build.ps1"` → junta `src/app.html` + `src/seed.json` + `src/som-maquina.mp3` + `src/som-papel.mp3` + `src/som-folha.mp3` + `src/som-fogo.mp3` (em base64) em `Almoxarifado TI.html`.
 - Regerar o seed a partir da planilha: `& ".\tools\extrair-planilha.ps1" [-Planilha arq.xlsx] [-Relatorio]` → sobrescreve `src/seed.json`; depois rode o build.
 - Rodar: abrir `Almoxarifado TI.html` no navegador (duplo clique). Não há instalação nem testes automatizados.
 - Testar no navegador com armazenamento: servir por `http://localhost` (em `file://` ou data: URL o comportamento de storage muda). Use um HttpListener simples na porta 8765; teste por lá para não sujar os dados reais do usuário.
@@ -23,7 +23,7 @@ Os dados iniciais vieram da planilha `Controle de almoxarifado TI SASC.xlsx`.
 - JS em português nos nomes de domínio (`pats`, `protocolos`, `viewPainel`), funções curtas, HTML montado com template strings e `esc()`.
 - Eventos só por delegação: `data-act` (clique → `ACTIONS`), `data-in`/`data-ch` (→ `INPUTS`). Não adicione listeners soltos por elemento.
 - Cores só por tokens CSS em `:root` (só tema escuro). Comentários raros, de seção (`/* ---------- X ---------- */`).
-- Identidade visual: `DESIGN.md` (Art Déco noturno inspirado no dossiê Deadlock). Animação de conteúdo só na troca de aba (`.view.entering`), nunca em algo que `render()` redesenha.
+- Identidade visual: `DESIGN.md` (Art Déco noturno inspirado no dossiê Deadlock). Animação de conteúdo só na troca de aba (`.view.entering`), nunca em CSS de algo que `render()` redesenha; feedback de ação (máquina de escrever do Lançar) é WAAPI disparado pela própria ação.
 - Textos da interface e mensagens em português do Brasil.
 
 ## Protocolo de consulta (antes de qualquer tarefa)

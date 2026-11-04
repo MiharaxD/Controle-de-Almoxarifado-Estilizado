@@ -22,6 +22,13 @@ colors:
   danger-ink: "#A8261F"
   tower-violet: "#C3A8F5"
   overlay: "rgba(3, 8, 9, .74)"
+  paper: "#EADFC4"
+  paper-2: "#DACBA8"
+  paper-stain: "#8E6A35"
+  paper-ink: "#1D1A15"
+  paper-print: "#2C4A46"
+  brass: "#C99A4B"
+  chrome: "#B9B3A2"
 typography:
   display:
     fontFamily: "Cartaz, \"Sitka Banner\", \"Sitka Display\", Georgia, \"Times New Roman\", serif"
@@ -133,7 +140,7 @@ components:
 
 **Creative North Star: "O Cartaz Carimbado da Cidade Noturna"**
 
-O almoxarifado é um cartaz Art Déco impresso à noite, inspirado no dossiê de Deadlock fornecido pelo usuário: noite azul-petróleo quase preta, um céu com brilho verde "gaslamp" no canto superior direito, meio-tom de pontos e grão de papel por cima de tudo. O texto é creme, como tinta clara sobre papel escuro. Cada protocolo é carimbado e cada status é um carimbo de tinta torto. A imersão é total e o tema é só escuro; não existe variante clara.
+O almoxarifado é um cartaz Art Déco impresso à noite, inspirado no dossiê de Deadlock fornecido pelo usuário: noite azul-petróleo quase preta, um céu com brilho verde "gaslamp" no canto superior direito, meio-tom de pontos e grão de papel por cima de tudo. O texto é creme, como tinta clara sobre papel escuro. Cada protocolo é carimbado e cada status é um carimbo de tinta torto. A imersão é total e o tema é só escuro; não existe variante clara. A única superfície clara é um objeto do mundo: a folha de papel envelhecido do protocolo, presa numa máquina de escrever.
 
 O mundo vive na casca (menu lateral com emblema de bússola e skyline Déco ao pé, molduras de filete duplo, cantos marcados em verde, losangos), nos carimbos e nos títulos-cartaz. A operação continua densa e rápida: tabelas, formulários e listas ficam onde o usuário espera, e nenhum efeito atrasa digitar e registrar. O movimento é curto (120 a 350 ms), físico e de papel: cartas que pousam, gavetas que deslizam, menus que desdobram, carimbos que batem.
 
@@ -143,7 +150,7 @@ O sistema recusa o painel SaaS cinza com um acento verde: o verde aqui é luz de
 - Só tema escuro, noite azul-petróleo com céu verde e meio-tom de pontos.
 - Títulos em serifa de cartaz caixa alta com sobreimpressão vermelha.
 - Rótulos, navegação, botões e números grandes em grotesca condensada caixa alta espaçada.
-- Status como carimbos tortos com tinta falhada; selo "REGISTRADO" no fim do protocolo.
+- Status como carimbos tortos com tinta falhada; selo do tipo ("RECEBIDO", "ENTREGUE", "TRANSFERIDO", "DESCARTADO") no fim do protocolo.
 - Molduras Art Déco de filete duplo, cantos verdes e losangos como marcadores.
 - Brilho gaslamp reservado a ação, foco, estado ativo e medidores.
 - Cartas levemente giradas que se endireitam ao passar o mouse.
@@ -165,6 +172,9 @@ Uma noite fria de azul-petróleo com tinta creme, luz verde de lampião e quatro
 - **Roxo de Torre** (tower-violet): Transferência.
 
 Cada cor de status tem par `-soft` (10% de alfa, fundo) e `-line` (cerca de 38 a 40%, contorno) em `:root`; use os pares, nunca alfas novos inventados.
+
+### Papel do protocolo
+A folha (`.papel`) é papel envelhecido: creme (paper → paper-2), ou verde-claro no modo Por texto (`.papel.verde`) com fibra e manchas em ruído SVG, vinheta de bordas e um anel de café discreto. Dentro dela os tokens são redefinidos: texto vira tinta de fita (paper-ink), rótulos são impressos em petróleo escuro (paper-print) e as tintas de movimento escurecem (`--papel-verde`, `--papel-azul`, `--papel-roxo`, danger-ink) para ler sobre o creme. Carimbos e selo usam `mix-blend-mode: multiply`. Metal da máquina: cromo (chrome) e latão (brass), com breu (`--breu`) nas sombras.
 
 ### Neutral
 - **Noite Petróleo** (night-petrol / night-petrol-2): fundo da página e base inferior dos gradientes de cartão e do menu lateral.
@@ -276,21 +286,35 @@ Poço com botões condensados; o ativo sobe para surface-3 com sublinhado intern
 ### Stamp Badges (assinatura)
 Status são carimbos de tinta: condensada 700 12px caixa alta, contorno de 1.5px e fundo de 9% na própria cor, girados -2° (1.5° em linhas pares) e mascarados por `--ink-mask` (ruído fractal) para parecer tinta falhada. A cor vem da tinta do status ou do movimento. O neutro é reto, sem máscara, com filete fino.
 
-### Selo "REGISTRADO" (assinatura)
-Ao registrar um protocolo, o modal vem com `{ selo }`: um carimbo verde de filete duplo, condensada 700 20px .22em, girado -9°, com máscara de tinta, bate no canto do cabeçalho (escala de 2.6 para 1 em 220ms, após 100ms) e o modal sente o impacto (`thud`, 120ms).
+### Máquina de escrever (Lançar, assinatura)
+O protocolo é datilografado: a folha `.papel` (cabeçalho impresso "SASC · Tecnologia da Informação", título em serifa de cartaz, tipo em carimbo, nº em tinta vermelha de fita; campos sem caixa, com linha tracejada e texto em Courier New 700) entra na máquina, vista de frente e um pouco de cima. Carro: rolo de borracha com guia de papel e roletes, pontas laqueadas, botões cilíndricos serrilhados, alavanca de retorno cromada e régua creme numerada (0 a 80, margens vermelhas) que anda com o carro sob um ponteiro gaslamp fixo. Deck em petróleo laqueado com brilho: carretéis cromados elípticos com fita vermelha em trapézio até o suporte de cartão (hastes cromadas, marcas vermelhas), cesta de tipos em meia-elipse com raios (sol Art Déco) e cubo de latão, linhas de velocidade em latão nas laterais, sino. Frente (sem teclado, só a parte de cima da máquina): faixa fina com a placa de latão escalonada "Almoxarifado · TI", botão de som e resumo à esquerda e botões à direita. A base fica fixa no pé da tela, exceto em telas com até 760px de altura ou 520px de largura. A fita bicolor (preto e vermelho) marca o ponto de batida.
+- **Batida de tecla** (`tecla`, WAAPI): escolha (tipo, select, data, item adicionado ou removido) sobe a fita, o martelo bate, os carretéis giram a fita, o corpo tranca 1,5px e o carro (folha + rolo) anda 2px para a esquerda (1px no celular, até 10 passos; no 10º o sino toca). O valor escolhido aparece letra a letra (clip-path em `steps(14)`, 280ms). Digitar texto dá batida leve, sem andar o carro.
+- **Som:** cada batida toca um estalo real de máquina (fatia aleatória do MP3, com variação de tom; mais baixo ao digitar texto) e a retirada da folha toca a troca de linha ("plim") junto com um farfalhar de papel; colocar a folha na máquina toca só o farfalhar. Toca mesmo com movimento reduzido; o botão de alto-falante na frente desliga.
+- **Por texto:** o mesmo conjunto, numa folha verde-clara de livro-razão (`.papel.verde`, tokens `--papel-v`/`--papel-v2`); o texto e a prévia ficam na folha e o resumo e os botões na máquina. Trocar entre Formulário e Por texto (`trocarFolha`, ~2,9s): a folha sobe com cuidado até soltar do rolo (450ms), flutua 0,5s, sai voando de lado com giro e some; a nova entra pelo lado oposto, flutua 0,5s acima da máquina e desce com cuidado para o rolo (saída com o "plim" e o papel; entrada só com o papel). Formulário → Por texto anda para a direita; o inverso, para a esquerda. Durante o voo `.maq.voando` solta o recorte lateral e `.main` corta o excesso (`overflow-x: clip`) para não criar rolagem. Cada letra faz o carro andar (até o sino) e Enter faz o retorno com o som da troca de linha.
+- **Trava:** erro ao registrar ou item recusado sacode a máquina (320ms).
+- **Limpar:** retorno do carro (alavanca + rolo girando, 320ms).
+- **Registrar** (`cerimonia`, com os dados já salvos; folha nova sobe do rolo com `alimentar`, 460ms, e o modal abre):
+  - Entrada e Saída: retorno do carro com troca de linha (300ms), a folha é arrancada para cima com rolo girando (440ms, ease-in, gira -4°).
+  - Descarte: um isqueiro de metal com tampa aberta (SVG `ISQUEIRO`) sobe de baixo à esquerda da folha, falha a ignição 1 ou 2 vezes (roda gira, faíscas, sopro de chama), acende, encosta na borda e fecha a tampa ao sair. A folha queima até sumir (~1,5s): máscara de vários círculos que crescem em velocidades diferentes (borda irregular), anel de brasa, carvão e tostado (`.queima`), chamas, brasas, fumaça e clarão laranja. Som de fogo (`som-fogo.mp3`, baixo).
+  - Transferência: a folha sai da máquina e encolhe para uma carta no centro, dobra em três (baixo para cima, depois cima para baixo, mostrando o verso), um envelope pardo entra e a carta desce no bolso; a aba fecha, o lacre roxo é pressionado, o envelope gira mostrando a frente (selo postal "TI", carimbo postal, nº e destino datilografados) e se abre no modal (morph do tamanho do envelope para o do modal).
+  - Com movimento reduzido, todos usam só o som de arrancar a folha.
+
+### Selo do protocolo (assinatura)
+O texto e a tinta do selo dependem do tipo (`SELO_TIPO`): Recebido (verde), Entregue (azul), Transferido (roxo), Descartado (vermelho); vários protocolos de tipos diferentes ficam "Registrados" em verde. A batida toca o som do carimbo. Vindo do envelope (`.envelopado`), o carimbo começa 440ms depois.
+O modal com `{ selo }` é a mesma folha de papel, com a lista dos itens registrados datilografada linha a linha (`listaRegistrados`: quantidade ou nº do patrimônio + descrição), que pousa vinda de cima (`papel-pousa`, 420ms, gira de -5° com leve assentamento). Um carimbo Art Déco (`CARIMBADOR`: punho laqueado, anéis de latão, base escalonada, borracha verde) desce acelerando (a partir de 300ms), bate em 580ms com achatamento e sombra no papel, o selo verde de filete duplo girado -9° aparece com a tinta e o modal sente o impacto (`thud`); o carimbo sobe e some (até 1,1s). No celular o selo fica acima do cabeçalho. Ao fechar, só a folha sai (`card-lift`); `.layer-out .modal *` desliga as animações internas para o clone não repetir a entrada.
 
 ### Shortcut Cards e KPIs
 Atalhos do Painel são cartas com meio-tom e losango de ícone na tinta do movimento, levemente giradas (-.8°, .9°, -.4°); no hover endireitam, sobem 4px e brilham na própria tinta. KPIs e toners também giram ±.5° e se endireitam no hover.
 
 ### Layers: modal, gaveta, dropdown, toast
-- **Modal:** carta que pousa (`card-drop`, 300ms: sobe 28px, gira de -3.5°, escala de .94); sai levantando (`card-lift`, 180ms). Moldura Déco igual à do cartão.
-- **Gaveta:** desliza da direita com clip-path (300ms), sai em 220ms.
+- **Modal:** carta que pousa (`card-drop`, 300ms: sobe 28px, gira de -3.5°, escala de .94); sai levantando (`card-lift`, 180ms). O modal carimbado do registro sai descendo (`papel-desce`, 460ms: recua 10px para cima, depois acelera 64vh para baixo girando até 3.5°), por qualquer via (botões, X, Esc, troca de rota). Moldura Déco igual à do cartão.
+- **Gaveta** (só a do patrimônio): é uma folha `.papel` dobrada em três, com vincos leves nas dobras e moldura de filete duplo. Abre como pacote vindo da direita (260ms) mostrando o cabeçalho e desdobra o painel do meio e o de baixo para frente, com sombra de vinco que clareia e leve passada de 6° (~750ms no total); fecha dobrando de baixo para cima e sai pela direita (~620ms). Som de virar página ao abrir e ao fechar. Salvar alterações carimba "SALVO" (verde) e dobra; Saída carimba "SAÍDA" (azul) e a folha é puxada para a esquerda com o farfalhar de tirar a folha; Descartar carimba "DESCARTE" (vermelho) e a folha é amassada numa bola (clip-path irregular + vincos `.rugas`) que dá um pulinho e cai; Devolver ao estoque carimba "DEVOLUÇÃO" (verde) e Transferir carimba "TRANSFERIDO" (roxo), e os dois fecham dobrando. O carimbador é o mesmo do protocolo, com a almofada na tinta do carimbo.
 - **Dropdowns** (busca global, candidatos, details): desdobram de cima com clip-path (180–220ms).
 - **Toasts:** deslizam da direita com giro de 2.5° (280ms), saem em 200ms; o de erro é tinta vermelha escura com tremida.
 - **Overlay:** véu radial com blur de 2px.
 
 ### Motion
-Faixa de 120 a 350 ms, entrada com `--out` (cubic-bezier(.16, 1, .3, 1)) e saída mais rápida com `--in` (cubic-bezier(.7, 0, .84, 0)). A entrada de página (subida escalonada, título com clip-path, atalhos distribuídos como cartas, medidores enchendo) só roda ao trocar de aba. Em `prefers-reduced-motion`, tudo para, exceto um fade de 150ms nas camadas.
+Faixa de 120 a 350 ms (a cerimônia do registro, até ~1,1s, é a exceção e roda com os dados já gravados), entrada com `--out` (cubic-bezier(.16, 1, .3, 1)) e saída mais rápida com `--in` (cubic-bezier(.7, 0, .84, 0)). A entrada de página (subida escalonada, título com clip-path, atalhos distribuídos como cartas, medidores enchendo) só roda ao trocar de aba. Em `prefers-reduced-motion`, tudo para, exceto um fade de 150ms nas camadas.
 
 ## Do's and Don'ts
 
@@ -303,7 +327,7 @@ Faixa de 120 a 350 ms, entrada com `--out` (cubic-bezier(.16, 1, .3, 1)) e saíd
 - **Do** use losangos como marcadores e como fundo de ícones SVG de traço.
 
 ### Don't:
-- **Don't** crie tema claro nem variante clara; o mundo é só escuro.
+- **Don't** crie tema claro nem variante clara; o mundo é só escuro (a folha de papel é objeto, não tema).
 - **Don't** use a serifa de cartaz para números, rótulos, botões ou navegação.
 - **Don't** deixe uma superfície em repouso brilhar em verde; o brilho é estado.
 - **Don't** use fontes web, CDN ou arquivos ao lado; só fontes do Windows ou uma fonte embutida no próprio arquivo.

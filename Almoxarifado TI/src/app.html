@@ -20,6 +20,18 @@
   --violet: #C3A8F5; --violet-soft: rgba(195, 168, 245, .10); --violet-line: rgba(195, 168, 245, .38);
   --focus: #74E3A4;
   --overlay: rgba(3, 8, 9, .74);
+  --papel: #EADFC4; --papel-2: #DACBA8; --papel-mancha: #8E6A35; --papel-tinta: #1D1A15; --papel-impresso: #2C4A46;
+  --papel-verde: #17673F; --papel-azul: #1A5674; --papel-roxo: #573A90; --papel-ambar: #8A5200;
+  --breu: #030606; --metal: #B9B3A2; --latao: #C99A4B;
+  --vinco-sombra: rgba(58, 38, 12, .30); --vinco-luz: rgba(255, 249, 232, .45); --dobra-sombra: rgba(22, 14, 4, .62);
+  --fogo: #FF9A2E; --fogo-claro: #FFEBB0; --fogo-fundo: #D9441A; --carvao: #1E140C; --tostado: rgba(120, 66, 20, .55); --fumaca: rgba(168, 158, 142, .30); --clarao: rgba(255, 140, 40, .20);
+  --envelope: #CDB68A; --envelope-2: #B79D6E; --envelope-dentro: #6F5C3C; --envelope-borda: rgba(70, 50, 20, .38);
+  --maquina: "Courier New", Courier, "Cascadia Mono", monospace;
+  --fibra: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .31 0 0 0 0 .16 0 0 0 .55 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  --manchas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .4 0 0 0 0 .18 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
+  --papel-fundo: radial-gradient(ellipse 120% 95% at 50% 42%, transparent 52%, color-mix(in srgb, var(--papel-mancha) 30%, transparent)), var(--manchas) 0 0 / 600px 600px, var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--papel), var(--papel-2));
+  --papel-v: #D3E2BE; --papel-v2: #B9CC9C;
+  --papel-fundo-v: radial-gradient(ellipse 120% 95% at 50% 42%, transparent 52%, color-mix(in srgb, var(--papel-mancha) 26%, transparent)), var(--manchas) 0 0 / 600px 600px, var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--papel-v), var(--papel-v2));
   --shadow-1: 0 2px 6px rgba(0, 0, 0, .35);
   --shadow-2: 0 22px 56px rgba(0, 0, 0, .6), 0 3px 10px rgba(0, 0, 0, .45);
   --dot: rgba(240, 231, 211, .1);
@@ -85,7 +97,7 @@ svg.i { width: 18px; height: 18px; flex: none; fill: none; stroke: currentColor;
 .side-foot::before { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 70px; background: linear-gradient(180deg, color-mix(in srgb, var(--accent) 22%, var(--surface-3)), var(--surface-2)); -webkit-mask: var(--skyline) center bottom / cover no-repeat; mask: var(--skyline) center bottom / cover no-repeat; opacity: .55; pointer-events: none; }
 .side-foot::after { content: ""; position: absolute; left: 0; right: 0; top: 0; height: 70px; background: radial-gradient(ellipse 60% 70% at 50% 100%, var(--accent-glow), transparent 70%); opacity: .35; pointer-events: none; z-index: -1; }
 
-.main { min-width: 0; display: flex; flex-direction: column; }
+.main { min-width: 0; display: flex; flex-direction: column; overflow-x: clip; }
 .topbar { position: sticky; top: 0; z-index: 20; display: flex; align-items: center; gap: 14px; padding: 12px 28px; background: color-mix(in srgb, var(--bg) 84%, transparent); backdrop-filter: blur(10px); border-bottom: 1px solid var(--border); box-shadow: 0 1px 0 var(--rule); }
 .topbar .menu-btn { display: none; }
 .gsearch { position: relative; flex: 1; max-width: 560px; }
@@ -234,6 +246,23 @@ table.t tbody tr.click:hover { background: var(--accent-soft); }
 table.t td.n, table.t th.n { text-align: right; }
 table.t td.muted { color: var(--text-3); }
 table.t tr:last-child td { border-bottom: 0; }
+table.t th.sel, table.t td.sel { width: 1%; padding-right: 2px; cursor: pointer; user-select: none; }
+table.t thead th.sel:first-child::before { display: none; }
+table.t tbody tr.sel-on { background: var(--accent-soft); box-shadow: inset 3px 0 0 var(--accent); }
+.selbox { all: unset; box-sizing: border-box; display: grid; place-items: center; width: 18px; height: 18px; border: 1.5px solid var(--border-strong); border-radius: var(--radius-sm); background: var(--well); color: var(--accent-fg); cursor: pointer; transition: background-color .15s, border-color .15s; }
+.selbox svg.i { grid-area: 1 / 1; width: 13px; height: 13px; stroke-width: 3; opacity: 0; }
+.selbox:hover { border-color: var(--accent); }
+.selbox:focus-visible { outline: 2px solid var(--focus); outline-offset: 2px; }
+.selbox[aria-checked="true"], .selbox[aria-checked="mixed"] { background: var(--accent); border-color: var(--accent); }
+.selbox[aria-checked="true"] svg.i { opacity: 1; }
+.selbox[aria-checked="mixed"]::after { content: ""; grid-area: 1 / 1; width: 8px; height: 2px; background: var(--accent-fg); }
+.sel-dock { position: sticky; bottom: 14px; z-index: 5; }
+.selbar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; margin: 0 12px 12px; padding: 8px 10px 8px 16px; background: var(--surface-3); border: 1px solid var(--accent-line); border-radius: var(--radius); box-shadow: var(--shadow-2), 0 0 24px -10px var(--accent-glow); }
+.selbar .sb-n { margin-right: auto; font: 600 13px var(--cond); font-stretch: condensed; letter-spacing: .1em; text-transform: uppercase; color: var(--text-2); }
+.selbar .sb-n b { color: var(--accent); font-size: 16px; font-variant-numeric: tabular-nums; }
+.selbar .sub { color: var(--text-3); text-transform: none; letter-spacing: .02em; }
+.btn .n-sel { min-width: 20px; padding: 3px 6px; border-radius: 10px; background: var(--accent); color: var(--accent-fg); font-size: 12px; line-height: 1; letter-spacing: 0; font-variant-numeric: tabular-nums; }
+.btn.primary .n-sel { background: var(--accent-fg); color: var(--accent); }
 .pat { font-family: var(--mono); font-size: 13px; font-weight: 600; letter-spacing: .02em; color: var(--text); }
 .pat.sp { color: var(--text-3); font-weight: 400; font-family: var(--font); font-style: italic; }
 .empty { padding: 44px 16px; text-align: center; color: var(--text-3); }
@@ -295,8 +324,112 @@ table.t.eq tfoot td { padding: 10px 12px; border-top: 3px double var(--border-st
 .itens li { gap: 12px; }
 .itens .qty { width: 84px; text-align: right; }
 .lanc-foot { display: flex; gap: 14px; align-items: center; padding: 14px 18px; border-top: 3px double var(--border-strong); flex-wrap: wrap; }
-.lanc-foot .sum { color: var(--text-2); font-size: 14px; }
+.lanc-foot .sum, .frente .sum { color: var(--text-2); font-size: 14px; }
 .lanc-foot .btn.primary { margin-left: auto; min-height: 46px; padding: 0 24px; font-size: 16px; }
+
+/* papel envelhecido (folha do lançamento e modal do protocolo registrado) */
+.papel {
+  --text: var(--papel-tinta); --text-2: color-mix(in srgb, var(--papel-tinta) 80%, var(--papel)); --text-3: color-mix(in srgb, var(--papel-tinta) 60%, var(--papel)); --sage: var(--papel-impresso);
+  --surface: var(--papel); --surface-2: color-mix(in srgb, var(--papel-2) 55%, var(--papel)); --surface-3: var(--papel); --bg-2: var(--papel-2); --well: color-mix(in srgb, var(--papel-tinta) 4%, transparent);
+  --border: color-mix(in srgb, var(--papel-tinta) 20%, transparent); --border-strong: color-mix(in srgb, var(--papel-tinta) 38%, transparent); --rule: transparent;
+  --accent: var(--papel-verde); --accent-fg: var(--papel); --accent-soft: color-mix(in srgb, var(--papel-verde) 10%, transparent); --accent-line: color-mix(in srgb, var(--papel-verde) 45%, transparent); --accent-glow: color-mix(in srgb, var(--papel-verde) 22%, transparent);
+  --info: var(--papel-azul); --info-soft: color-mix(in srgb, var(--papel-azul) 10%, transparent); --info-line: color-mix(in srgb, var(--papel-azul) 42%, transparent);
+  --violet: var(--papel-roxo); --violet-soft: color-mix(in srgb, var(--papel-roxo) 10%, transparent); --violet-line: color-mix(in srgb, var(--papel-roxo) 42%, transparent);
+  --danger: var(--danger-ink); --danger-soft: color-mix(in srgb, var(--danger-ink) 10%, transparent); --danger-line: color-mix(in srgb, var(--danger-ink) 42%, transparent);
+  --warn: var(--papel-ambar); --warn-soft: color-mix(in srgb, var(--papel-ambar) 10%, transparent); --warn-line: color-mix(in srgb, var(--papel-ambar) 42%, transparent);
+  --focus: var(--papel-verde); --dot: color-mix(in srgb, var(--papel-tinta) 8%, transparent);
+  --frame: color-mix(in srgb, var(--papel-impresso) 45%, transparent); --corner: var(--papel-impresso);
+  color-scheme: light; color: var(--text); caret-color: var(--papel-tinta); background: var(--papel-fundo);
+}
+.papel ::selection { background: color-mix(in srgb, var(--papel-verde) 22%, transparent); color: var(--papel-tinta); }
+.papel .badge, .papel .selo { mix-blend-mode: multiply; }
+.papel.verde { --surface: var(--papel-v); --surface-2: color-mix(in srgb, var(--papel-v2) 55%, var(--papel-v)); --surface-3: var(--papel-v); --bg-2: var(--papel-v2); background: var(--papel-fundo-v); }
+
+/* máquina de escrever (Lançar) */
+@property --giro { syntax: "<angle>"; inherits: true; initial-value: 0deg; }
+.maq { --carro: 0; --passo: 2px; position: relative; max-width: 1240px; padding: 0 34px; overflow-x: clip; }
+.maq.voando { overflow-x: visible; }
+.folha { position: relative; z-index: 1; translate: calc(var(--carro) * var(--passo) * -1) 0; padding: 24px 30px 52px; border-radius: 2px 2px 0 0; box-shadow: 0 26px 50px -22px rgba(0, 0, 0, .85), 0 0 0 1px color-mix(in srgb, var(--papel-mancha) 35%, transparent); }
+.folha::before { content: ""; position: absolute; inset: 9px 9px 34px; border: 3px double var(--frame); pointer-events: none; }
+.folha::after { content: ""; position: absolute; right: 7%; bottom: 64px; width: 128px; height: 128px; border-radius: 50%; background: radial-gradient(circle, transparent 57%, color-mix(in srgb, var(--papel-mancha) 16%, transparent) 59%, color-mix(in srgb, var(--papel-mancha) 7%, transparent) 63%, transparent 65%); pointer-events: none; }
+.fl-cab { position: relative; display: flex; align-items: flex-end; gap: 10px 16px; flex-wrap: wrap; padding: 2px 4px 14px; margin-bottom: 20px; border-bottom: 3px double var(--border-strong); }
+.fl-org { flex-basis: 100%; display: flex; align-items: center; justify-content: center; gap: 12px; color: var(--sage); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .32em; text-transform: uppercase; }
+.fl-org::before, .fl-org::after { content: ""; width: 5px; height: 5px; rotate: 45deg; background: currentColor; }
+.fl-cab h2 { margin: 0; font: 600 28px/1 var(--display); text-transform: uppercase; letter-spacing: .04em; font-variant-numeric: lining-nums; }
+.fl-cab .fl-tipo { height: 26px; font-size: 14px; rotate: -3deg; align-self: center; }
+.fl-num { margin-left: auto; color: var(--sage); font: 600 12px/1 var(--cond); font-stretch: condensed; letter-spacing: .16em; text-transform: uppercase; }
+.fl-num b { color: var(--danger); font: 700 26px/1 var(--maquina); letter-spacing: 0; text-shadow: 0 0 .8px var(--danger); }
+.folha .lanc { gap: 0; }
+.fl-campos { padding-right: 26px; }
+.fl-itens { min-width: 0; padding-left: 26px; border-left: 1px dashed var(--border-strong); }
+.fl-itens .sect-title .badge, .fl-itens .sect-title .kbd-hint { order: 2; }
+.fl-itens .sect-title .kbd-hint { margin-left: 0; letter-spacing: .06em; }
+.folha .input { height: 34px; padding: 0 4px; border: 0; border-bottom: 1px dashed var(--border-strong); border-radius: 0; background-color: transparent; box-shadow: none; font: 700 15px var(--maquina); color: var(--text); text-shadow: 0 0 .7px var(--text); }
+.folha select.input { padding-right: 26px; }
+.folha .input:hover { border-bottom-color: var(--text-3); }
+.folha .input:focus { border-bottom: 1px solid var(--ink, var(--accent)); box-shadow: inset 0 -1px 0 var(--ink, var(--accent)); }
+.folha .input.err { border-bottom: 1px solid var(--danger); box-shadow: inset 0 -1px 0 var(--danger); }
+.folha textarea.input { padding: 3px 8px; border: 1px dashed var(--border-strong); line-height: 24px; font-size: 14px; background: repeating-linear-gradient(180deg, transparent 0 23px, var(--border) 23px 24px) 0 3px / 100% 24px local; }
+.folha textarea.input:focus { border: 1px solid var(--ink, var(--accent)); box-shadow: none; }
+.folha .adder { padding: 0 0 14px; border-bottom: 1px dashed var(--border-strong); }
+.folha .adder .search input { padding-left: 34px; }
+.folha .adder .search .i { left: 6px; }
+.folha .cands { left: 0; right: 0; top: 50px; }
+.folha .list li { padding: 10px 2px; border-bottom: 1px dashed var(--border); }
+.folha .itens b, .folha .pat { font-family: var(--maquina); font-weight: 700; text-shadow: 0 0 .6px currentColor; }
+.folha .pat { font-size: 14px; }
+.folha .itens .qty { width: 70px; padding: 0 6px; border: 1px dashed var(--border-strong); }
+.maq-base { position: sticky; bottom: 0; z-index: 3; margin: -22px -28px 0; --laca: linear-gradient(180deg, color-mix(in srgb, var(--text) 9%, transparent), transparent 22%), linear-gradient(180deg, color-mix(in srgb, var(--metal) 8%, var(--surface-2)), var(--bg-2) 55%, var(--breu)); --cromo: linear-gradient(180deg, var(--text), var(--metal) 35%, color-mix(in srgb, var(--metal) 35%, var(--breu))); --cromo-h: linear-gradient(90deg, color-mix(in srgb, var(--metal) 40%, var(--breu)), var(--text) 40%, var(--metal) 60%, color-mix(in srgb, var(--metal) 35%, var(--breu))); }
+.carro { position: relative; z-index: 2; height: 30px; margin: 0 30px; translate: calc(var(--carro) * var(--passo) * -1) 0; }
+.rolo { position: absolute; inset: 0; border-radius: 7px / 50%; background: repeating-linear-gradient(180deg, transparent 0 3px, color-mix(in srgb, var(--metal) 9%, transparent) 3px 4px) 0 0 / 100% 7px, linear-gradient(180deg, var(--surface-3), var(--well) 36%, var(--breu) 78%, var(--surface-2)); box-shadow: 0 -8px 16px -6px rgba(0, 0, 0, .55), 0 5px 10px rgba(0, 0, 0, .5), inset 0 1px 0 color-mix(in srgb, var(--metal) 22%, transparent); }
+.rolo::before { content: ""; position: absolute; left: 6%; right: 6%; top: -7px; height: 3px; border-radius: 2px; background: var(--cromo); box-shadow: 0 2px 3px rgba(0, 0, 0, .45); }
+.rolo::after { content: ""; position: absolute; left: 6%; right: 6%; top: -9px; height: 7px; background: linear-gradient(180deg, var(--surface-3), var(--breu)) 24% 0 / 22px 100% no-repeat, linear-gradient(180deg, var(--surface-3), var(--breu)) 76% 0 / 22px 100% no-repeat; }
+.ponta { position: absolute; top: -8px; bottom: -6px; width: 20px; border-radius: 6px; background: var(--laca); border: 1px solid color-mix(in srgb, var(--metal) 30%, var(--breu)); box-shadow: 0 4px 8px rgba(0, 0, 0, .55); }
+.ponta.e { left: -14px; }
+.ponta.d { right: -14px; }
+.botao { position: absolute; top: 50%; width: 22px; height: 40px; margin-top: -20px; border-radius: 6px / 12px; background: radial-gradient(ellipse 30% 45% at 50% 50%, var(--latao), transparent), repeating-linear-gradient(180deg, color-mix(in srgb, var(--metal) 55%, var(--breu)) 0 2px, var(--breu) 2px 4px); box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--metal) 30%, transparent), 0 4px 10px rgba(0, 0, 0, .6); }
+.botao.e { left: -36px; }
+.botao.d { right: -36px; }
+.alavanca { position: absolute; left: -18px; top: -9px; width: 50px; height: 5px; border-radius: 3px; transform-origin: calc(100% - 3px) 50%; transform: rotate(32deg); background: var(--cromo); box-shadow: 0 3px 6px rgba(0, 0, 0, .5); }
+.alavanca::after { content: ""; position: absolute; right: -2px; top: -2.5px; width: 10px; height: 10px; border-radius: 50%; background: radial-gradient(circle at 40% 35%, var(--text), var(--metal) 40%, color-mix(in srgb, var(--metal) 30%, var(--breu))); box-shadow: 0 0 0 1px var(--breu), 0 2px 4px rgba(0, 0, 0, .6); }
+.alavanca::before { content: ""; position: absolute; left: -14px; top: -5px; width: 20px; height: 15px; border-radius: 8px 4px 4px 8px; background: radial-gradient(ellipse at 40% 35%, var(--text), var(--metal) 45%, color-mix(in srgb, var(--metal) 35%, var(--breu))); }
+.solta { position: absolute; right: -8px; top: -22px; width: 5px; height: 22px; border-radius: 3px 3px 1px 1px; background: var(--cromo); rotate: 14deg; box-shadow: 0 2px 4px rgba(0, 0, 0, .5); }
+.regua { position: absolute; left: 4%; right: 4%; top: calc(100% - 2px); height: 13px; display: flex; justify-content: space-between; align-items: flex-end; padding: 0 2px 1px; color: var(--papel-tinta); font: 700 7.5px/1 var(--maquina); border: 1px solid color-mix(in srgb, var(--metal) 45%, var(--breu)); border-top: 0; border-radius: 0 0 2px 2px; background: linear-gradient(90deg, var(--danger) 0 3px, transparent 3px) 10% 0 / 100% 100% no-repeat, linear-gradient(90deg, var(--danger) 0 3px, transparent 3px) 90% 0 / 100% 100% no-repeat, repeating-linear-gradient(90deg, color-mix(in srgb, var(--breu) 70%, transparent) 0 1px, transparent 1px 10px) 0 0 / 100% 5px no-repeat, repeating-linear-gradient(90deg, color-mix(in srgb, var(--breu) 45%, transparent) 0 1px, transparent 1px 5px) 0 0 / 100% 3px no-repeat, linear-gradient(180deg, var(--text), var(--text-2)); box-shadow: 0 2px 4px rgba(0, 0, 0, .5); }
+.ponteiro { position: absolute; z-index: 3; left: 50%; top: 24px; width: 0; height: 0; margin-left: -5px; border: 5px solid transparent; border-top: 8px solid var(--accent); filter: drop-shadow(0 0 4px var(--accent-glow)) drop-shadow(0 1px 1px rgba(0, 0, 0, .7)); }
+.fita { position: absolute; z-index: 3; left: 50%; top: -15px; width: 30px; height: 13px; margin-left: -15px; border: 2px solid var(--metal); border-top: 0; border-radius: 0 0 3px 3px; background: linear-gradient(180deg, var(--breu) 0 50%, var(--danger-ink) 50%); box-shadow: 0 2px 5px rgba(0, 0, 0, .5); }
+.martelo { position: absolute; z-index: 1; left: 50%; top: -4px; width: 4px; height: 18px; margin-left: -2px; border-radius: 1px; background: var(--cromo); opacity: 0; }
+.corpo { position: relative; margin-top: -2px; }
+.deck { position: relative; height: 86px; margin: 0 3%; border: 1px solid var(--border-strong); border-bottom: 0; border-radius: 46px 46px 0 0 / 40px 40px 0 0; background: radial-gradient(var(--dot) 1px, transparent 1.5px) 0 0 / 5px 5px, var(--laca); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--metal) 25%, transparent), 0 -4px 14px rgba(0, 0, 0, .45); }
+.deck::before { content: ""; position: absolute; top: 44px; left: 22px; right: 22px; height: 20px; background: repeating-linear-gradient(180deg, color-mix(in srgb, var(--latao) 45%, transparent) 0 1px, transparent 1px 5px) 0 0 / 28px 100% no-repeat, repeating-linear-gradient(180deg, color-mix(in srgb, var(--latao) 45%, transparent) 0 1px, transparent 1px 5px) 100% 0 / 28px 100% no-repeat; pointer-events: none; }
+.deck::after { content: ""; position: absolute; left: -1px; right: -1px; bottom: 0; height: 3px; background: var(--cromo-h); }
+.carretel { position: absolute; top: 42px; width: 76px; height: 30px; border-radius: 50%; background: radial-gradient(ellipse 18% 20% at 50% 46%, var(--latao) 0 40%, var(--breu) 46% 70%, transparent 76%), radial-gradient(ellipse 50% 50% at 50% 46%, color-mix(in srgb, var(--danger-ink) 70%, var(--breu)) 0 42%, var(--breu) 44% 50%, var(--metal) 54% 64%, color-mix(in srgb, var(--metal) 40%, var(--breu)) 70%, var(--text) 82%, color-mix(in srgb, var(--metal) 50%, var(--breu)) 96%); box-shadow: 0 5px 8px rgba(0, 0, 0, .6), inset 0 -2px 3px rgba(0, 0, 0, .4); }
+.carretel::after { content: ""; position: absolute; inset: 9px 24px 10px; border-radius: 50%; background: repeating-conic-gradient(from var(--giro), color-mix(in srgb, var(--metal) 60%, transparent) 0 14deg, transparent 14deg 60deg); opacity: .8; }
+.carretel.e { left: 12%; }
+.carretel.d { right: 12%; }
+.fita-v { position: absolute; top: 17px; height: 40px; }
+.fita-v.e { left: calc(12% + 38px); right: calc(50% + 70px); background: linear-gradient(to bottom right, transparent calc(50% - 2.5px), var(--danger-ink) calc(50% - 2.5px) 50%, color-mix(in srgb, var(--danger-ink) 65%, var(--text)) 50% calc(50% + 1px), var(--danger-ink) calc(50% + 1px) calc(50% + 2.5px), transparent calc(50% + 2.5px)); }
+.fita-v.d { right: calc(12% + 38px); left: calc(50% + 70px); background: linear-gradient(to bottom left, transparent calc(50% - 2.5px), var(--danger-ink) calc(50% - 2.5px) 50%, color-mix(in srgb, var(--danger-ink) 65%, var(--text)) 50% calc(50% + 1px), var(--danger-ink) calc(50% + 1px) calc(50% + 2.5px), transparent calc(50% + 2.5px)); }
+.fita-v.c { left: calc(50% - 72px); right: calc(50% - 72px); top: 15px; height: 5px; background: linear-gradient(180deg, var(--danger-ink), color-mix(in srgb, var(--danger-ink) 65%, var(--text)) 45%, var(--danger-ink)); }
+.suporte { position: absolute; left: 50%; top: 12px; width: 132px; height: 28px; margin-left: -66px; border-left: 3px solid var(--metal); border-right: 3px solid var(--metal); background: linear-gradient(90deg, var(--danger) 0 38%, transparent 38% 62%, var(--danger) 62%) 0 9px / 100% 1px no-repeat, linear-gradient(90deg, var(--danger) 0 38%, transparent 38% 62%, var(--danger) 62%) 0 16px / 100% 1px no-repeat; opacity: .9; }
+.suporte::before, .suporte::after { content: ""; position: absolute; top: 18px; width: 1.5px; height: 10px; background: var(--metal); left: 50%; }
+.suporte::before { margin-left: -14px; }
+.suporte::after { margin-left: 12px; }
+.segmento { position: absolute; left: 50%; bottom: 12px; width: 200px; height: 46px; margin-left: -100px; border: 2px solid var(--metal); border-bottom: 0; border-radius: 100px 100px 0 0 / 46px 46px 0 0; background: radial-gradient(ellipse 14% 30% at 50% 100%, var(--latao) 0 45%, var(--breu) 50% 72%, transparent 78%), radial-gradient(ellipse 50% 100% at 50% 100%, transparent 0 86%, var(--breu) 90%), repeating-conic-gradient(from -90deg at 50% 100%, transparent 0 2deg, color-mix(in srgb, var(--metal) 85%, var(--breu)) 2deg 3deg, transparent 3deg 6.5deg), radial-gradient(ellipse 50% 100% at 50% 100%, color-mix(in srgb, var(--surface-3) 70%, var(--breu)), var(--breu)); box-shadow: inset 0 3px 6px rgba(0, 0, 0, .6), 0 -1px 0 color-mix(in srgb, var(--text) 25%, transparent); }
+.segmento::before { content: ""; position: absolute; left: 50%; top: 4px; width: 22px; height: 12px; margin-left: -11px; border: 2px solid var(--metal); border-top: 0; border-radius: 0 0 11px 11px; }
+.frente { position: relative; display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: 12px 28px; padding: 20px 26px 16px; border: 1px solid var(--border-strong); border-top: 0; border-radius: 4px 4px 14px 14px; background: radial-gradient(var(--dot) 1px, transparent 1.5px) 0 0 / 5px 5px, var(--laca); box-shadow: var(--shadow-2), inset 0 -2px 0 color-mix(in srgb, var(--metal) 18%, transparent); }
+.frente::before { content: ""; position: absolute; inset: 7px 4px 4px; border: 1px solid var(--frame); border-radius: 2px 2px 11px 11px; pointer-events: none; }
+.frente::after { content: ""; position: absolute; left: 4%; right: 4%; bottom: -7px; height: 7px; z-index: -1; background: linear-gradient(180deg, var(--breu), var(--surface-2)) 0 0 / 54px 100% no-repeat, linear-gradient(180deg, var(--breu), var(--surface-2)) 100% 0 / 54px 100% no-repeat; border-radius: 0 0 4px 4px; }
+.placa { position: absolute; left: 50%; top: -11px; translate: -50% 0; padding: 5px 24px 4px; color: var(--breu); font: 600 12px/1 var(--display); letter-spacing: .26em; text-transform: uppercase; white-space: nowrap; background: linear-gradient(180deg, color-mix(in srgb, var(--latao) 55%, var(--text)), var(--latao) 55%, color-mix(in srgb, var(--latao) 70%, var(--breu))); clip-path: polygon(8px 0, calc(100% - 8px) 0, calc(100% - 8px) 3px, 100% 3px, 100% calc(100% - 3px), calc(100% - 8px) calc(100% - 3px), calc(100% - 8px) 100%, 8px 100%, 8px calc(100% - 3px), 0 calc(100% - 3px), 0 3px, 8px 3px); text-shadow: 0 1px 0 color-mix(in srgb, var(--text) 45%, transparent); }
+.frente .err-msg { grid-column: 1 / -1; margin: 0; }
+.frente .err-msg:empty { display: none; }
+.frente .lanc-foot { padding: 0; border: 0; justify-content: flex-end; }
+.fr-info { display: flex; align-items: center; gap: 8px; min-width: 0; }
+.som-bt[aria-pressed="false"] { color: var(--text-3); }
+.sino { position: absolute; right: 5%; top: 26px; width: 18px; height: 13px; border-radius: 9px 9px 2px 2px; background: radial-gradient(circle at 35% 30%, color-mix(in srgb, var(--latao) 45%, var(--text)), var(--latao) 45%, color-mix(in srgb, var(--latao) 40%, var(--breu))); box-shadow: 0 2px 4px rgba(0, 0, 0, .5); transform-origin: 50% 0; }
+.sino::after { content: ""; position: absolute; inset: -6px; border-radius: 50%; border: 2px solid var(--latao); opacity: 0; }
+.sino.ding { animation: badalo .52s ease-out; }
+.sino.ding::after { animation: ding .5s ease-out; }
+.view.entering .folha { animation: alimenta .44s .04s var(--out) backwards; }
 .lanc.txt { grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); }
 textarea.txt-in { min-height: 200px; font: 14px/1.7 var(--mono); }
 .txt-help { display: flex; flex-direction: column; gap: 8px; font-size: 13px; color: var(--text-2); }
@@ -330,13 +463,125 @@ textarea.txt-in { min-height: 200px; font: 14px/1.7 var(--mono); }
 #layer.swap > .overlay, #layer.swap > .modal:not(.nudge), #layer.swap > .drawer:not(.nudge) { animation: none; }
 .layer-out { pointer-events: none; }
 .layer-out .overlay { animation: fade-out .2s ease-in forwards; }
-.layer-out .modal { animation: card-lift .18s var(--in) forwards; }
+.layer-out .modal, .layer-out .modal.carimbado { animation: card-lift .18s var(--in) forwards; }
+.layer-out .modal *, .layer-out .modal *::before, .layer-out .modal *::after { animation: none !important; }
+.layer-out.desce .modal, .layer-out.desce .modal.carimbado { animation: papel-desce .46s linear forwards; }
+.layer-out.desce .overlay { animation: fade-out .34s .1s ease-in forwards; }
 .layer-out .drawer { animation: drawer-out .22s var(--in) forwards; }
 .layer-out .lightbox { animation: fade-out .18s ease-in forwards; }
-.selo { position: absolute; top: -18px; right: 64px; z-index: 2; padding: 6px 12px 5px; border: 3px double var(--accent); border-radius: 3px; color: var(--accent); font: 700 20px/1 var(--cond); font-stretch: condensed; letter-spacing: .22em; text-transform: uppercase; rotate: -9deg; background: color-mix(in srgb, var(--accent) 8%, transparent); -webkit-mask: var(--ink-mask) 0 0 / 90px 30px; mask: var(--ink-mask) 0 0 / 90px 30px; pointer-events: none; animation: carimbo .22s .1s var(--out) backwards; }
-.modal.carimbado { animation: card-drop .3s var(--out), thud .12s .22s ease-out; }
-.modal.carimbado { width: min(640px, calc(100vw - 32px)); }
-.modal.carimbado > header h2 { padding-right: 170px; }
+.modal.papel { background: var(--papel-fundo); border-color: color-mix(in srgb, var(--papel-mancha) 45%, transparent); }
+.modal.papel > footer { border-top: 1px dashed var(--border-strong); }
+.modal.carimbado { width: min(640px, calc(100vw - 32px)); animation: papel-pousa .42s var(--out), thud .14s .58s ease-out; }
+.reg-resumo { display: flex; flex-direction: column; gap: 10px; padding-right: 214px; min-height: 76px; }
+.reg-resumo p { margin: 0; }
+.fl-lista { list-style: none; margin: 0; padding: 0; border-top: 1px dashed var(--border-strong); max-height: 260px; overflow-y: auto; }
+.fl-lista li { display: grid; grid-template-columns: 74px minmax(0, 1fr); gap: 12px; align-items: baseline; padding: 7px 2px; border-bottom: 1px dashed var(--border); font: 700 14px/1.35 var(--maquina); text-shadow: 0 0 .6px currentColor; animation: datilo .3s calc(.42s + var(--i) * .07s) steps(16, end) backwards; }
+.fl-lista b { text-align: right; color: var(--text-2); font: inherit; }
+.fl-lista .badge { margin-left: 6px; text-shadow: none; vertical-align: 1px; }
+.selo-wrap { position: absolute; z-index: 2; top: 80px; right: 30px; rotate: -9deg; pointer-events: none; }
+.selo-wrap::before { content: ""; position: absolute; left: 4%; right: 4%; bottom: -8px; height: 18px; border-radius: 50%; background: radial-gradient(closest-side, rgba(0, 0, 0, .32), transparent); opacity: 0; animation: sombra .8s .3s both; }
+.selo { position: relative; display: block; padding: 6px 12px 5px; border: 3px double var(--accent); border-radius: 3px; color: var(--accent); font: 700 20px/1 var(--cond); font-stretch: condensed; letter-spacing: .22em; text-transform: uppercase; white-space: nowrap; background: color-mix(in srgb, var(--accent) 8%, transparent); -webkit-mask: var(--ink-mask) 0 0 / 90px 30px; mask: var(--ink-mask) 0 0 / 90px 30px; animation: imprime .18s .58s var(--out) backwards; }
+.carimbador { position: absolute; left: 50%; bottom: -8px; width: 196px; margin-left: -98px; overflow: visible; opacity: 0; transform-origin: 50% 100%; filter: drop-shadow(0 12px 10px rgba(0, 0, 0, .4)); animation: carimbar .8s .3s both; }
+.carimbador .lq { fill: color-mix(in srgb, var(--papel-impresso) 50%, var(--breu)); }
+.carimbador .lt { fill: var(--latao); }
+.carimbador .br { fill: color-mix(in srgb, var(--papel) 28%, transparent); }
+.carimbador .bo { fill: var(--accent); }
+.modal.carimbado.envelopado { animation: thud .14s 1.02s ease-out; }
+.modal.envelopado .selo-wrap::before, .modal.envelopado .carimbador { animation-delay: .74s; }
+.modal.envelopado .selo { animation-delay: 1.02s; }
+.modal.envelopado .fl-lista li { animation-delay: calc(.86s + var(--i) * .07s); }
+
+/* folha do patrimônio (gaveta de papel: desdobra, carimba, dobra/amassa/sai) */
+.drawer.papel { background: var(--papel-fundo); border-left: 0; box-shadow: -26px 0 60px rgba(0, 0, 0, .6), 0 0 0 1px color-mix(in srgb, var(--papel-mancha) 40%, transparent); animation: none; }
+.drawer.papel::before { content: ""; position: absolute; inset: 8px; z-index: 2; border: 3px double var(--frame); pointer-events: none; }
+.drawer.papel::after { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none;
+  background: linear-gradient(180deg, transparent calc(33.333% - 16px), var(--vinco-sombra) calc(33.333% - 1px), var(--vinco-luz) 33.333%, transparent calc(33.333% + 12px)),
+    linear-gradient(180deg, transparent calc(66.666% - 16px), var(--vinco-sombra) calc(66.666% - 1px), var(--vinco-luz) 66.666%, transparent calc(66.666% + 12px)); opacity: .55; }
+.drawer.papel.abrindo { opacity: 0; }
+.drawer .selo-wrap { position: absolute; z-index: 3; top: 30%; left: 50%; right: auto; margin: 0; translate: -50% 0; rotate: -8deg; }
+.drawer .selo-wrap::before, .drawer .carimbador { animation-delay: 0s; }
+.drawer .selo { padding: 10px 20px 8px; font-size: 34px; letter-spacing: .26em; animation-delay: .28s; }
+.drawer .carimbador { width: 230px; margin-left: -115px; }
+.dobra { position: fixed; z-index: 42; pointer-events: none; perspective: 1800px; perspective-origin: 50% 30%; }
+.dobra .dh { position: absolute; left: 0; right: 0; transform-origin: 50% 0; transform-style: preserve-3d; }
+.dobra .dp { position: absolute; left: 0; right: 0; overflow: hidden; backface-visibility: hidden; box-shadow: -20px 0 44px rgba(0, 0, 0, .45); }
+.dobra .drawer { position: absolute; left: 0; right: 0; bottom: auto; width: auto; box-shadow: none; }
+.dobra .vinco { position: absolute; inset: 0; z-index: 4; opacity: 0; background: linear-gradient(180deg, var(--dobra-sombra), color-mix(in srgb, var(--dobra-sombra) 30%, transparent)); }
+.dobra .dp:first-child .vinco { background: linear-gradient(0deg, var(--dobra-sombra), transparent 45%); }
+.dobra .drawer *, .layer-out .drawer *, .dobra .drawer *::before, .layer-out .drawer *::before { animation: none !important; }
+.layer-out > .drawer.papel { animation: none; }
+.layer-out.folha-dobra > .drawer.papel { opacity: 0; }
+.layer-out.folha-dobra .overlay, .layer-out.folha-amassa .overlay, .layer-out.folha-puxa .overlay { animation: fade-out .3s .28s ease-in forwards; }
+.rugas { position: absolute; inset: 0; z-index: 4; pointer-events: none; opacity: 0;
+  background: linear-gradient(115deg, transparent 31%, var(--vinco-luz) 32%, var(--vinco-sombra) 34%, transparent 38%),
+    linear-gradient(62deg, transparent 51%, var(--vinco-sombra) 53%, var(--vinco-luz) 54.5%, transparent 58%),
+    linear-gradient(160deg, transparent 43%, var(--vinco-sombra) 45%, var(--vinco-luz) 46%, transparent 50%),
+    linear-gradient(22deg, transparent 37%, var(--vinco-luz) 39%, var(--vinco-sombra) 41%, transparent 45%),
+    linear-gradient(96deg, transparent 58%, var(--vinco-sombra) 60%, var(--vinco-luz) 61%, transparent 64%),
+    linear-gradient(140deg, transparent 54%, var(--vinco-luz) 55%, var(--vinco-sombra) 57%, transparent 61%),
+    radial-gradient(ellipse 34% 22% at 50% 42%, transparent 30%, var(--vinco-sombra) 75%, var(--dobra-sombra)); }
+
+/* cerimônias do registro: isqueiro e fogo (descarte), envelope (transferência) */
+@property --q { syntax: "<number>"; inherits: true; initial-value: 0; }
+.queima { position: absolute; inset: 0; z-index: 5; pointer-events: none; }
+.labareda, .brasa, .faisca, .fumaca, .clarao { position: fixed; z-index: 43; pointer-events: none; }
+.labareda { width: 24px; height: 40px; margin: -36px 0 0 -12px; border-radius: 50% 50% 46% 46% / 64% 64% 36% 36%; transform-origin: 50% 90%; background: radial-gradient(ellipse 50% 62% at 50% 76%, var(--fogo-claro), var(--fogo) 42%, color-mix(in srgb, var(--fogo-fundo) 75%, transparent) 70%, transparent 74%); filter: blur(.4px); }
+.brasa, .faisca { width: 3px; height: 3px; margin: -1.5px; border-radius: 50%; background: var(--fogo-claro); box-shadow: 0 0 6px 1px var(--fogo); }
+.faisca { z-index: 45; }
+.fumaca { z-index: 42; width: 46px; height: 46px; margin: -23px; border-radius: 50%; background: radial-gradient(closest-side, var(--fumaca), transparent); filter: blur(4px); }
+.clarao { z-index: 42; width: 900px; height: 900px; margin: -450px; border-radius: 50%; background: radial-gradient(closest-side, var(--clarao), transparent); mix-blend-mode: screen; opacity: 0; }
+.isqueiro { position: fixed; z-index: 44; width: 116px; height: 144px; pointer-events: none; transform-origin: 32px 140px; filter: drop-shadow(0 16px 14px rgba(0, 0, 0, .55)); }
+.isqueiro svg { display: block; width: 100%; height: 100%; overflow: visible; }
+.isqueiro .m1 { stop-color: var(--metal); }
+.isqueiro .m2 { stop-color: color-mix(in srgb, var(--metal) 55%, var(--breu)); }
+.isqueiro .m3 { stop-color: color-mix(in srgb, var(--metal) 50%, var(--papel)); }
+.isqueiro .f1 { stop-color: var(--fogo-claro); }
+.isqueiro .f2 { stop-color: var(--fogo); }
+.isqueiro .f3 { stop-color: var(--fogo-fundo); }
+.isqueiro .f4 { stop-color: var(--fogo); stop-opacity: 0; }
+.isqueiro .metal { fill: url(#isq-m); stroke: color-mix(in srgb, var(--metal) 35%, var(--breu)); stroke-width: 1; }
+.isqueiro .chamine { fill: color-mix(in srgb, var(--metal) 80%, var(--papel)); stroke: color-mix(in srgb, var(--metal) 35%, var(--breu)); stroke-width: 1; }
+.isqueiro .furos { fill: var(--breu); }
+.isqueiro .dente { fill: color-mix(in srgb, var(--metal) 60%, var(--breu)); stroke: var(--breu); stroke-width: 2; stroke-dasharray: 1.6 1.6; }
+.isqueiro .eixo, .isqueiro .dobradica { fill: var(--latao); }
+.isqueiro .friso { fill: none; stroke: var(--latao); stroke-width: 1.3; }
+.isqueiro .tampa { transform-box: view-box; transform-origin: 60px 74px; rotate: 108deg; }
+.isqueiro .roda { transform-box: fill-box; transform-origin: 50% 50%; }
+.isqueiro .fogo { transform-box: fill-box; transform-origin: 50% 100%; scale: 0; }
+.isqueiro .chama { fill: url(#isq-f); transform-box: fill-box; transform-origin: 50% 100%; }
+.isqueiro .miolo { fill: var(--fogo-claro); opacity: .85; }
+.isqueiro .halo { fill: url(#isq-h); opacity: .55; }
+.envio { position: fixed; inset: 0; z-index: 42; pointer-events: none; perspective: 1400px; }
+.env { position: absolute; transform-style: preserve-3d; }
+.env-tras, .env-frente { position: absolute; inset: 0; }
+.env-frente, .env.vira .env-tras { backface-visibility: hidden; }
+.env-dentro, .env-bolso, .env-aba { position: absolute; left: 0; right: 0; top: 0; }
+.env-dentro { bottom: 0; z-index: 1; border-radius: 3px; background: linear-gradient(180deg, var(--envelope-dentro), color-mix(in srgb, var(--envelope-dentro) 70%, var(--breu))); box-shadow: 0 22px 44px -16px rgba(0, 0, 0, .75); }
+.env-bolso { bottom: 0; z-index: 3; border-radius: 3px; clip-path: polygon(0 0, 50% 56%, 100% 0, 100% 100%, 0 100%);
+  background: linear-gradient(to top right, transparent calc(50% - 3px), var(--envelope-borda) 50%, transparent 50%) left top / 50% 56% no-repeat,
+    linear-gradient(to top left, transparent calc(50% - 3px), var(--envelope-borda) 50%, transparent 50%) right top / 50% 56% no-repeat,
+    linear-gradient(to bottom right, transparent calc(50% - 1px), var(--envelope-borda) 50%, transparent calc(50% + 1px)) left bottom / 50% 44% no-repeat,
+    linear-gradient(to bottom left, transparent calc(50% - 1px), var(--envelope-borda) 50%, transparent calc(50% + 1px)) right bottom / 50% 44% no-repeat,
+    var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--envelope), var(--envelope-2)); }
+.env-aba { z-index: 0; height: 62%; transform-origin: 50% 0; transform: perspective(800px) rotateX(180deg); clip-path: polygon(0 0, 100% 0, 52% 98%, 48% 98%); background: var(--fibra) 0 0 / 260px 260px, linear-gradient(180deg, var(--envelope-2), var(--envelope)); }
+.lacre { position: absolute; z-index: 5; left: 50%; top: 62%; width: 30px; height: 30px; margin: -18px 0 0 -15px; border-radius: 50%; scale: 0; background: radial-gradient(circle at 38% 34%, color-mix(in srgb, var(--papel-roxo) 55%, var(--papel)), var(--papel-roxo) 55%, color-mix(in srgb, var(--papel-roxo) 70%, var(--breu))); box-shadow: 0 2px 3px rgba(0, 0, 0, .4); }
+.env-frente { transform: rotateY(180deg); display: flex; flex-direction: column; justify-content: flex-end; gap: 2px; padding: 16px 20px; border-radius: 3px; color: var(--papel-tinta); font: 700 13px/1.45 var(--maquina); text-shadow: 0 0 .6px currentColor; background: var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--envelope), var(--envelope-2)); box-shadow: 0 22px 44px -16px rgba(0, 0, 0, .75); }
+.env-frente b { font: inherit; text-transform: uppercase; letter-spacing: .06em; }
+.env-frente span:not(.postal) { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.env-frente .postal { position: absolute; top: 12px; right: 14px; width: 38px; height: 46px; display: grid; place-items: center; background: var(--papel); outline: 2px dotted var(--papel); outline-offset: 1px; color: var(--papel-roxo); font: 700 15px var(--display); text-shadow: none; }
+.env-frente .postal::before { content: ""; position: absolute; inset: 4px; border: 1px solid currentColor; }
+.env-frente .marca-postal { position: absolute; top: 16px; right: 38px; width: 50px; height: 50px; border: 2px solid var(--papel-roxo); border-radius: 50%; opacity: .65; mix-blend-mode: multiply; }
+.env-frente .marca-postal::after { content: ""; position: absolute; left: -26px; right: 30px; top: 14px; height: 18px; background: repeating-linear-gradient(180deg, var(--papel-roxo) 0 2px, transparent 2px 6px); }
+.carta { position: absolute; z-index: 2; perspective: 1100px; transform-origin: 0 0; }
+.carta .cp, .carta .ch { position: absolute; left: 0; right: 0; }
+.carta .ch { transform-style: preserve-3d; }
+.carta .ch.baixo { transform-origin: 50% 0; }
+.carta .ch.cima { transform-origin: 50% 100%; }
+.carta .cf, .carta .cv { position: absolute; inset: 0; z-index: 0; overflow: hidden; background: var(--papel-fundo); box-shadow: 0 6px 14px -8px rgba(0, 0, 0, .6); }
+.carta .cv { opacity: 0; transform: rotateX(180deg); }
+.carta .folha { position: absolute; left: 0; margin: 0; translate: none; transform-origin: 0 0; box-shadow: none; }
+.carta .folha *, .carta .folha *::before, .carta .folha *::after { animation: none !important; }
+.carta .cs { position: absolute; inset: 0; z-index: 6; opacity: 0; background: var(--dobra-sombra); }
 dl.kv { display: grid; grid-template-columns: 130px 1fr; gap: 8px 12px; margin: 0; font-size: 14px; }
 .fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
 .fotos button { aspect-ratio: 1; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--well); overflow: hidden; cursor: pointer; transition: border-color .2s, box-shadow .25s var(--out), rotate .3s var(--out); }
@@ -415,11 +660,26 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 @keyframes card-drop { from { opacity: 0; translate: 0 28px; rotate: -3.5deg; scale: .94; } 55% { opacity: 1; } }
 @keyframes card-drop-flat { from { opacity: 0; translate: 0 18px; scale: .96; } }
 @keyframes card-lift { to { opacity: 0; translate: 0 -14px; rotate: 1.5deg; scale: .97; } }
+@keyframes papel-desce { from { animation-timing-function: cubic-bezier(.3, 0, .4, 1); } 18% { translate: 0 -10px; rotate: -.8deg; animation-timing-function: cubic-bezier(.55, 0, .85, .25); } 72% { opacity: 1; } to { opacity: 0; translate: 0 64vh; rotate: 3.5deg; scale: .98; } }
 @keyframes drawer-in { from { opacity: .4; translate: 60px 0; clip-path: inset(0 0 0 40%); } to { clip-path: inset(0 0 0 0); } }
 @keyframes drawer-out { to { opacity: 0; translate: 50px 0; } }
 @keyframes toast-in { from { opacity: 0; translate: 48px 0; rotate: 2.5deg; } }
 @keyframes toast-out { to { opacity: 0; translate: 32px 0; scale: .96; } }
-@keyframes carimbo { 0% { opacity: 0; scale: 2.6; rotate: -22deg; } 60% { opacity: 1; scale: .92; rotate: -8deg; } 100% { scale: 1; rotate: -9deg; } }
+@keyframes papel-pousa { from { opacity: 0; translate: 0 -34vh; rotate: -5deg; scale: 1.03; } 50% { opacity: 1; } 78% { rotate: .5deg; } }
+@keyframes carimbar {
+  0% { opacity: 0; translate: 36px -170px; rotate: 9deg; scale: 1.28; animation-timing-function: cubic-bezier(.55, 0, .9, .4); }
+  12% { opacity: 1; }
+  35% { translate: 0 0; rotate: 0deg; scale: 1; animation-timing-function: ease-out; }
+  43% { scale: 1.035 .93; }
+  54% { opacity: 1; translate: 0 -5px; scale: 1; animation-timing-function: cubic-bezier(.5, 0, .75, 0); }
+  100% { opacity: 0; translate: -14px -190px; rotate: -7deg; scale: 1.22; }
+}
+@keyframes sombra { 0% { opacity: 0; scale: .45; } 35% { opacity: 1; scale: 1; } 54% { opacity: .8; scale: .95; } 100% { opacity: 0; scale: .4; } }
+@keyframes datilo { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 0 0 0); } }
+@keyframes imprime { from { opacity: 0; scale: 1.06; filter: blur(1px); } }
+@keyframes alimenta { from { clip-path: inset(100% 0 0 0); translate: 0 56px; } to { clip-path: inset(0 0 0 0); } }
+@keyframes badalo { 20% { rotate: 22deg; } 40% { rotate: -16deg; } 60% { rotate: 9deg; } 80% { rotate: -4deg; } }
+@keyframes ding { from { opacity: .9; scale: .6; } to { opacity: 0; scale: 1.8; } }
 @keyframes thud { 30% { scale: .985; } 60% { scale: 1.006; } }
 @keyframes shake { 20%, 60% { translate: -4px 0; } 40%, 80% { translate: 4px 0; } }
 @keyframes nudge { 30% { scale: 1.02; } 60% { scale: .99; } }
@@ -434,6 +694,8 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 @media (max-width: 1100px) {
   .g-kpi, .quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   .g-2, .lanc, .lanc.txt, .g-half { grid-template-columns: minmax(0, 1fr); }
+  .fl-campos { padding-right: 0; }
+  .fl-itens { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 1px dashed var(--border-strong); }
 }
 @media (max-width: 860px) {
   .app { grid-template-columns: 1fr; }
@@ -446,22 +708,53 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
   .view { padding: 18px 16px; }
   .cfg-unit { grid-template-columns: 1fr; }
   .top-actions .lbl { display: none; }
+  .maq { --passo: 1px; padding: 0 16px; }
+  .folha { padding: 20px 18px 50px; }
+  .maq-base { margin: -22px -12px 0; }
+  .carro { margin: 0 24px; }
+  .deck { height: 78px; margin: 0 2%; }
+  .deck::before { display: none; }
+  .carretel { top: 42px; width: 58px; height: 24px; }
+  .carretel::after { inset: 7px 18px 8px; }
+  .carretel.e { left: 7%; }
+  .carretel.d { right: 7%; }
+  .fita-v.e { left: calc(7% + 29px); right: calc(50% + 54px); }
+  .fita-v.d { right: calc(7% + 29px); left: calc(50% + 54px); }
+  .fita-v.c { left: calc(50% - 56px); right: calc(50% - 56px); }
+  .suporte { width: 100px; margin-left: -50px; }
+  .segmento { width: 150px; height: 40px; margin-left: -75px; }
 }
 @media (max-width: 520px) {
   .g-kpi, .quick { grid-template-columns: minmax(0, 1fr); }
   .row2 { grid-template-columns: 1fr; }
+  .alavanca, .solta, .placa { display: none; }
+  .frente { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
+  .carretel { width: 46px; height: 20px; top: 44px; }
+  .carretel::after { inset: 6px 14px 7px; }
+  .fita-v.e { left: calc(7% + 23px); }
+  .fita-v.d { right: calc(7% + 23px); }
+  .fl-cab h2 { font-size: 22px; }
+  .botao { width: 16px; height: 32px; margin-top: -16px; }
+  .botao.e { left: -28px; }
+  .botao.d { right: -28px; }
+  .selbar .sb-n { flex-basis: 100%; }
+  .selbar .btn { flex: 1; padding: 0 8px; }
   .lote.locada li { grid-template-columns: 24px minmax(0, 1fr) minmax(0, 1fr) auto; }
   .lote.locada .loc { grid-column: 2 / 4; }
   dl.kv { grid-template-columns: 1fr; gap: 2px; }
   dl.kv dd { margin-bottom: 8px; }
   .kpi b { font-size: 40px; }
-  .selo { right: 56px; top: -24px; font-size: 17px; }
   .modal > footer { flex-direction: column-reverse; align-items: stretch; gap: 10px; }
   .modal > footer .btn { width: 100%; }
   .modal > footer .btn.primary:not(.sm)::before, .modal > footer .btn.primary:not(.sm)::after { display: none; }
-  .modal.carimbado > header { padding-top: 28px; }
-  .modal.carimbado > header h2 { padding-right: 0; }
+  .reg-resumo { padding-right: 0; min-height: 0; }
+  .fl-lista li { grid-template-columns: 58px minmax(0, 1fr); gap: 8px; }
+  .selo-wrap { position: relative; top: auto; right: auto; align-self: flex-end; margin: 22px 26px -6px 0; }
+  .selo { font-size: 17px; }
+  .carimbador { width: 168px; margin-left: -84px; }
 }
+
+@media (max-height: 760px), (max-width: 520px) { .maq-base { position: relative; } }
 
 /* print */
 #print { display: none; }
@@ -511,6 +804,10 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 <div id="print"></div>
 
 <script id="seed" type="application/json">__SEED__</script>
+<script id="som" type="text/plain">__SOM__</script>
+<script id="som-papel" type="text/plain">__SOM_PAPEL__</script>
+<script id="som-folha" type="text/plain">__SOM_FOLHA__</script>
+<script id="som-fogo" type="text/plain">__SOM_FOGO__</script>
 <script>
 'use strict';
 
@@ -547,6 +844,8 @@ const TONER_CORES = { Preto: '#111827', Ciano: '#06B6D4', Magenta: '#DB2777', Am
 const PAT_RE = /^\d{5,6}$/;
 
 const ICONS = {
+  som: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
+  mudo: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="m22 9-6 6M16 9l6 6"/>',
   painel: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
   plus: '<path d="M12 5v14M5 12h14"/>',
   box: '<path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"/><path d="M3.27 6.96 12 12.01l8.73-5.05M12 22.08V12"/>',
@@ -787,7 +1086,7 @@ function emptyDb() {
 
 /* ---------- domínio ---------- */
 let db;
-const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, draft: null, open: {}, lancModo: 'form', txt: '' };
+const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, itSel: [], mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, draft: null, open: {}, lancModo: 'form', txt: '' };
 
 const patIdent = p => p.num || (p.locadora ? `Loc. ${p.locadora}` : 'S.P.');
 const patDesc = p => [p.cat, p.marca, p.modelo].filter(Boolean).join(' · ');
@@ -849,16 +1148,19 @@ function openLayer(html) {
   const first = $('#layer [autofocus]') || $('#layer input, #layer select, #layer button:not([data-act="close-layer"])');
   first && first.focus();
 }
-function closeLayer() {
+function closeLayer(saida = 'dobra') {
   const layer = $('#layer');
   ui.layerSujo = false;
+  $$('.dobra', layer).forEach(el => el.remove());
   if (layer.innerHTML && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const out = document.createElement('div');
     out.className = 'layer-out'; out.inert = true;
     out.append(...layer.childNodes);
     $$('[id]', out).forEach(el => el.removeAttribute('id'));
     layer.after(out);
-    setTimeout(() => out.remove(), 240);
+    const dr = $(':scope > .drawer.papel', out);
+    if (dr) { dr.classList.remove('abrindo'); out.classList.add('folha-' + saida); Promise.race([FOLHA_SAI[saida](dr, out), espera(1600)]).catch(() => {}).then(() => out.remove()); }
+    else { const desce = !!$(':scope > .modal.carimbado', out); out.classList.toggle('desce', desce); setTimeout(() => out.remove(), desce ? 500 : 240); }
   }
   layer.innerHTML = ''; layer.classList.remove('swap');
   lastFocus && lastFocus.focus && lastFocus.focus();
@@ -870,10 +1172,105 @@ function layerFora() {
   box.classList.remove('nudge'); void box.offsetWidth; box.classList.add('nudge');
   toast('Há dados não salvos. Para descartar, use Cancelar ou o X.');
 }
-function modal(title, body, foot, { wide, selo } = {}) {
-  openLayer(`<div class="modal${selo ? ' carimbado' : ''}" role="dialog" aria-modal="true" aria-labelledby="mdl-t" ${wide ? 'style="width:min(760px,calc(100vw - 32px))"' : ''}>
-    ${selo ? `<div class="selo" aria-hidden="true">${esc(selo)}</div>` : ''}<header><h2 id="mdl-t">${esc(title)}</h2><kbd class="esc" aria-hidden="true">Esc</kbd><button class="btn icon sm ghost" data-act="close-layer" aria-label="Fechar">${icon('x')}</button></header>
+const CARIMBADOR = `<svg class="carimbador" viewBox="0 0 160 150"><ellipse class="lq" cx="80" cy="26" rx="30" ry="24"/><ellipse class="br" cx="70" cy="17" rx="11" ry="6"/><rect class="lt" x="62" y="46" width="36" height="6" rx="3"/><rect class="lq" x="69" y="50" width="22" height="44"/><rect class="lt" x="67" y="66" width="26" height="4"/><path class="lq" d="M34 112 52 91h56l18 21z"/><rect class="lq" x="6" y="110" width="148" height="26" rx="3"/><rect class="lt" x="12" y="117" width="136" height="2.5"/><path class="lt" d="M80 121l5 5-5 5-5-5z"/><rect class="bo" x="10" y="136" width="140" height="8" rx="1"/></svg>`;
+function modal(title, body, foot, { wide, selo, tinta, cls } = {}) {
+  openLayer(`<div class="modal${selo ? ' carimbado papel' : ''}${cls ? ' ' + cls : ''}" role="dialog" aria-modal="true" aria-labelledby="mdl-t" ${wide ? 'style="width:min(760px,calc(100vw - 32px))"' : ''}>
+    ${selo ? `<div class="selo-wrap" aria-hidden="true"${tinta ? ` style="--accent:${tinta}"` : ''}><div class="selo">${esc(selo)}</div>${CARIMBADOR}</div>` : ''}<header><h2 id="mdl-t">${esc(title)}</h2><kbd class="esc" aria-hidden="true">Esc</kbd><button class="btn icon sm ghost" data-act="close-layer" aria-label="Fechar">${icon('x')}</button></header>
     <div class="content">${body}</div>${foot ? `<footer>${foot}</footer>` : ''}</div>`);
+}
+
+/* ---------- folha do patrimônio ---------- */
+function folhaRig(dr, pai) {
+  const r = dr.getBoundingClientRect(), t = r.height / 3, rolo = $('.content', dr).scrollTop;
+  const div = (cls, css) => { const e = document.createElement('div'); e.className = cls; e.style.cssText = css; return e; };
+  const painel = i => {
+    const p = div('dp', `top:0;height:${t}px`), c = dr.cloneNode(true), v = div('vinco', '');
+    c.classList.remove('abrindo'); c.style.cssText = `top:${-i * t}px;height:${r.height}px`;
+    $$('[id]', c).forEach(el => el.removeAttribute('id'));
+    p.append(c, v); return p;
+  };
+  const rig = div('dobra', `left:${r.left}px;top:${r.top}px;width:${r.width}px;height:${r.height}px`);
+  rig.inert = true; rig.setAttribute('aria-hidden', 'true');
+  const p1 = painel(0), p2 = painel(1), p3 = painel(2), h2 = div('dh', `top:${t}px;height:${2 * t}px`), h3 = div('dh', `top:${t}px;height:${t}px`);
+  h3.append(p3); h2.append(p2, h3); rig.append(p1, h2); pai.append(rig);
+  $$('.content', rig).forEach(c => { c.scrollTop = rolo; });
+  return { rig, h2, h3, v: $$('.vinco', rig) };
+}
+const DOBRA = 'cubic-bezier(.45, 0, .55, 1)';
+async function desdobrar(dr) {
+  if (parado()) return;
+  dr.classList.add('abrindo');
+  const f = folhaRig(dr, $('#layer'));
+  somPronto().then(() => som(...SOM.abrir));
+  const abre = (el, delay, duration) => el.animate([
+    { transform: 'rotateX(-180deg)', easing: 'cubic-bezier(.5, 0, .75, .9)' },
+    { transform: 'rotateX(6deg)', offset: .82, easing: 'cubic-bezier(.3, 0, .3, 1)' },
+    { transform: 'rotateX(0deg)' }], { delay, duration, fill: 'backwards' });
+  const luz = (el, delay, duration, de = .7) => el.animate([{ opacity: de }, { opacity: 0 }], { delay, duration, easing: 'ease-out', fill: 'backwards' });
+  const as = [
+    f.rig.animate([{ opacity: 0, transform: 'translateX(64px) rotate(1.5deg)' }, { opacity: 1, transform: 'none' }], { duration: 260, easing: OUT }),
+    abre(f.h2, 170, 340), abre(f.h3, 380, 360),
+    luz(f.v[0], 170, 340, .45), luz(f.v[1], 170, 420), luz(f.v[2], 380, 440),
+  ];
+  await Promise.race([Promise.all(as.map(a => a.finished)), espera(1400)]).catch(() => {});
+  f.rig.remove(); dr.classList.remove('abrindo');
+}
+const FOLHA_SAI = {
+  dobra(dr, out) {
+    const f = folhaRig(dr, out);
+    som(...SOM.fechar);
+    const fecha = (el, delay) => el.animate([{ transform: 'rotateX(0deg)' }, { transform: 'rotateX(-180deg)' }], { delay, duration: 280, easing: DOBRA, fill: 'both' });
+    const sombra = (el, delay, ate = .7) => el.animate([{ opacity: 0 }, { opacity: ate }], { delay, duration: 280, easing: 'ease-in', fill: 'both' });
+    fecha(f.h3, 0); sombra(f.v[2], 0); fecha(f.h2, 190); sombra(f.v[1], 190); sombra(f.v[0], 190, .45);
+    return f.rig.animate([{ opacity: 1, transform: 'none' }, { opacity: 0, transform: 'translateX(70px) rotate(2deg)' }], { delay: 420, duration: 200, easing: 'cubic-bezier(.7, 0, .84, 0)', fill: 'both' }).finished;
+  },
+  amassa(dr) {
+    const w = dr.offsetWidth, h = dr.offsetHeight, cx = w / 2, cy = h * .42, R = w * .36, n = 28;
+    const angs = [...Array(n)].map((_, i) => -Math.PI + i * 2 * Math.PI / n)
+      .concat([[0, 0], [w, 0], [w, h], [0, h]].map(([x, y]) => Math.atan2(y - cy, x - cx))).sort((a, b) => a - b);
+    const borda = a => { const dx = Math.cos(a), dy = Math.sin(a); const k = Math.min(dx > 0 ? (w - cx) / dx : dx < 0 ? -cx / dx : 1e9, dy > 0 ? (h - cy) / dy : dy < 0 ? -cy / dy : 1e9); return [cx + dx * k, cy + dy * k]; };
+    const A = angs.map(borda), B = angs.map((a, i) => { const r = R * (i % 2 ? .88 : 1) * (.9 + Math.random() * .16); return [cx + Math.cos(a) * r, cy + Math.sin(a) * r]; });
+    const M = A.map(([x, y], i) => { const k = .5 + Math.random() * .2; return [x + (B[i][0] - x) * k + (Math.random() - .5) * 36, y + (B[i][1] - y) * k + (Math.random() - .5) * 36]; });
+    const poly = P => `polygon(${P.map(([x, y]) => `${x.toFixed(1)}px ${y.toFixed(1)}px`).join(',')})`;
+    dr.style.transformOrigin = `${cx}px ${cy}px`;
+    dr.insertAdjacentHTML('beforeend', '<i class="rugas"></i>');
+    som(...SOM.amassar);
+    $('.rugas', dr).animate([{ opacity: 0 }, { opacity: 1 }], { duration: 460, easing: 'ease-out', fill: 'forwards' });
+    return dr.animate([
+      { clipPath: poly(A), transform: 'none', easing: 'cubic-bezier(.3, 0, .2, 1)' },
+      { clipPath: poly(M), transform: 'scale(.82) rotate(-6deg)', offset: .28, easing: 'cubic-bezier(.4, 0, .2, 1)' },
+      { clipPath: poly(B), transform: 'scale(.52) rotate(9deg)', offset: .56, easing: 'cubic-bezier(.2, 0, .3, 1)' },
+      { clipPath: poly(B), transform: 'translate(-6px, -16px) scale(.53) rotate(14deg)', offset: .68, easing: 'cubic-bezier(.55, 0, .9, .4)' },
+      { clipPath: poly(B), transform: `translate(-40px, ${innerHeight}px) scale(.5) rotate(160deg)` },
+    ], { duration: 1050, fill: 'forwards' }).finished;
+  },
+  puxa(dr) {
+    const d = dr.getBoundingClientRect().right + 80;
+    som(...SOM.tirar);
+    return dr.animate([
+      { translate: '0 0', rotate: '0deg', easing: 'cubic-bezier(.3, 0, .4, 1)' },
+      { translate: '12px -3px', rotate: '.6deg', offset: .16, easing: 'cubic-bezier(.5, 0, .8, .6)' },
+      { translate: `${-d}px 8px`, rotate: '-5deg' },
+    ], { duration: 620, fill: 'forwards' }).finished;
+  },
+};
+async function carimbar(dr, texto, tinta) {
+  ui.layerSujo = false; dr.inert = true;
+  dr.insertAdjacentHTML('beforeend', `<div class="selo-wrap" aria-hidden="true" style="--accent:${tinta}"><div class="selo">${esc(texto)}</div>${CARIMBADOR}</div>`);
+  dr.animate([{ scale: 1 }, { scale: .985, offset: .3 }, { scale: 1.006, offset: .6 }, { scale: 1 }], { delay: 280, duration: 150, easing: 'ease-out' });
+  setTimeout(() => som(...SOM.carimbo), 270);
+  await espera(940);
+  return !!dr.closest('#layer');
+}
+const PAT_IR = { saida: ['Saída', 'var(--info)', 'puxa'], descarte: ['Descarte', 'var(--danger)', 'amassa'], entrada: ['Devolução', 'var(--accent)', 'dobra'], transferencia: ['Transferido', 'var(--violet)', 'dobra'] };
+async function patIr(tipo) {
+  const dr = $('#layer .drawer'), href = `#/lancar?tipo=${tipo}&b=${ui.editPat}`, [texto, tinta, saida] = PAT_IR[tipo];
+  if (dr && !parado()) {
+    if (dr.inert) return;
+    if (!await carimbar(dr, texto, tinta)) return;
+    closeLayer(saida);
+  }
+  location.hash = href;
 }
 function confirmDialog(title, msg, okLabel, onOk, danger = false) {
   ui.onConfirm = onOk;
@@ -999,26 +1396,55 @@ function viewPainel() {
 function viewItens() {
   if (ui.query.get('st') === 'alerta') ui.itf.st = 'alerta';
   return pageHead('Itens', 'Materiais controlados por quantidade (estoque inicial zerado).',
-    `<button class="btn" data-act="prod-new" data-tipo="item">${icon('plus')}Novo item</button><a class="btn primary" href="#/lancar?tipo=entrada">${icon('in')}Entrada</a>`) +
+    `<button class="btn" data-act="prod-new" data-tipo="item">${icon('plus')}Novo item</button>${itAcao('saida')}${itAcao('entrada')}`) +
     `<section class="card"><div class="toolbar">
       <div class="search">${icon('search')}<label class="sr" for="itq">Buscar item</label><input id="itq" class="input" type="search" placeholder="Buscar item" value="${esc(ui.itf.q)}" data-in="itf" data-k="q"></div>
       <label class="sr" for="its">Situação</label>
       <select id="its" class="input" data-ch="itf" data-k="st"><option value="">Todas as situações</option><option value="alerta" ${ui.itf.st === 'alerta' ? 'selected' : ''}>Com alerta</option><option value="ok" ${ui.itf.st === 'ok' ? 'selected' : ''}>Normal</option></select>
       <span class="count" id="itc"></span>
-    </div><div class="tbl-wrap" id="itt">${itensTable()}</div></section>`;
+    </div><div class="tbl-wrap" id="itt">${itensTable()}</div><div class="sel-dock" id="itbar">${itensBar()}</div></section>`;
 }
+function refreshItens() { $('#itt').innerHTML = itensTable(); $('#itbar').innerHTML = itensBar(); $$('.page-head [data-act=it-lancar]').forEach(b => { b.outerHTML = itAcao(b.dataset.tipo); }); }
+function itAcao(tipo) { const n = ui.itSel.length; return `<button class="btn${tipo === 'entrada' ? ' primary' : ''}" data-act="it-lancar" data-tipo="${tipo}">${icon(tipo === 'entrada' ? 'in' : 'out')}${TIPOS[tipo].label}${n ? ` <span class="n-sel">${n}</span>` : ''}</button>`; }
+function selBox(on, label) { return `<button type="button" class="selbox" role="checkbox" aria-checked="${on}" aria-label="${esc(label)}">${icon('check')}</button>`; }
 function itensTable() {
   const q = norm(ui.itf.q);
   const rows = db.produtos.filter(p => p.tipo === 'item')
     .filter(p => !q || hit(norm(prodLabel(p)), q))
     .filter(p => !ui.itf.st || (ui.itf.st === 'alerta' ? (p.min > 0 && stockState(p) !== 'ok') : stockState(p) === 'ok'))
     .sort((a, b) => prodLabel(a).localeCompare(prodLabel(b), 'pt'));
+  ui.itSel = ui.itSel.filter(id => prodById(id));
+  ui.itVis = rows.map(p => p.id);
   setTimeout(() => { const c = $('#itc'); if (c) c.textContent = plural(rows.length, 'item', 'itens'); });
   if (!rows.length) return `<div class="empty"><b>Nenhum item encontrado</b>Ajuste a busca ou cadastre um novo item.</div>`;
-  return `<table class="t"><thead><tr><th>Item</th><th>Medida</th><th class="n">Estoque</th><th class="n">Mínimo</th><th>Situação</th><th class="n">Ações</th></tr></thead><tbody>
-    ${rows.map(p => `<tr class="click" data-act="prod-open" data-id="${p.id}"><td><b>${esc(p.nome)}</b>${p.modelo ? ` <span style="color:var(--text-3)">· ${esc(p.modelo)}</span>` : ''}</td><td class="muted">${esc(p.un)}</td><td class="n"><b>${p.qtd}</b></td><td class="n muted">${p.min || '—'}</td><td>${p.min > 0 || p.qtd <= 0 ? stockBadge(p) : '<span class="badge b-ok">Normal</span>'}</td>
+  const sel = new Set(ui.itSel), nSel = rows.filter(p => sel.has(p.id)).length;
+  const todos = nSel === rows.length ? 'true' : nSel ? 'mixed' : 'false';
+  return `<table class="t"><thead><tr><th class="sel" data-act="it-all">${selBox(todos, 'Selecionar todos os itens da lista')}</th><th>Item</th><th>Medida</th><th class="n">Estoque</th><th class="n">Mínimo</th><th>Situação</th><th class="n">Ações</th></tr></thead><tbody>
+    ${rows.map(p => `<tr class="click${sel.has(p.id) ? ' sel-on' : ''}" data-act="prod-open" data-id="${p.id}"><td class="sel" data-act="it-sel" data-id="${p.id}">${selBox(sel.has(p.id), 'Selecionar ' + prodLabel(p))}</td><td><b>${esc(p.nome)}</b>${p.modelo ? ` <span style="color:var(--text-3)">· ${esc(p.modelo)}</span>` : ''}</td><td class="muted">${esc(p.un)}</td><td class="n"><b>${p.qtd}</b></td><td class="n muted">${p.min || '—'}</td><td>${p.min > 0 || p.qtd <= 0 ? stockBadge(p) : '<span class="badge b-ok">Normal</span>'}</td>
       <td class="n" style="white-space:nowrap"><a class="btn sm ghost" href="#/lancar?tipo=entrada&p=${p.id}" aria-label="Entrada de ${esc(prodLabel(p))}">${icon('in')}Entrada</a><a class="btn sm ghost" href="#/lancar?tipo=saida&p=${p.id}" aria-label="Saída de ${esc(prodLabel(p))}">${icon('out')}Saída</a></td></tr>`).join('')}
   </tbody></table>`;
+}
+function itensBar() {
+  const n = ui.itSel.length;
+  if (!n) return '';
+  const vis = new Set(ui.itVis || []), fora = ui.itSel.filter(id => !vis.has(id)).length;
+  return `<div class="selbar" role="region" aria-label="Itens selecionados"><span class="sb-n"><b>${n}</b> ${n === 1 ? 'item selecionado' : 'itens selecionados'}${fora ? ` <span class="sub">· ${fora} fora da busca</span>` : ''}</span>
+    <button class="btn sm ghost" data-act="it-limpar">${icon('x')}Limpar</button><button class="btn sm" data-act="it-lancar" data-tipo="saida">${icon('out')}Saída</button><button class="btn sm primary" data-act="it-lancar" data-tipo="entrada">${icon('in')}Entrada</button></div>`;
+}
+function itMarca(id, faixa) {
+  const s = new Set(ui.itSel), vis = ui.itVis || [], on = !s.has(id);
+  const a = vis.indexOf(ui.itUlt), b = vis.indexOf(id);
+  (faixa && a >= 0 && b >= 0 ? vis.slice(Math.min(a, b), Math.max(a, b) + 1) : [id]).forEach(x => on ? s.add(x) : s.delete(x));
+  ui.itUlt = id;
+  itSelecao([...s]);
+}
+function itSelecao(ids) {
+  const antes = ui.itSel.length, foco = document.activeElement && document.activeElement.closest('td.sel, th.sel');
+  ui.itSel = ids;
+  refreshItens();
+  if (foco) { const f = $(foco.dataset.id ? `#itt td.sel[data-id="${foco.dataset.id}"] .selbox` : '#itt th.sel .selbox'); if (f) f.focus(); }
+  const bar = $('#itbar .selbar');
+  if (!antes && bar && !parado()) bar.animate([{ opacity: 0, transform: 'translateY(14px)' }, { opacity: 1, transform: 'none' }], { duration: 240, easing: 'cubic-bezier(.2, .8, .2, 1)' });
 }
 function prodModal(p, tipo) {
   const isNew = !p;
@@ -1209,8 +1635,7 @@ function patDrawer(id) {
   ui.editPat = id;
   const hist = patHistory(id);
   const ativo = p.status === 'ativo';
-  const go = t => `#/lancar?tipo=${t}&b=${p.id}`;
-  openLayer(`<aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="dr-t">
+  openLayer(`<aside class="drawer papel" role="dialog" aria-modal="true" aria-labelledby="dr-t">
     <header><div><h2 id="dr-t">${p.num ? 'Patrimônio ' + esc(p.num) : esc(patIdent(p))}</h2><span style="color:var(--text-3);font-size:13px">${esc(patDesc(p))}</span></div><kbd class="esc" aria-hidden="true">Esc</kbd><button class="btn icon sm ghost" data-act="close-layer" aria-label="Fechar">${icon('x')}</button></header>
     <div class="content">
       ${p.conferir ? `<div class="banner" style="margin:0">${icon('alert')}<div>${esc(p.conferir)}</div><div class="actions"><button class="btn sm" data-act="pat-ok">${icon('check')}Conferido</button></div></div>` : ''}
@@ -1222,8 +1647,8 @@ function patDrawer(id) {
         ${p.locadora ? `<dt>Nº locadora</dt><dd>${esc(p.locadora)}</dd>` : ''}
       </dl>
       ${ativo ? `<div style="display:flex;gap:8px;flex-wrap:wrap">
-        ${p.un === ESTOQUE ? `<a class="btn sm" href="${go('saida')}">${icon('out')}Saída</a>` : `<a class="btn sm" href="${go('entrada')}">${icon('in')}Devolver ao estoque</a><a class="btn sm" href="${go('transferencia')}">${icon('transfer')}Transferir</a>`}
-        <a class="btn sm danger" href="${go('descarte')}">${icon('trash')}Descartar</a></div>` : ''}
+        ${p.un === ESTOQUE ? `<button class="btn sm" data-act="pat-ir" data-tipo="saida">${icon('out')}Saída</button>` : `<button class="btn sm" data-act="pat-ir" data-tipo="entrada">${icon('in')}Devolver ao estoque</button><button class="btn sm" data-act="pat-ir" data-tipo="transferencia">${icon('transfer')}Transferir</button>`}
+        <button class="btn sm danger" data-act="pat-ir" data-tipo="descarte">${icon('trash')}Descartar</button></div>` : ''}
       <div><p class="sect-title">Fotos</p><div class="fotos" id="pt-fotos">${fotosHtml(p)}</div>
         <input type="file" id="pt-foto-in" accept="image/*" multiple hidden data-ch="pat-foto"></div>
       <div><p class="sect-title">Editar cadastro</p><div class="form-stack">${patForm(p)}
@@ -1236,6 +1661,7 @@ function patDrawer(id) {
       <div><p class="sect-title">Histórico</p>${hist.length ? `<ul class="timeline">${hist.map(pr => `<li>${tipoBadge(pr.tipo)} Protocolo <a href="#/movimentacoes?p=${pr.num}">Nº ${pr.num}</a><span class="sub">${fmtD(pr.data)} · ${esc(protoDest(pr))}${pr.pessoa ? ' · ' + esc(pr.pessoa) : ''}</span></li>`).join('')}</ul>` : '<p style="margin:0;color:var(--text-3)">Sem movimentações registradas no programa. Local vindo da planilha.</p>'}</div>
     </div></aside>`);
   fillFotos($('#pt-fotos'));
+  if (!$('#layer').classList.contains('swap')) desdobrar($('#layer .drawer'));
 }
 function fotosHtml(p) {
   const fs = p.fotos || [];
@@ -1277,15 +1703,19 @@ function fotoRm(t) {
   commit(); fotoFechar(); refreshFotos(p); fotosGc(); toast('Foto removida.');
 }
 function setorOpts(un, sel) { return `<option value="">—</option>` + setoresDe(un).map(s => `<option ${sel === s ? 'selected' : ''}>${esc(s)}</option>`).join(''); }
-function patSave() {
+async function patSave() {
   const p = patById(ui.editPat);
+  if (!p || $('#layer .drawer[inert]')) return;
   const r = readPatForm(p.id);
   if (r.err) return showFormErr(r);
   Object.assign(p, r.data);
   const un = $('#pt-un'); if (un) { p.un = un.value; p.setor = $('#pt-setor').value; }
   if (p.conferir && p.cat === 'Impressora' && p.posse && /própria ou locada/.test(p.conferir)) p.conferir = '';
   if (/fora do padrão/.test(p.conferir) && (p.num || p.sp)) p.conferir = p.num ? '' : p.conferir;
-  commit(); closeLayer(); rerenderKeep(); toast('Patrimônio atualizado.');
+  commit(); rerenderKeep();
+  const dr = $('#layer .drawer');
+  if (dr && !parado()) { if (await carimbar(dr, 'Salvo', 'var(--accent)')) closeLayer(); return; }
+  closeLayer(); toast('Patrimônio atualizado.');
 }
 function patNewModal(aba, lote = false, base = null) {
   const cats = catsDaAba(aba);
@@ -1411,7 +1841,7 @@ function viewLancar() {
   if (ui.lancModo === 'texto') return pageHead('Lançar movimentação', 'Escreva uma movimentação por linha. A prévia mostra como cada linha será registrada antes de gravar.', modos) + viewLancarTexto();
   if (q.has('tipo') && TIPOS[q.get('tipo')]) setTipo(q.get('tipo'), true);
   if (q.has('origem')) ui.draft.origem = q.get('origem');
-  if (q.has('p')) addItem('p', q.get('p'), true);
+  q.getAll('p').forEach(id => addItem('p', id, true));
   if (q.has('b')) addItem('b', q.get('b'), true);
   if ([...q.keys()].length) history.replaceState(null, '', '#/lancar');
   ui.query = new URLSearchParams();
@@ -1420,9 +1850,11 @@ function viewLancar() {
   const destUnits = unitNames().filter(u => u !== ESTOQUE);
   return pageHead('Lançar movimentação', 'Um protocolo pode ter vários itens. O estoque e o local dos patrimônios são atualizados ao registrar.', modos) +
     `<div class="seg lg" role="group" aria-label="Tipo de movimentação" style="margin-bottom:16px">${Object.entries(TIPOS).map(([k, t]) => `<button class="${t.cls}" data-act="tipo" data-tipo="${k}" aria-pressed="${d.tipo === k}">${icon(t.icon)}${t.label}</button>`).join('')}</div>
-    <div class="lanc">
-      <section class="card"><header><span class="ico i32 ${T.cls}">${icon(T.icon)}</span><h2>Protocolo Nº ${db.config.protoNext}</h2></header>
-        <div class="body form-stack">
+    <div class="maq" style="--carro:${ui.carro || 0}">
+      <div class="folha papel ${T.cls}">
+        <header class="fl-cab"><span class="fl-org">SASC · Tecnologia da Informação</span><h2>Protocolo</h2><span class="badge ${T.badge} fl-tipo">${icon(T.icon)}${T.label}</span><span class="fl-num">Nº <b>${db.config.protoNext}</b></span></header>
+        <div class="lanc">
+        <section class="fl-campos form-stack" aria-label="Dados do protocolo">
           <label class="f">Data<input class="input" type="date" value="${d.data}" data-in="draft" data-k="data" max="${today()}"></label>
           ${d.tipo === 'entrada' ? `<label class="f">Origem<select class="input" data-ch="draft" data-k="origem" data-rerender="1">${ORIGENS.map(o => `<option ${d.origem === o ? 'selected' : ''}>${o}</option>`).join('')}</select></label>` : ''}
           ${needDest || (d.tipo === 'entrada' && d.origem === 'Devolução de unidade') ? `
@@ -1433,24 +1865,41 @@ function viewLancar() {
           ${d.tipo !== 'descarte' ? `<label class="f">${d.tipo === 'entrada' ? 'Entregue por' : 'Recebido por'}<span class="hint">Nome da pessoa</span><input class="input" value="${esc(d.pessoa)}" data-in="draft" data-k="pessoa" autocomplete="off" list="dl-pessoas"></label>` : ''}
           <datalist id="dl-pessoas">${[...new Set(db.protocolos.map(p => p.pessoa).filter(Boolean))].slice(-200).map(n => `<option>${esc(n)}</option>`).join('')}</datalist>
           <label class="f">${d.tipo === 'descarte' ? 'Motivo do descarte' : 'Observação'}<span class="hint">Chamado, defeito, nota fiscal…</span><textarea class="input" rows="3" data-in="draft" data-k="obs">${esc(d.obs)}</textarea></label>
-        </div>
-      </section>
-      <section class="card">
-        <header><h2>Itens do protocolo</h2><span class="badge b-neutral" style="margin-left:auto">${plural(d.itens.length, 'item', 'itens')}</span></header>
+        </section>
+        <section class="fl-itens" aria-labelledby="fl-it-t">
+        <h3 class="sect-title" id="fl-it-t">Itens do protocolo <span class="badge b-neutral">${plural(d.itens.length, 'item', 'itens')}</span></h3>
         <div class="adder">
           <div class="search">${icon('search')}<label class="sr" for="add-q">Adicionar item</label><input id="add-q" class="input" type="search" autocomplete="off" placeholder="${d.tipo === 'transferencia' ? 'Digite o nº do patrimônio ou marca' : 'Digite o nº do patrimônio, item ou toner'}" aria-controls="cands" aria-autocomplete="list"></div>
           <div class="hint"><span><kbd>Enter</kbd> adiciona o primeiro resultado · leitor de código de barras funciona aqui</span>${d.tipo === 'entrada' ? `<button class="btn sm" data-act="novo-pat" style="margin-left:auto">${icon('plus')}Novo patrimônio</button>` : ''}</div>
           <div class="cands" id="cands" role="listbox" hidden></div>
         </div>
         ${d.itens.length ? `<ul class="list itens">${d.itens.map((it, i) => draftItemRow(it, i)).join('')}</ul>` : `<div class="empty"><b>Nenhum item adicionado</b>${esc(T.hint)}. Busque acima para adicionar itens, toners ou patrimônios.</div>`}
-        <div class="lanc-foot">
-          <span class="sum">${draftSummary()}</span>
-          ${d.itens.length ? `<button class="btn ghost" data-act="draft-clear">Limpar</button>` : ''}
-          <button class="btn primary" data-act="registrar" ${d.itens.length ? '' : 'disabled'}>${icon('check')}Registrar ${T.label.toLowerCase()}</button>
+        </section>
         </div>
-        <p class="err-msg" id="lanc-err" role="alert" style="padding:0 16px 12px;margin:0"></p>
-      </section>
+      </div>
+      ${maqBase(`<span class="sum">${draftSummary()}</span>`, `${d.itens.length ? `<button class="btn ghost" data-act="draft-clear">Limpar</button>` : ''}
+              <button class="btn primary" data-act="registrar" ${d.itens.length ? '' : 'disabled'}>${icon('check')}Registrar ${T.label.toLowerCase()}</button>`)}
     </div>`;
+}
+function maqBase(sum, botoes) {
+  return `<div class="maq-base">
+        <div class="carro" aria-hidden="true"><i class="ponta e"></i><i class="ponta d"></i><div class="rolo"></div><i class="botao e"></i><i class="botao d"></i><i class="alavanca"></i><i class="solta"></i><div class="regua">${[0, 10, 20, 30, 40, 50, 60, 70, 80].map(n => `<span>${n}</span>`).join('')}</div></div>
+        <i class="martelo" aria-hidden="true"></i><i class="fita" aria-hidden="true"></i><i class="ponteiro" aria-hidden="true"></i>
+        <div class="corpo">
+          <div class="deck" aria-hidden="true"><i class="fita-v e"></i><i class="fita-v d"></i><i class="fita-v c"></i><i class="suporte"></i><i class="carretel e"></i><i class="carretel d"></i><i class="segmento"></i><span class="sino"></span></div>
+          <div class="frente">
+            <span class="placa" aria-hidden="true">Almoxarifado · TI</span>
+            <div class="fr-info">
+              <button class="btn icon sm ghost som-bt" data-act="som" aria-pressed="${!ui.mudo}" aria-label="${ui.mudo ? 'Ligar' : 'Desligar'} som da máquina" title="Som da máquina">${icon(ui.mudo ? 'mudo' : 'som')}</button>
+              ${sum}
+            </div>
+            <div class="lanc-foot" id="maq-bts">
+              ${botoes}
+            </div>
+            <p class="err-msg" id="lanc-err" role="alert"></p>
+          </div>
+        </div>
+      </div>`;
 }
 function draftSummary() {
   const it = ui.draft.itens;
@@ -1545,6 +1994,7 @@ function showCands() {
   box.innerHTML = list.map((c, i) => `<button role="option" class="${i === 0 ? 'sel' : ''}" data-act="cand" data-k="${c.k}" data-id="${c.id}">${c.html}<span class="sub">${c.sub}</span></button>`).join('');
 }
 function afterLancar() {
+  somPronto();
   const inp = $('#add-q'); if (!inp) return;
   inp.addEventListener('focus', showCands);
   inp.addEventListener('input', showCands);
@@ -1557,7 +2007,7 @@ function afterLancar() {
     } else if (e.key === 'Enter') {
       e.preventDefault();
       const c = ui.cands && ui.cands[ui.candSel];
-      if (c) { addItem(c.k, c.id); renderLancarKeepFocus(); }
+      if (c) adicionar(c.k, c.id);
       else { const nb = $('#cands [data-act="novo-pat"]'); if (nb) nb.click(); }
     } else if (e.key === 'Escape') { box.hidden = true; }
   });
@@ -1588,7 +2038,7 @@ function novoPatSave(more) {
     Object.entries({ '#pt-cat': keep.cat, '#pt-posse': keep.posse, '#pt-marca': keep.marca, '#pt-modelo': keep.modelo }).forEach(([s, v]) => { $(s).value = v; });
     $('#pt-num').focus();
     toast('Adicionado. Informe o próximo.');
-  } else { closeLayer(); renderLancarKeepFocus(); }
+  } else { closeLayer(); renderLancarKeepFocus(); tecla(true, $$('.folha .itens > li').at(-1)); }
 }
 function validarDraft(d) {
   if (!d.itens.length) return 'Adicione pelo menos um item.';
@@ -1605,27 +2055,33 @@ function validarDraft(d) {
   for (const it of d.itens) if (it.k === 'b') { const p = patById(it.id); if (!allowedInDraft('b', p, d.tipo)) return `${patIdent(p)} não pode entrar neste protocolo (local mudou).`; }
   return '';
 }
-function registrar() {
+async function registrar() {
   const d = ui.draft, m = validarDraft(d);
   if (m) {
     if (!d.un && $('#d-un')) $('#d-un').focus();
-    $('#lanc-err').textContent = m; return toast(m, true);
+    $('#lanc-err').textContent = m; trava(); return toast(m, true);
   }
   const pr = gravarDraft(d);
   commit();
   ui.draft = newDraft(d.tipo);
-  render();
-  modalRegistrados([pr]);
+  await cerimonia([pr]);
 }
-function modalRegistrados(prs) {
+const SELO_TIPO = { entrada: ['Recebido', 'Recebidos', 'var(--accent)'], saida: ['Entregue', 'Entregues', 'var(--info)'], transferencia: ['Transferido', 'Transferidos', 'var(--violet)'], descarte: ['Descartado', 'Descartados', 'var(--danger)'] };
+function modalRegistrados(prs, { envelope } = {}) {
   ui.lastProto = prs[prs.length - 1].id;
+  const [um, varios, tinta] = (prs.every(p => p.tipo === prs[0].tipo) && SELO_TIPO[prs[0].tipo]) || ['Registrado', 'Registrados', ''];
+  const op = { selo: prs.length === 1 ? um : varios, tinta, cls: envelope ? 'envelopado' : '' };
+  if (!parado()) setTimeout(() => som(...SOM.carimbo), envelope ? 1010 : 570);
   if (prs.length === 1) {
     const pr = prs[0];
-    return modal(`Protocolo Nº ${pr.num} registrado`, `<p style="margin:0">${tipoBadge(pr.tipo)} ${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</p><p style="margin:0;color:var(--text-2)">Estoque e locais já foram atualizados.</p>`,
-      `<a class="btn" href="#/movimentacoes?p=${pr.num}">Ver protocolo</a><button class="btn" data-act="close-layer">Novo lançamento</button><button class="btn primary" data-act="print" data-id="${pr.id}" autofocus>${icon('print')}Imprimir comprovante</button>`, { selo: 'Registrado' });
+    return modal(`Protocolo Nº ${pr.num} registrado`, `<div class="reg-resumo"><p>${tipoBadge(pr.tipo)} ${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</p><p style="color:var(--text-2)">Estoque e locais já foram atualizados.</p></div>${listaRegistrados(pr)}`,
+      `<a class="btn" href="#/movimentacoes?p=${pr.num}">Ver protocolo</a><button class="btn" data-act="close-layer">Novo lançamento</button><button class="btn primary" data-act="print" data-id="${pr.id}" autofocus>${icon('print')}Imprimir comprovante</button>`, op);
   }
-  modal(`${prs.length} protocolos registrados`, `<ul class="list" style="margin:-8px -18px 0">${prs.map(pr => `<li><span class="grow">${tipoBadge(pr.tipo)} <b>Nº ${pr.num}</b><span class="sub">${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</span></span><button class="btn sm" data-act="print" data-id="${pr.id}">${icon('print')}Imprimir</button></li>`).join('')}</ul><p style="margin:0;color:var(--text-2)">Estoque e locais já foram atualizados.</p>`,
-    `<a class="btn" href="#/movimentacoes">Ver movimentações</a><button class="btn primary" data-act="close-layer" autofocus>Novo lançamento</button>`, { selo: 'Registrados' });
+  modal(`${prs.length} protocolos registrados`, `<div class="reg-resumo"><p style="color:var(--text-2)">Estoque e locais já foram atualizados.</p></div><ul class="list" style="margin:0 -18px">${prs.map(pr => `<li><span class="grow">${tipoBadge(pr.tipo)} <b>Nº ${pr.num}</b><span class="sub">${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</span></span><button class="btn sm" data-act="print" data-id="${pr.id}">${icon('print')}Imprimir</button></li>`).join('')}</ul>`,
+    `<a class="btn" href="#/movimentacoes">Ver movimentações</a><button class="btn primary" data-act="close-layer" autofocus>Novo lançamento</button>`, op);
+}
+function listaRegistrados(pr) {
+  return `<ol class="fl-lista" aria-label="Itens registrados">${pr.itens.map((it, i) => `<li style="--i:${Math.min(i, 8)}">${it.k === 'p' ? `<b>${it.qtd}×</b><span>${esc(it.label)}</span>` : `<b>${esc(it.ident || '')}</b><span>${esc(it.label)}${it.novo ? '<span class="badge b-in">Novo</span>' : ''}</span>`}</li>`).join('')}</ol>`;
 }
 function gravarDraft(d) {
   const pr ={ id: uid(), num: db.config.protoNext, tipo: d.tipo, data: d.data, un: d.un, setor: d.setor, pessoa: d.pessoa.trim(), origem: d.tipo === 'entrada' ? d.origem : '', obs: d.obs.trim(), criado: new Date().toISOString(), itens: [] };
@@ -1650,6 +2106,358 @@ function gravarDraft(d) {
   db.protocolos.push(pr);
   db.config.protoNext++;
   return pr;
+}
+
+/* ---------- máquina de escrever ---------- */
+const CARRO_MAX = 10, OUT = 'cubic-bezier(.16, 1, .3, 1)';
+const parado = () => matchMedia('(prefers-reduced-motion: reduce)').matches;
+const passo = maq => parseFloat(getComputedStyle(maq).getPropertyValue('--passo')) || 2;
+const espera = ms => new Promise(r => setTimeout(r, ms));
+const SOM = {
+  teclas: [0.128, 0.467, 1.07, 2.146, 3.497, 4.159, 4.416, 4.659, 6.036, 6.375, 6.63, 6.817, 7.236, 7.466, 7.712, 8.36, 11.83, 12.064, 12.615, 13.278, 13.533, 13.777],
+  linha: ['maquina', 13.9, 1.05, 1.4], tirar: ['papel', 19.4, 1.15, 6], colocar: ['papel', 15.2, .8, 4],
+  abrir: ['folha', .3, .9, .8], fechar: ['folha', 3.8, .95, 1.45], amassar: ['papel', 6, 1.3, 5.5], carimbo: ['maquina', 2.146, .16, 1, .55],
+  risca: ['maquina', 6.036, .09, .8, 1.9], acende: ['folha', .3, .6, .55, .6], queima: ['fogo', 3.25, 2.5, .45], tampa: ['maquina', 4.159, .1, .9, 1.4],
+};
+let somCtx = null, somProm = null;
+const somBufs = {};
+function somPronto() {
+  if (somProm) return somProm;
+  try { somCtx = new AudioContext(); } catch { return (somProm = Promise.resolve()); }
+  somProm = Promise.all([['maquina', '#som'], ['papel', '#som-papel'], ['folha', '#som-folha'], ['fogo', '#som-fogo']].map(([k, sel]) => {
+    const b64 = (($(sel) || {}).textContent || '').trim();
+    if (!/^[A-Za-z0-9+/=]{100,}$/.test(b64)) return null;
+    return fetch('data:audio/mpeg;base64,' + b64).then(r => r.arrayBuffer())
+      .catch(() => Uint8Array.from(atob(b64), c => c.charCodeAt(0)).buffer)
+      .then(a => somCtx.decodeAudioData(a)).then(b => { somBufs[k] = b; }, () => {});
+  }));
+  return somProm;
+}
+function som(fonte, ini, dur, ganho, taxa = 1) {
+  if (ui.mudo) return;
+  const buf = somBufs[fonte];
+  if (!buf) { somPronto(); return; }
+  if (somCtx.state === 'suspended') somCtx.resume();
+  const s = somCtx.createBufferSource(), g = somCtx.createGain(), t = somCtx.currentTime, fim = t + dur / taxa;
+  s.buffer = buf; s.playbackRate.value = taxa;
+  g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(ganho, t + .004); g.gain.setValueAtTime(ganho, fim - .06); g.gain.linearRampToValueAtTime(0, fim);
+  s.connect(g).connect(somCtx.destination); s.start(t, ini, dur);
+}
+const somTecla = forte => som('maquina', SOM.teclas[Math.floor(Math.random() * SOM.teclas.length)], .14, forte ? .9 : .5, .95 + Math.random() * .1);
+function adicionar(k, id) {
+  const antes = JSON.stringify(ui.draft.itens);
+  addItem(k, id); renderLancarKeepFocus();
+  if (JSON.stringify(ui.draft.itens) === antes) return trava();
+  tecla(true, $$('.folha .itens > li')[ui.draft.itens.findIndex(x => x.k === k && x.id === id)]);
+}
+function datilografa(e) {
+  const el = e.target;
+  if (!el.closest || !el.closest('.folha') || el.type === 'file') return;
+  const texto = el.tagName === 'TEXTAREA' || /^(text|search|number)$/.test(el.type);
+  if (e.type === 'input' && e.inputType === 'insertLineBreak') novaLinha();
+  else if (e.type === 'input' && texto) tecla(false);
+  else if (e.type === 'change' && !texto) tecla(true, el.isConnected ? el : $(`.folha [data-k="${el.dataset.k}"]`));
+}
+function tecla(forte = true, alvo) {
+  const maq = $('.maq'); if (!maq) return;
+  somTecla(forte);
+  if (parado()) return;
+  $$('.carretel', maq).forEach(r =>r.animate([{ '--giro': '0deg' }, { '--giro': '60deg' }], { duration: forte ? 360 : 220, easing: OUT }));
+  $('.fita', maq).animate([{ translate: '0 0' }, { translate: '0 -5px', offset: .35 }, { translate: '0 0' }], { duration: 130, easing: 'ease-out' });
+  $('.martelo', maq).animate([{ translate: '0 0', opacity: 0 }, { translate: '0 -17px', opacity: 1, offset: .4 }, { translate: '0 0', opacity: 0 }], { duration: 130, easing: 'ease-out' });
+  $('.corpo', maq).animate([{ translate: '0 0' }, { translate: `0 ${forte ? 1.5 : .75}px`, offset: .3 }, { translate: '0 0' }], { duration: forte ? 220 : 130, easing: OUT });
+  if (forte || ui.lancModo === 'texto') {
+    const de = ui.carro || 0, para = Math.min(de + 1, CARRO_MAX), p = passo(maq);
+    ui.carro = para; maq.style.setProperty('--carro', para);
+    const kf = [{ translate: `${-de * p}px 0` }, { translate: `${-para * p}px ${forte ? 2 : .75}px`, offset: .3 }, { translate: `${-para * p}px 0` }];
+    $$('.folha, .carro', maq).forEach(el => el.animate(kf, { duration: 230, easing: OUT }));
+    if (para === CARRO_MAX && de < CARRO_MAX) sino(maq);
+  }
+  alvo && alvo.animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 280, easing: 'steps(14, end)' });
+}
+function sino(maq) { const s = $('.sino', maq); s.classList.remove('ding'); void s.offsetWidth; s.classList.add('ding'); }
+function girar(maq, voltas, ms) {
+  $$('.botao', maq).forEach(b => b.animate([{ backgroundPositionY: '0px, 0px' }, { backgroundPositionY: `0px, ${voltas * 8}px` }], { duration: ms, easing: OUT }));
+  $('.rolo', maq).animate([{ backgroundPositionY: '0px, 0px' }, { backgroundPositionY: `${voltas * 14}px, 0px` }], { duration: ms, easing: OUT });
+}
+function alavanca(maq) { $('.alavanca', maq).animate([{ rotate: '0deg' }, { rotate: '-24deg', offset: .35 }, { rotate: '0deg' }], { duration: 360, easing: OUT }); }
+function retorno(de) {
+  const maq = $('.maq'); if (!maq || parado()) return;
+  const x = -(de || 0) * passo(maq);
+  if (x) $$('.folha, .carro', maq).forEach(el => el.animate([{ translate: `${x}px 0` }, { translate: '0 0' }], { duration: 320, easing: OUT }));
+  girar(maq, 1, 320); alavanca(maq);
+}
+function novaLinha() {
+  const maq = $('.maq'); if (!maq) return;
+  const de = ui.carro || 0; ui.carro = 0; maq.style.setProperty('--carro', 0);
+  som(...SOM.linha); retorno(de);
+}
+function trava() {
+  const maq = $('.maq'); if (!maq || parado()) return;
+  maq.animate([{ translate: '0 0' }, { translate: '-5px 0' }, { translate: '4px 0' }, { translate: '-2px 0' }, { translate: '0 0' }], { duration: 320, easing: 'ease-out' });
+}
+async function arrancarFolha() {
+  const maq = $('.maq'); ui.carro = 0;
+  if (!maq) return;
+  som(...SOM.linha); som(...SOM.tirar);
+  if (parado()) return;
+  maq.inert = true;
+  const folha = $('.folha', maq), x = -parseFloat(maq.style.getPropertyValue('--carro') || 0) * passo(maq);
+  const sobe = folha.getBoundingClientRect().bottom + 80, o = (duration, easing) => ({ duration, easing, fill: 'forwards' });
+  $('.carro', maq).animate([{ translate: `${x}px 0` }, { translate: '0 0' }], o(300, OUT));
+  folha.animate([{ translate: `${x}px 0` }, { translate: '0 -20px' }], o(300, OUT));
+  girar(maq, 1, 300); alavanca(maq);
+  await espera(300);
+  girar(maq, 6, 480);
+  folha.animate([{ translate: '0 -20px' }, { translate: '0 -10px', offset: .14 }, { translate: `0 ${-sobe * .45}px`, rotate: '-1.5deg', opacity: 1, offset: .7 }, { translate: `0 ${-sobe}px`, rotate: '-4deg', opacity: 0 }], o(440, 'cubic-bezier(.45, 0, .8, .4)'));
+  await espera(420);
+}
+function alimentar() {
+  const maq = $('.maq'); if (!maq) return;
+  som(...SOM.colocar);
+  if (parado()) return;
+  $('.folha', maq).animate([{ clipPath: 'inset(100% 0 0 0)', translate: '0 56px' }, { clipPath: 'inset(0 0 0 0)', translate: '0 0' }], { duration: 460, easing: OUT });
+  girar(maq, 4, 460);
+}
+async function trocarFolha(dir, trocar) {
+  const maq = $('.maq');
+  if (!maq || parado()) return trocar();
+  const SOBE = -78, W = innerWidth, CUIDADO = 'cubic-bezier(.45, 0, .25, 1)', BOIA = 'ease-in-out';
+  const x0 = -(ui.carro || 0) * passo(maq);
+  ui.carro = 0; maq.inert = true; maq.classList.add('voando');
+  $('.carro', maq).animate([{ translate: `${x0}px 0` }, { translate: '0 0' }], { duration: 450, easing: OUT, fill: 'forwards' });
+  girar(maq, 2, 450); som(...SOM.linha); som(...SOM.tirar);
+  $('.folha', maq).animate([
+    { translate: `${x0}px 0`, rotate: '0deg', easing: CUIDADO },
+    { translate: `0 ${SOBE}px`, rotate: '-.8deg', offset: .33, easing: BOIA },
+    { translate: `0 ${SOBE - 6}px`, rotate: '.4deg', offset: .51, easing: BOIA },
+    { translate: `0 ${SOBE}px`, rotate: '-.4deg', opacity: 1, offset: .69, easing: 'cubic-bezier(.55, 0, .85, .35)' },
+    { translate: `${dir * W}px ${SOBE + 12}px`, rotate: `${dir * 7}deg`, opacity: 0 },
+  ], { duration: 1370, fill: 'forwards' });
+  await espera(1370);
+  trocar();
+  const nova = $('.maq'); if (!nova || nova === maq) return;
+  nova.inert = true; nova.classList.add('voando');
+  $('.folha', nova).animate([
+    { translate: `${-dir * W}px ${SOBE + 12}px`, rotate: `${-dir * 7}deg`, opacity: 0, easing: OUT },
+    { translate: `0 ${SOBE}px`, rotate: '.8deg', opacity: 1, offset: .32, easing: BOIA },
+    { translate: `0 ${SOBE - 6}px`, rotate: '-.4deg', offset: .48, easing: BOIA },
+    { translate: `0 ${SOBE}px`, rotate: '0deg', offset: .65, easing: CUIDADO },
+    { translate: '0 2px', offset: .93, easing: 'ease-out' },
+    { translate: '0 0' },
+  ], { duration: 1500 });
+  await espera(980);
+  girar(nova, 3, 520); som(...SOM.colocar);
+  await espera(520);
+  nova.inert = false; nova.classList.remove('voando');
+}
+
+/* ---------- cerimônias do registro (fogo no descarte, envelope na transferência) ---------- */
+const sorte = (a, b) => a + Math.random() * (b - a);
+function fixo(cls, css = '', html = '') {
+  const e = document.createElement('div');
+  e.className = cls; e.style.cssText = css; e.innerHTML = html; e.setAttribute('aria-hidden', 'true');
+  document.body.append(e); return e;
+}
+function particula(cls, x, y, kf, ms, easing = 'ease-out') {
+  const p = fixo(cls, `left:${x.toFixed(1)}px;top:${y.toFixed(1)}px`);
+  p.animate(kf, { duration: ms, easing, fill: 'forwards' });
+  setTimeout(() => p.remove(), ms + 40);
+}
+async function cerimonia(prs) {
+  const maq = $('.maq'), tipo = prs.every(p => p.tipo === prs[0].tipo) ? prs[0].tipo : '';
+  let fim = null;
+  if (maq && !parado() && tipo === 'descarte') await queimarFolha(maq);
+  else if (maq && !parado() && tipo === 'transferencia') fim = await envelopar(maq, prs);
+  else await arrancarFolha();
+  if (ui.route === 'lancar') { render(); alimentar(); }
+  modalRegistrados(prs, { envelope: !!fim });
+  fim && fim();
+}
+const ISQUEIRO = `<svg viewBox="0 0 116 144"><defs><linearGradient id="isq-m" x1="0" x2="1"><stop class="m2" offset="0"/><stop class="m1" offset=".3"/><stop class="m3" offset=".55"/><stop class="m1" offset=".78"/><stop class="m2" offset="1"/></linearGradient><radialGradient id="isq-f" cx=".5" cy=".8" r=".75"><stop class="f1" offset="0"/><stop class="f2" offset=".5"/><stop class="f3" offset="1"/></radialGradient><radialGradient id="isq-h"><stop class="f2" offset="0"/><stop class="f4" offset="1"/></radialGradient></defs><g class="fogo"><ellipse class="halo" cx="28" cy="30" rx="24" ry="28"/><path class="chama" d="M28 46C19 40 19 28 24 20C26 16 27 11 28 6C31 14 37 22 37 32C37 40 34 45 28 46Z"/><path class="miolo" d="M28 45C24 42 24 35 27 29C28 33 31 36 31 40C31 43 30 44.5 28 45Z"/></g><rect class="chamine" x="12" y="44" width="32" height="30" rx="2"/><g class="furos">${[18, 24, 30, 36, 21, 27, 33].map((x, i) => `<circle cx="${x}" cy="${i < 4 ? 54 : 62}" r="1.8"/>`).join('')}</g><g class="roda"><circle class="dente" cx="47" cy="44" r="6.5"/><circle class="eixo" cx="47" cy="44" r="2"/></g><rect class="metal" x="4" y="74" width="56" height="66" rx="6"/><path class="friso" d="M4 81h56M4 133h56M32 96l9 11-9 11-9-11z"/><g class="tampa"><rect class="metal" x="4" y="36" width="56" height="38" rx="6"/><path class="friso" d="M4 67h56"/></g><rect class="dobradica" x="56" y="69" width="8" height="10" rx="2"/></svg>`;
+async function queimarFolha(maq) {
+  ui.carro = 0; maq.inert = true;
+  const folha = $('.folha', maq), fr = folha.getBoundingClientRect(), fundo = Math.min($('.carro', maq).getBoundingClientRect().top, innerHeight);
+  const I = { x: fr.left, y: Math.max(Math.max(fr.top, 0) + 30, Math.min(fundo - 46, innerHeight - 124)) };
+  const isq = await acender(I);
+  isq.animate([{ translate: '0 0' }, { translate: '16px -2px' }], { duration: 220, easing: OUT, fill: 'forwards' });
+  await espera(200);
+  const fogo = incendiar(folha, I, fundo);
+  await espera(460);
+  apagar(isq);
+  await fogo;
+}
+async function acender(I) {
+  const isq = fixo('isqueiro', `left:${I.x - 42}px;top:${I.y - 26}px`, ISQUEIRO), fogo = $('.fogo', isq);
+  isq.animate([
+    { translate: '-90px 200px', rotate: '-22deg', opacity: 0, easing: 'cubic-bezier(.2, .8, .3, 1)' },
+    { translate: '3px -8px', rotate: '2deg', opacity: 1, offset: .72, easing: 'ease-in-out' },
+    { translate: '0 0', rotate: '0deg' }], { duration: 520 });
+  await espera(540);
+  const falhas = Math.random() < .5 ? 1 : 2;
+  for (let i = 0; i <= falhas; i++) {
+    const pega = i === falhas;
+    riscar(isq, pega);
+    if (!pega) {
+      fogo.animate([{ scale: '0 0', opacity: 0 }, { scale: '.6 .45', opacity: .9, offset: .25 }, { scale: '.3 .6', opacity: 0 }], { duration: 220, easing: 'ease-out' });
+      await espera(sorte(330, 450)); continue;
+    }
+    som(...SOM.acende);
+    fogo.animate([{ scale: '0 0', opacity: 0 }, { scale: '1.2 1.35', opacity: 1, offset: .4 }, { scale: '1 1', opacity: 1 }], { duration: 340, easing: OUT, fill: 'forwards' });
+    $('.chama', isq).animate([{ transform: 'scale(1, 1) skewX(0deg)' }, { transform: 'scale(.93, 1.08) skewX(3deg)' }, { transform: 'scale(1.04, .95) skewX(-2deg)' }, { transform: 'scale(.97, 1.05) skewX(1deg)' }], { duration: 260, iterations: Infinity, direction: 'alternate', easing: 'ease-in-out' });
+    await espera(380);
+  }
+  return isq;
+}
+function riscar(isq, pega) {
+  som(...SOM.risca);
+  $('.roda', isq).animate([{ rotate: '0deg' }, { rotate: '-330deg' }], { duration: 260, easing: 'cubic-bezier(.15, .8, .3, 1)' });
+  isq.animate([{ translate: '0 0', rotate: '0deg' }, { translate: '1px 4px', rotate: '-2.5deg', offset: .22 }, { translate: '0 0', rotate: '0deg' }], { duration: 300, easing: OUT });
+  const r = isq.getBoundingClientRect();
+  for (let i = 0; i < (pega ? 4 : 7); i++) {
+    const dx = sorte(-14, 30), dy = sorte(-34, -8);
+    particula('faisca', r.left + 47, r.top + 40, [{ translate: '0 0', opacity: 1 }, { translate: `${dx}px ${dy}px`, opacity: 1, offset: .55 }, { translate: `${dx * 1.3}px ${dy + 18}px`, opacity: 0, scale: .3 }], sorte(220, 380));
+  }
+}
+function apagar(isq) {
+  som(...SOM.tampa);
+  $('.tampa', isq).animate([{ rotate: '108deg' }, { rotate: '0deg' }], { duration: 150, easing: 'cubic-bezier(.5, 0, .9, .5)', fill: 'forwards' });
+  $('.fogo', isq).animate([{ scale: '1 1', opacity: 1 }, { scale: '.2 .1', opacity: 0 }], { delay: 90, duration: 120, easing: 'ease-in', fill: 'forwards' });
+  isq.animate([{ translate: '16px -2px', rotate: '0deg', opacity: 1 }, { translate: '10px 4px', rotate: '-3deg', opacity: 1, offset: .3 }, { translate: '-80px 220px', rotate: '-20deg', opacity: 0 }], { delay: 170, duration: 480, easing: 'cubic-bezier(.5, 0, .8, .4)', fill: 'forwards' });
+  setTimeout(() => isq.remove(), 720);
+}
+function incendiar(folha, I, fundo) {
+  const fr = folha.getBoundingClientRect(), w = fr.width, h = fr.height, x0 = I.x - fr.left, y0 = I.y - fr.top, MS = 2400;
+  const longe = (x, y) => Math.max(Math.hypot(x, y), Math.hypot(w - x, y), Math.hypot(x, h - y), Math.hypot(w - x, h - y));
+  const k0 = longe(x0, y0) + 46, C = [{ x: x0, y: y0, d: 6, k: k0 }];
+  for (let i = 0; i < 14; i++) {
+    const x = sorte(0, w), y = sorte(0, h), k = k0 * sorte(1.25, 2.3);
+    C.push({ x, y, k, d: k * Math.hypot(x - x0, y - y0) / k0 * sorte(.82, 1) });
+  }
+  const R = c => `(var(--q) * ${c.k.toFixed(0)}px - ${c.d.toFixed(0)}px)`;
+  const g = (c, stops) => `radial-gradient(circle at ${c.x.toFixed(0)}px ${c.y.toFixed(0)}px, ${stops(R(c))})`;
+  const mask = C.map(c => g(c, r => `transparent calc${r}, #000 calc(${r} + 1.5px)`)).join(', ');
+  const borda = C.map(c => g(c, r => `transparent calc(${r} - 1px), var(--fogo-claro) calc${r}, var(--fogo) calc(${r} + 2px), var(--fogo-fundo) calc(${r} + 4px), var(--carvao) calc(${r} + 7px), var(--carvao) calc(${r} + 11px), var(--tostado) calc(${r} + 18px), transparent calc(${r} + 54px)`)).join(', ');
+  folha.style.setProperty('--q', 0);
+  Object.assign(folha.style, { webkitMaskImage: mask, webkitMaskComposite: 'source-in', maskImage: mask, maskComposite: 'intersect' });
+  const q = document.createElement('i'); q.className = 'queima'; q.style.backgroundImage = borda; folha.append(q);
+  q.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 160, fill: 'backwards' });
+  folha.animate([{ '--q': 0 }, { '--q': 1 }], { duration: MS, easing: 'cubic-bezier(.45, .1, .7, .75)', fill: 'forwards' });
+  som(...SOM.queima);
+  const luz = fixo('clarao', `left:${I.x + 80}px;top:${I.y - 80}px`);
+  luz.animate([{ opacity: 0 }, { opacity: 1, offset: .2 }, { opacity: .7, offset: .45 }, { opacity: 1, offset: .7 }, { opacity: .8 }], { duration: MS, easing: 'ease-in-out', fill: 'forwards' });
+  const hv = Math.min(h, fundo - fr.top), pontos = [0, .25, .5, .75, 1].flatMap(a => [0, .5, 1].map(b => [a * w, Math.max(0, b * hv)]));
+  const coberto = qv => pontos.every(([x, y]) => C.some(o => Math.hypot(x - o.x, y - o.y) < qv * o.k - o.d));
+  let vivo = true, fim;
+  const acabou = new Promise(r => { fim = r; });
+  const solta = () => {
+    if (!vivo) return;
+    const qv = parseFloat(getComputedStyle(folha).getPropertyValue('--q')) || 0, f = folha.getBoundingClientRect();
+    if (coberto(qv)) { vivo = false; return fim(); }
+    for (let n = 0, ok = 0; n < 30 && ok < 7; n++) {
+      const c = C[Math.floor(Math.random() * C.length)], r = qv * c.k - c.d, a = Math.random() * Math.PI * 2;
+      if (r < 3) continue;
+      const x = c.x + Math.cos(a) * r, y = c.y + Math.sin(a) * r;
+      if (x < 0 || x > w || y < 0 || y > h || f.top + y > fundo || f.top + y < 0) continue;
+      if (C.some(o => o !== c && Math.hypot(x - o.x, y - o.y) < qv * o.k - o.d - 2)) continue;
+      labareda(f.left + x, f.top + y); ok++;
+    }
+    setTimeout(solta, 40);
+  };
+  solta();
+  return Promise.race([acabou, espera(MS)]).then(() => {
+    vivo = false;
+    luz.animate([{ opacity: .8 }, { opacity: 0 }], { duration: 320, easing: 'ease-out', fill: 'forwards' });
+    setTimeout(() => luz.remove(), 360);
+    return espera(300);
+  });
+}
+function labareda(x, y) {
+  const s = sorte(.7, 1.5), sobe = sorte(14, 30) * s;
+  particula('labareda', x, y, [
+    { transform: `scale(${.3 * s}, ${.2 * s})`, opacity: 0 },
+    { transform: `scale(${s}, ${s * sorte(.9, 1.3)})`, opacity: 1, offset: .25 },
+    { transform: `translate(${sorte(-4, 4)}px, ${-sobe}px) scale(${.35 * s}, ${s * 1.1})`, opacity: 0 }], sorte(220, 380));
+  if (Math.random() < .18) particula('brasa', x, y, [{ translate: '0 0', opacity: 1 }, { translate: `${sorte(-30, 30)}px ${sorte(-120, -60)}px`, opacity: 0 }], sorte(700, 1200), 'cubic-bezier(.2, .6, .4, 1)');
+  if (Math.random() < .1) particula('fumaca', x, y - 20, [{ translate: '0 0', scale: .5, opacity: 0 }, { opacity: 1, offset: .25 }, { translate: `${sorte(-20, 20)}px ${sorte(-150, -90)}px`, scale: 2, opacity: 0 }], sorte(1100, 1600));
+}
+function cartaRig(folha, W, H, s) {
+  const t = H / 3, el = (cls, css = '') => { const e = document.createElement('div'); e.className = cls; e.style.cssText = css; return e; };
+  const face = i => {
+    const f = el('cf'), c = folha.cloneNode(true);
+    c.style.cssText = `width:${folha.offsetWidth}px;top:${-i * t}px;transform:scale(${s})`;
+    $$('[id]', c).forEach(e => e.removeAttribute('id'));
+    f.append(c, el('cs')); return f;
+  };
+  const verso = () => { const v = el('cv'); v.append(el('cs')); return v; };
+  const carta = el('carta'), meio = el('cp', `top:${t}px;height:${t}px`), baixo = el('ch baixo', `top:${2 * t}px;height:${t}px`), cima = el('ch cima', `top:0;height:${t}px`);
+  meio.append(face(1)); baixo.append(face(2), verso()); cima.append(face(0), verso());
+  carta.append(meio, baixo, cima);
+  return carta;
+}
+async function envelopar(maq, prs) {
+  const folha = $('.folha', maq), fr = folha.getBoundingClientRect(), x0 = -(ui.carro || 0) * passo(maq);
+  const fundo = Math.min($('.carro', maq).getBoundingClientRect().top, innerHeight);
+  ui.carro = 0; maq.inert = true;
+  const W = Math.min(300, innerWidth * .7), H = W * 1.3, t = H / 3, D = 150, We = W + 28, He = t + 30;
+  const cx = innerWidth / 2, cyL = innerHeight / 2 - 90, cyE = cyL + D, ex = cx - We / 2, ey = cyE - He / 2, Dm = cyE - innerHeight / 2;
+  const pr = prs[0], titulo = prs.length > 1 ? `${prs.length} protocolos` : `Protocolo Nº ${pr.num}`, para = prs.length > 1 ? 'Transferência' : `Para: ${protoDest(pr)}`;
+  const palco = fixo('envio', '', `<div class="env" style="left:${ex}px;top:${ey}px;width:${We}px;height:${He}px"><div class="env-tras"><i class="env-dentro"></i><i class="env-bolso"></i><i class="env-aba"></i><i class="lacre"></i></div><div class="env-frente"><span class="postal">TI</span><i class="marca-postal"></i><b>${esc(titulo)}</b><span>${esc(para)}</span></div></div>`);
+  const env = $('.env', palco), aba = $('.env-aba', palco);
+  const s = W / fr.width, k = 1 / s, lx = (We - W) / 2, ly = cyL - H / 2 - ey, sx = fr.left - ex - lx, sy = fr.top - ey - ly;
+  const corte = Math.max(0, H - Math.max(40, fundo - fr.top) * s);
+  const carta = cartaRig(folha, W, H, s);
+  carta.style.cssText = `left:${lx}px;top:${ly}px;width:${W}px;height:${H}px`;
+  $('.env-tras', palco).insertBefore(carta, $('.env-bolso', palco));
+  folha.style.visibility = 'hidden';
+  $$('.env-dentro, .env-bolso, .env-aba', palco).forEach(e => e.animate([{ translate: '0 46px', opacity: 0 }, { translate: '0 0', opacity: 1 }], { delay: 1000, duration: 420, easing: OUT, fill: 'backwards' }));
+  som(...SOM.linha); som(...SOM.tirar);
+  $('.carro', maq).animate([{ translate: `${x0}px 0` }, { translate: '0 0' }], { duration: 300, easing: OUT, fill: 'forwards' });
+  girar(maq, 6, 620); alavanca(maq);
+  carta.animate([
+    { transform: `translate(${sx}px, ${sy}px) scale(${k}) rotate(0deg)`, clipPath: `inset(0 0 ${corte}px 0)`, easing: 'cubic-bezier(.3, 0, .4, 1)' },
+    { transform: `translate(${sx}px, ${sy - 30}px) scale(${k}) rotate(0deg)`, clipPath: `inset(0 0 ${Math.max(0, corte - 30 * s)}px 0)`, offset: .22, easing: 'cubic-bezier(.3, .5, .3, 1)' },
+    { transform: `translate(${sx * .18}px, ${sy * .18 - 26}px) scale(${1 + (k - 1) * .12}) rotate(-3deg)`, clipPath: 'inset(0 0 0 0)', offset: .7, easing: 'ease-out' },
+    { transform: 'translate(0px, 0px) scale(1) rotate(0deg)', clipPath: 'inset(0 0 0 0)' }], { duration: 700, fill: 'forwards' });
+  await espera(720);
+  som(...SOM.fechar);
+  const dobra = (h, ang, delay) => {
+    h.animate([{ transform: 'rotateX(0deg)', easing: 'cubic-bezier(.45, 0, .4, 1)' }, { transform: `rotateX(${ang * 1.03}deg)`, offset: .86, easing: 'ease-out' }, { transform: `rotateX(${ang}deg)` }], { delay, duration: 340, fill: 'both' });
+    const vira = (de, para) => [{ opacity: de }, { opacity: de, offset: .42 }, { opacity: para, offset: .4201 }, { opacity: para }];
+    $('.cf', h).animate(vira(1, 0), { delay, duration: 340, fill: 'both' });
+    $('.cv', h).animate(vira(0, 1), { delay, duration: 340, fill: 'both' });
+    $('.cf > .cs', h).animate([{ opacity: 0 }, { opacity: .5, offset: .5 }, { opacity: .5 }], { delay, duration: 340, fill: 'both' });
+    $('.cv > .cs', h).animate([{ opacity: .5 }, { opacity: .5, offset: .5 }, { opacity: .1 }], { delay, duration: 340, fill: 'both' });
+  };
+  dobra($('.baixo', carta), 180, 0); dobra($('.cima', carta), -180, 240);
+  await espera(620);
+  som(...SOM.colocar);
+  carta.animate([{ translate: '0 0', easing: 'ease-out' }, { translate: '0 -10px', offset: .2, easing: 'cubic-bezier(.45, 0, .3, 1)' }, { translate: `0 ${D}px` }], { duration: 460, fill: 'forwards' });
+  await espera(480);
+  aba.style.zIndex = 4;
+  aba.animate([{ transform: 'perspective(800px) rotateX(180deg)', filter: 'brightness(.8)' }, { transform: 'perspective(800px) rotateX(0deg)', filter: 'brightness(1)' }], { duration: 300, easing: 'cubic-bezier(.5, 0, .25, 1)', fill: 'forwards' });
+  await espera(300);
+  som(...SOM.carimbo);
+  $('.lacre', palco).animate([{ scale: 0, opacity: 0 }, { scale: 1.25, opacity: 1, offset: .5 }, { scale: 1, opacity: 1 }], { duration: 240, easing: OUT, fill: 'forwards' });
+  env.animate([{ scale: 1 }, { scale: .97, offset: .35 }, { scale: 1 }], { duration: 200, easing: 'ease-out' });
+  await espera(320);
+  carta.remove(); env.classList.add('vira');
+  som(...SOM.abrir);
+  const virado = `translateY(${-Dm}px) rotateY(180deg) scale(1.08)`;
+  env.animate([
+    { transform: 'translateY(0px) rotateY(0deg) scale(1)', easing: 'ease-out' },
+    { transform: 'translateY(6px) rotateY(0deg) scale(.98)', offset: .14, easing: 'cubic-bezier(.45, 0, .3, 1)' },
+    { transform: virado }], { duration: 720, fill: 'forwards' });
+  await espera(740);
+  return () => {
+    const m = $('#layer .modal');
+    setTimeout(() => palco.remove(), 520);
+    if (!m) return;
+    const mr = m.getBoundingClientRect(), er = env.getBoundingClientRect();
+    const dx = er.left + er.width / 2 - (mr.left + mr.width / 2), dy = er.top + er.height / 2 - (mr.top + mr.height / 2);
+    m.animate([{ transform: `translate(-50%, -50%) translate(${dx}px, ${dy}px) scale(${er.width / mr.width}, ${er.height / mr.height})`, opacity: 0 }, { opacity: 1, offset: .4 }, { transform: 'translate(-50%, -50%)', opacity: 1 }], { duration: 480, easing: OUT });
+    env.animate([{ transform: virado, opacity: 1 }, { opacity: 0, offset: .45 }, { transform: `translate(${-dx}px, ${-Dm - dy}px) rotateY(180deg) scale(${mr.width / We}, ${mr.height / He})`, opacity: 0 }], { duration: 480, easing: OUT, fill: 'forwards' });
+  };
 }
 
 /* ---------- LANÇAR POR TEXTO ---------- */
@@ -1902,9 +2710,13 @@ function simular(fn) {
   try { return fn(); } finally { db = real; }
 }
 function viewLancarTexto() {
-  return `<div class="lanc txt">
-    <section class="card"><header><h2>Uma movimentação por linha</h2></header>
-      <div class="body form-stack">
+  const pl = txtPlano();
+  return `<div class="maq" style="--carro:${ui.carro || 0}">
+    <div class="folha papel verde">
+      <header class="fl-cab"><span class="fl-org">SASC · Tecnologia da Informação</span><h2>Lançamento por texto</h2><span class="fl-num">A partir do Nº <b>${db.config.protoNext}</b></span></header>
+      <div class="lanc txt">
+      <section class="fl-campos form-stack" aria-labelledby="txt-t">
+        <h3 class="sect-title" id="txt-t">Uma movimentação por linha</h3>
         <label class="sr" for="txt-in">Movimentações em texto</label>
         <textarea id="txt-in" class="input txt-in" rows="8" spellcheck="false" autocomplete="off" data-in="txt" data-ctrl-enter="txt-registrar" placeholder="${esc(TXT_EXEMPLOS.slice(0, 2).join('\n'))}">${esc(ui.txt)}</textarea>
         <div class="txt-ex"><span>Exemplos:</span>${TXT_EXEMPLOS.map(x => `<button class="chip" data-act="txt-ex" data-ex="${esc(x)}">${esc(x)}</button>`).join('')}</div>
@@ -1920,30 +2732,41 @@ function viewLancarTexto() {
             <li>Linhas seguidas com mesmo tipo, local, data e pessoa formam um protocolo; uma linha em branco separa.</li>
           </ul>
         </details>
+      </section>
+      <section class="fl-itens" aria-labelledby="txt-prev-t">
+        <h3 class="sect-title" id="txt-prev-t">Prévia <span class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> registra</span></h3>
+        <div id="txt-prev">${txtPreview(pl)}</div>
+      </section>
       </div>
-    </section>
-    <section class="card"><header><h2>Prévia</h2><span class="kbd-hint"><kbd>Ctrl</kbd> + <kbd>Enter</kbd> registra</span></header><div id="txt-prev">${txtPreview()}</div></section>
+    </div>
+    ${maqBase(`<span class="sum" id="txt-sum">${txtSum(pl)}</span>`, txtBotoes(pl))}
   </div>`;
 }
-function txtPreview() {
-  if (!ui.txt.trim()) return `<div class="empty"><b>Nada digitado ainda</b>Cada linha aparece aqui como será registrada, com os erros apontados antes de gravar.</div>`;
-  const { linhas, prs } = simular(() => txtProcessar(ui.txt));
-  const ruins = linhas.filter(l => l.erros.length).length;
-  return `<ul class="list txt-prev">${linhas.map(l => `<li class="${l.erros.length ? 'bad' : ''}"><span class="ln">${l.n}</span>
+const txtPlano = () => ui.txt.trim() ? simular(() => txtProcessar(ui.txt)) : null;
+const txtRuins = pl => pl.linhas.filter(l => l.erros.length).length;
+function txtPreview(pl) {
+  if (!pl) return `<div class="empty"><b>Nada digitado ainda</b>Cada linha aparece aqui como será registrada, com os erros apontados antes de gravar.</div>`;
+  return `<ul class="list txt-prev">${pl.linhas.map(l => `<li class="${l.erros.length ? 'bad' : ''}"><span class="ln">${l.n}</span>
       <span class="grow">${l.erros.length ? `<code>${esc(l.src.trim())}</code>${l.erros.map(m => `<span class="err-msg">${esc(m)}</span>`).join('')}` : `<span class="hd">${l.head}</span>${l.partes.map(h => `<span class="it">${h}</span>`).join('')}`}</span>
-      ${l.proto ? `<span class="badge b-neutral">Nº ${l.proto}</span>` : ''}</li>`).join('')}</ul>
-    <div class="lanc-foot"><span class="sum">${ruins ? `<span class="err-msg" style="font-size:14px">${plural(ruins, 'linha')} com problema</span>` : `${plural(linhas.length, 'linha')} → ${plural(prs.length, 'protocolo')}`}</span>
-      <button class="btn ghost" data-act="txt-limpar">Limpar</button>
-      <button class="btn primary" data-act="txt-registrar" ${ruins || !prs.length ? 'disabled' : ''}>${icon('check')}Registrar${prs.length > 1 ? ` ${prs.length} protocolos` : ''}</button></div>`;
+      ${l.proto ? `<span class="badge b-neutral">Nº ${l.proto}</span>` : ''}</li>`).join('')}</ul>`;
 }
-function txtRegistrar() {
+function txtSum(pl) {
+  if (!pl) return 'Digite uma movimentação por linha';
+  const ruins = txtRuins(pl);
+  return ruins ? `<span class="err-msg" style="font-size:14px">${plural(ruins, 'linha')} com problema</span>` : `${plural(pl.linhas.length, 'linha')} → ${plural(pl.prs.length, 'protocolo')}`;
+}
+function txtBotoes(pl) {
+  const n = pl ? pl.prs.length : 0, ok = pl && n && !txtRuins(pl);
+  return `${pl ? `<button class="btn ghost" data-act="txt-limpar">Limpar</button>` : ''}
+              <button class="btn primary" data-act="txt-registrar" ${ok ? '' : 'disabled'}>${icon('check')}Registrar${n > 1 ? ` ${n} protocolos` : ''}</button>`;
+}
+async function txtRegistrar() {
   const plano = simular(() => txtProcessar(ui.txt));
-  if (!plano.prs.length || plano.linhas.some(l => l.erros.length)) return toast('Corrija as linhas com problema antes de registrar.', true);
+  if (!plano.prs.length || plano.linhas.some(l => l.erros.length)) { trava(); return toast('Corrija as linhas com problema antes de registrar.', true); }
   const { prs } = txtProcessar(ui.txt);
   commit();
   ui.txt = '';
-  render();
-  modalRegistrados(prs);
+  await cerimonia(prs);
 }
 
 /* ---------- MOVIMENTAÇÕES ---------- */
@@ -2138,10 +2961,15 @@ const ACTIONS = {
   }, true),
   'prod-new': t => prodModal(null, t.dataset.tipo),
   'prod-open': t => { $('#gresults').hidden = true; prodModal(prodById(t.dataset.id)); },
+  'it-sel': (t, e) => itMarca(t.dataset.id, e.shiftKey),
+  'it-all': () => { const vis = ui.itVis || [], s = new Set(ui.itSel), todos = vis.every(id => s.has(id)); vis.forEach(id => todos ? s.delete(id) : s.add(id)); itSelecao([...s]); },
+  'it-limpar': () => itSelecao([]),
+  'it-lancar': t => { const ids = ui.itSel; ui.itSel = []; location.hash = `#/lancar?tipo=${t.dataset.tipo}` + ids.map(id => '&p=' + encodeURIComponent(id)).join(''); },
   'prod-save': prodSave,
   'prod-del': () => { db.produtos = db.produtos.filter(p => p.id !== ui.editProd); commit(); closeLayer(); render(); toast('Cadastro excluído.'); },
   'pat-open': (t, e) => { if (e.target.closest('a')) return; $('#gresults').hidden = true; patDrawer(t.dataset.id); },
   'pat-save': patSave,
+  'pat-ir': t => patIr(t.dataset.tipo),
   'pat-ok': () => { patById(ui.editPat).conferir = ''; commit(); patDrawer(ui.editPat); rerenderBehind(); toast('Marcado como conferido.'); },
   'pat-new': t => patNewModal(t.dataset.aba),
   'pat-create': patCreate,
@@ -2154,26 +2982,35 @@ const ACTIONS = {
   'foto-rm': fotoRm,
   'pf-un': t => { const f = pf(ui.route === 'impressora' ? 'impressora' : ui.route); f.un = t.dataset.un; f.setor = ''; render(); },
   'pf-sort': t => { const f = pf(ui.route); if (f.sort === t.dataset.k) f.dir *= -1; else { f.sort = t.dataset.k; f.dir = 1; } refreshPats(); },
-  tipo: t => { setTipo(t.dataset.tipo); render(); },
-  cand: t => { addItem(t.dataset.k, t.dataset.id); renderLancarKeepFocus(); },
-  'rm-item': t => { ui.draft.itens.splice(+t.dataset.i, 1); render(); },
-  'draft-clear': () => { ui.draft.itens = []; render(); },
+  tipo: t => { setTipo(t.dataset.tipo); render(); tecla(true, $('.folha .fl-tipo')); },
+  cand: t => adicionar(t.dataset.k, t.dataset.id),
+  'rm-item': t => { ui.draft.itens.splice(+t.dataset.i, 1); render(); tecla(); },
+  som: () => { ui.mudo = !ui.mudo; try { localStorage.setItem('almox-som', ui.mudo ? '0' : '1'); } catch {} render(); $('.som-bt').focus(); if (!ui.mudo) tecla(); },
+  'draft-clear': () => { const de = ui.carro; ui.draft.itens = []; ui.carro = 0; render(); retorno(de); },
   'novo-pat': t => novoPatModal(null, t.dataset.num),
   'edit-novo': t => novoPatModal(+t.dataset.i),
   'novo-pat-save': t => novoPatSave(!!t.dataset.more),
   registrar,
-  'lanc-modo': t => {
-    ui.lancModo = t.dataset.modo;
-    try { localStorage.setItem('almox-lanc-modo', ui.lancModo); } catch {}
-    render();
-    const el = $(ui.lancModo === 'texto' ? '#txt-in' : '#add-q'); el && el.focus();
+  'lanc-modo': async t => {
+    if (t.dataset.modo === ui.lancModo || ui.trocando) return;
+    const modo = t.dataset.modo;
+    ui.trocando = true;
+    await trocarFolha(modo === 'texto' ? 1 : -1, () => {
+      ui.lancModo = modo;
+      try { localStorage.setItem('almox-lanc-modo', modo); } catch {}
+      if (ui.route === 'lancar') render();
+    });
+    ui.trocando = false;
+    if (ui.route !== 'lancar') return;
+    const el =$(ui.lancModo === 'texto' ? '#txt-in' : '#add-q'); el && el.focus({ preventScroll: true });
   },
   'txt-ex': t => {
     ui.txt = ui.txt.trim() ? ui.txt.replace(/\s*$/, '\n') + t.dataset.ex : t.dataset.ex;
     render();
     const el = $('#txt-in'); el.focus(); el.setSelectionRange(el.value.length, el.value.length);
+    tecla(true, $('#txt-prev .txt-prev > li:last-child'));
   },
-  'txt-limpar': () => { ui.txt = ''; render(); $('#txt-in').focus(); },
+  'txt-limpar': () => { const de = ui.carro; ui.txt = ''; ui.carro = 0; render(); $('#txt-in').focus(); retorno(de); },
   'txt-registrar': () => { clearTimeout(ui.txtT); txtRegistrar(); },
   print: t => printProto(t.dataset.id),
   undo: t => undoProto(t.dataset.id),
@@ -2188,7 +3025,7 @@ const ACTIONS = {
 };
 function rerenderBehind() { const y = window.scrollY; const layer = $('#layer').innerHTML; renderNav(); $('#view').innerHTML = VIEWS[ui.route](); $('#layer').innerHTML = layer; window.scrollTo(0, y); }
 const INPUTS = {
-  itf: t => { ui.itf[t.dataset.k] = t.value; $('#itt').innerHTML = itensTable(); },
+  itf: t => { ui.itf[t.dataset.k] = t.value; refreshItens(); },
   pf: t => { pf(ui.route)[t.dataset.k] = t.type === 'checkbox' ? t.checked : t.value; if (t.dataset.k === 'un') pf(ui.route).setor = ''; t.tagName === 'SELECT' && t.dataset.k === 'un' ? render() : refreshPats(); },
   mf: t => { ui.mf[t.dataset.k] = t.value; $('#mtable').innerHTML = movTable(); },
   df: t => { ui.df.q = t.value; const pos = t.selectionStart; render(); const n = $('#dq'); n.focus(); n.setSelectionRange(pos, pos); },
@@ -2205,12 +3042,12 @@ const INPUTS = {
     t.classList.toggle('err', over);
     $('.sub', li).textContent = `Em estoque: ${p.qtd}${d.tipo === 'entrada' ? ` → ${p.qtd + it.qtd}` : ` → ${p.qtd - it.qtd}`}`;
     let em = $('.err-msg', li); if (over && !em) { em = document.createElement('span'); em.className = 'err-msg'; em.textContent = 'Quantidade maior que o estoque'; $('.grow', li).append(em); } else if (!over && em) em.remove();
-    $('.lanc-foot .sum').textContent = draftSummary();
+    $('.maq .sum').textContent = draftSummary();
   },
   txt: t => {
     ui.txt = t.value;
     clearTimeout(ui.txtT);
-    ui.txtT = setTimeout(() => { const el = $('#txt-prev'); if (el) el.innerHTML = txtPreview(); }, 150);
+    ui.txtT = setTimeout(() => { const el = $('#txt-prev'); if (!el) return; const pl = txtPlano(); el.innerHTML = txtPreview(pl); $('#txt-sum').innerHTML = txtSum(pl); $('#maq-bts').innerHTML = txtBotoes(pl); }, 150);
   },
   'pt-sp': t => { const n = $('#pt-num'); n.disabled = t.checked; if (t.checked) { n.value = ''; n.classList.remove('err'); } },
   'pt-un': t => { $('#pt-setor').innerHTML = setorOpts(t.value, ''); },
@@ -2233,8 +3070,8 @@ document.addEventListener('click', e => {
   const fn = ACTIONS[t.dataset.act];
   if (fn) { if (t.tagName !== 'A') e.preventDefault(); fn(t, e); }
 });
-document.addEventListener('input', e => { marcaSujo(e); const t = e.target.closest('[data-in]'); if (t) INPUTS[t.dataset.in](t, e); });
-document.addEventListener('change', e => { marcaSujo(e); const t = e.target.closest('[data-ch]'); if (t) INPUTS[t.dataset.ch](t, e); });
+document.addEventListener('input', e => { marcaSujo(e); const t = e.target.closest('[data-in]'); if (t) INPUTS[t.dataset.in](t, e); datilografa(e); });
+document.addEventListener('change', e => { marcaSujo(e); const t = e.target.closest('[data-ch]'); if (t) INPUTS[t.dataset.ch](t, e); datilografa(e); });
 document.addEventListener('paste', e => { marcaSujo(e); const t = e.target.closest('[data-paste]'); if (t) INPUTS[t.dataset.paste](t, e); });
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && $('.lightbox')) { ACTIONS['foto-fechar'](); return; }
@@ -2256,9 +3093,27 @@ $('#gq').addEventListener('keydown', e => {
 window.addEventListener('hashchange', route);
 document.addEventListener('click', hideCandsOutside);
 
+/* ---------- texturas ---------- */
+async function texturas() {
+  const raiz = document.documentElement, cs = getComputedStyle(raiz), k = Math.min(2, Math.ceil(devicePixelRatio || 1));
+  for (const v of ['--fibra', '--manchas', '--grain', '--ink-mask']) {
+    try {
+      const m = cs.getPropertyValue(v).match(/url\("(data:image\/svg\+xml[^"]+)"\)/);
+      if (!m) continue;
+      const img = new Image(); img.src = m[1]; await img.decode();
+      const c = document.createElement('canvas'); c.width = img.naturalWidth * k; c.height = img.naturalHeight * k;
+      c.getContext('2d').drawImage(img, 0, 0, c.width, c.height);
+      const blob = await new Promise(r => c.toBlob(r));
+      if (blob) raiz.style.setProperty(v, `url("${URL.createObjectURL(blob)}")`);
+    } catch {}
+  }
+}
+
 /* ---------- início ---------- */
 (async function init() {
+  texturas();
   try { if (localStorage.getItem('almox-lanc-modo') === 'texto') ui.lancModo = 'texto'; } catch {}
+  try { ui.mudo = localStorage.getItem('almox-som') === '0'; } catch {}
   if (matchMedia('(max-width: 520px)').matches) $('#gq').placeholder = 'Buscar em tudo';
   $('.menu-btn').innerHTML = icon('menu');
   $$('[data-icon]').forEach(el => { el.outerHTML = icon(el.dataset.icon); });
@@ -2268,6 +3123,7 @@ document.addEventListener('click', hideCandsOutside);
   fotosGc();
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   route();
+  (window.requestIdleCallback || setTimeout)(() => somPronto(), { timeout: 3000 });
 })();
 </script>
 </body>
