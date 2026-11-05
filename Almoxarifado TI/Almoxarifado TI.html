@@ -23,6 +23,7 @@
   --papel: #EADFC4; --papel-2: #DACBA8; --papel-mancha: #8E6A35; --papel-tinta: #1D1A15; --papel-impresso: #2C4A46;
   --papel-verde: #17673F; --papel-azul: #1A5674; --papel-roxo: #573A90; --papel-ambar: #8A5200;
   --breu: #030606; --metal: #B9B3A2; --latao: #C99A4B;
+  --foto-papel: #F7F2E6; --foto-sombra: 0 1px 2px rgba(22, 14, 4, .35), 0 6px 10px -6px rgba(22, 14, 4, .55); --foto-sombra-alta: 0 3px 4px rgba(22, 14, 4, .25), 0 14px 18px -8px rgba(22, 14, 4, .45); --foto-sombra-ar: 0 26px 28px -10px rgba(22, 14, 4, .3);
   --vinco-sombra: rgba(58, 38, 12, .30); --vinco-luz: rgba(255, 249, 232, .45); --dobra-sombra: rgba(22, 14, 4, .62);
   --fogo: #FF9A2E; --fogo-claro: #FFEBB0; --fogo-fundo: #D9441A; --carvao: #1E140C; --tostado: rgba(120, 66, 20, .55); --fumaca: rgba(168, 158, 142, .30); --clarao: rgba(255, 140, 40, .20);
   --envelope: #CDB68A; --envelope-2: #B79D6E; --envelope-dentro: #6F5C3C; --envelope-borda: rgba(70, 50, 20, .38);
@@ -583,13 +584,29 @@ textarea.txt-in { min-height: 200px; font: 14px/1.7 var(--mono); }
 .carta .folha *, .carta .folha *::before, .carta .folha *::after { animation: none !important; }
 .carta .cs { position: absolute; inset: 0; z-index: 6; opacity: 0; background: var(--dobra-sombra); }
 dl.kv { display: grid; grid-template-columns: 130px 1fr; gap: 8px 12px; margin: 0; font-size: 14px; }
-.fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 8px; }
-.fotos button { aspect-ratio: 1; padding: 0; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--well); overflow: hidden; cursor: pointer; transition: border-color .2s, box-shadow .25s var(--out), rotate .3s var(--out); }
-.fotos button:hover { border-color: var(--accent-line); box-shadow: var(--shadow-2); rotate: -1.5deg; }
-.fotos img { width: 100%; height: 100%; object-fit: cover; display: block; transition: scale .4s var(--out); }
-.fotos button:hover img { scale: 1.06; }
-.fotos .foto-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border-style: dashed; border-color: var(--border-strong); color: var(--text-2); font: 600 13px/1.2 var(--cond); font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; }
-.fotos .foto-add:hover { border-color: var(--accent); color: var(--accent); rotate: 0deg; }
+.fotos { display: grid; grid-template-columns: repeat(auto-fill, minmax(96px, 1fr)); gap: 22px 14px; padding-top: 14px; border-radius: var(--radius); outline: 1.5px dashed transparent; outline-offset: 6px; transition: outline-color .2s, background-color .2s; }
+.fotos > button { position: relative; aspect-ratio: 1; padding: 0; border: 0; background: none; cursor: pointer; }
+.fotos .foto { transition: rotate .3s var(--out), translate .3s var(--out); }
+.foto .moldura { position: absolute; inset: 0; z-index: 1; display: block; transform-origin: 50% 0; padding: 5px 5px 13px; background: var(--foto-papel); box-shadow: var(--foto-sombra); transition: box-shadow .3s var(--out); }
+.foto img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.foto .clipe { position: absolute; z-index: 2; top: -17px; left: 30%; width: 15px; height: 43px; transform-origin: 50% 30%; pointer-events: none; color: var(--metal); filter: drop-shadow(1px 1.5px 0 color-mix(in srgb, var(--breu) 30%, transparent)); }
+.foto .clipe.tras { z-index: 0; color: color-mix(in srgb, var(--metal) 70%, var(--breu)); filter: none; }
+.foto .clipe svg { display: block; width: 100%; height: 100%; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linecap: round; }
+.foto .clipe .brilho { stroke: var(--foto-papel); stroke-width: .45; opacity: .6; }
+.fotos .foto:nth-child(4n+1) { rotate: -2deg; } .foto:nth-child(4n+1) .clipe { left: 22%; }
+.fotos .foto:nth-child(4n+2) { rotate: 1.6deg; } .foto:nth-child(4n+2) .clipe { left: 58%; }
+.fotos .foto:nth-child(4n+3) { rotate: -.8deg; } .foto:nth-child(4n+3) .clipe { left: 36%; }
+.fotos .foto:nth-child(4n) { rotate: 2.2deg; } .foto:nth-child(4n) .clipe { left: 66%; }
+.fotos .foto:hover { rotate: 0deg; translate: 0 -3px; }
+.foto:hover .moldura { box-shadow: var(--foto-sombra-alta); }
+.fotos .foto-add { display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 4px; border: 1px dashed var(--border-strong); border-radius: var(--radius-sm); background: var(--well); color: var(--text-2); font: 600 13px/1.2 var(--cond); font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; text-align: center; transition: border-color .2s, color .2s, background-color .2s, scale .25s var(--out); }
+.foto-add .fa-txt { display: flex; flex-direction: column; align-items: center; gap: 3px; }
+.foto-add small { font: 400 11px/1.2 var(--font); letter-spacing: 0; text-transform: none; color: var(--text-3); }
+.foto-add .fa-solta, .drawer.recebe .foto-add .fa-txt { display: none; }
+.drawer.recebe .foto-add .fa-solta { display: inline; }
+.fotos .foto-add:hover { border-color: var(--accent); color: var(--accent); }
+.drawer.recebe .fotos { outline-color: var(--accent-line); background: var(--accent-soft); }
+.drawer.recebe .fotos .foto-add { border-style: solid; border-color: var(--accent); color: var(--accent); background: var(--accent-soft); scale: 1.04; }
 .foto-ind { display: inline-flex; vertical-align: middle; margin-left: 6px; color: var(--sage); }
 .lightbox { position: fixed; inset: 0; z-index: 50; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; padding: 16px; animation: fade .2s ease-out; }
 .lightbox .overlay { z-index: 0; }
@@ -1663,26 +1680,66 @@ function patDrawer(id) {
   fillFotos($('#pt-fotos'));
   if (!$('#layer').classList.contains('swap')) desdobrar($('#layer .drawer'));
 }
+const CLIPE = 'M4.5 24V8a1.75 1.75 0 0 1 3.5 0v23a3.25 3.25 0 0 1-6.5 0V6a4.75 4.75 0 0 1 9.5 0v8';
+const clipeSvg = (d, cls = '') => `<span class="clipe ${cls}" aria-hidden="true"><svg viewBox="0 0 12.5 36"><path d="${d}"/>${cls ? '' : `<path class="brilho" d="${d}"/>`}</svg></span>`;
 function fotosHtml(p) {
   const fs = p.fotos || [];
-  return fs.map((f, i) => `<button data-act="foto-ver" data-id="${f}" aria-label="Ampliar foto ${i + 1}"><img data-foto="${f}" alt=""></button>`).join('') +
-    (fs.length < FOTO_LIM ? `<button class="foto-add" data-act="pat-foto-add">${icon('camera')}Adicionar</button>` : '');
+  return fs.map((f, i) => `<button class="foto" data-act="foto-ver" data-id="${f}" aria-label="Ampliar foto ${i + 1}">${clipeSvg('M11 6v20', 'tras')}<span class="moldura"><img data-foto="${f}" alt=""></span>${clipeSvg(CLIPE)}</button>`).join('') +
+    (fs.length < FOTO_LIM ? `<button class="foto-add" data-act="pat-foto-add">${icon('camera')}<span class="fa-txt">Adicionar<small>ou arraste aqui</small></span><span class="fa-solta">Solte para prender</span></button>` : '');
 }
 function refreshFotos(p) {
   const box = $('#pt-fotos'); if (box) { box.innerHTML = fotosHtml(p); fillFotos(box); }
   if ($('#ptable')) refreshPats();
 }
-async function patFotoAdd(files) {
+async function patFotoAdd(files, origem) {
   const p = patById(ui.editPat); if (!p) return;
   const lista = [...files].slice(0, FOTO_LIM - (p.fotos || []).length);
   if (lista.length < files.length) toast(`Limite de ${FOTO_LIM} fotos por patrimônio.`, true);
-  let ok = 0;
+  const novas = [];
   for (const f of lista) {
-    try { const id = 'F' + uid(); await fotoPut(id, await fotoReduzir(f)); (p.fotos ||= []).push(id); ok++; }
+    try { const id = 'F' + uid(); await fotoPut(id, await fotoReduzir(f)); (p.fotos ||= []).push(id); novas.push(id); }
     catch (e) { toast(e.message === 'imagem' ? `"${f.name}" não é uma imagem válida.` : 'Não foi possível salvar a foto neste navegador.', true); }
   }
-  if (!ok) return;
-  commit(); refreshFotos(p); toast(ok > 1 ? `${ok} fotos adicionadas.` : 'Foto adicionada.');
+  if (!novas.length) return;
+  commit(); refreshFotos(p); prender(novas, origem); toast(novas.length > 1 ? `${novas.length} fotos adicionadas.` : 'Foto adicionada.');
+}
+function prender(ids, origem) {
+  const els = ids.map(id => $(`#pt-fotos .foto[data-id="${id}"]`)).filter(Boolean), raiz = getComputedStyle(document.documentElement);
+  const passo = Math.min(90, 360 / els.length), voo = 340, morde = 310;
+  els.forEach((el, i) => {
+    const t0 = i * passo;
+    if (i < 3) { setTimeout(() => som(...SOM.pousa), t0 + voo * .7); setTimeout(() => som(...SOM.clipe), t0 + morde + 150); }
+    if (parado()) return;
+    const r = parseFloat(getComputedStyle(el).rotate) || 0, b = el.getBoundingClientRect(), mold = $('.moldura', el);
+    const dx = origem ? origem.x - (b.left + b.width / 2) : 0, dy = origem ? origem.y - (b.top + b.height / 2) : -44;
+    el.animate([
+      { translate: `${dx}px ${dy}px`, rotate: `${r - 9}deg`, scale: 1.16, opacity: 0, easing: 'cubic-bezier(.3, .6, .5, 1)' },
+      { translate: `${dx * .3}px ${dy * .3 - 16}px`, rotate: `${r - 4}deg`, scale: 1.1, opacity: 1, offset: .45, easing: 'cubic-bezier(.4, 0, .8, .5)' },
+      { translate: '0 2px', rotate: `${r + 1.2}deg`, scale: .985, offset: .82, easing: 'ease-out' },
+      { translate: '0 0', rotate: `${r}deg`, scale: 1 },
+    ], { duration: voo, delay: t0, fill: 'backwards' });
+    const ar = raiz.getPropertyValue('--foto-sombra-ar');
+    mold.animate([{ boxShadow: ar }, { boxShadow: ar, offset: .45 }, { boxShadow: raiz.getPropertyValue('--foto-sombra'), offset: .9 }],
+      { duration: voo + 60, delay: t0, fill: 'backwards', easing: 'ease-in' });
+    mold.animate([{ scale: '1 1' }, { scale: '1.012 .975', offset: .35 }, { scale: '1 1' }], { duration: 180, delay: t0 + morde + 150, easing: 'ease-out' });
+    for (const c of $$('.clipe', el)) c.animate([
+      { translate: '0 -18px', rotate: '-16deg', opacity: 0 }, { opacity: 1, offset: .3 },
+      { translate: '0 2px', rotate: '2deg', offset: .65 }, { translate: '0 0', rotate: '0deg' },
+    ], { duration: 240, delay: t0 + morde, easing: 'cubic-bezier(.16, 1, .3, 1)', fill: 'backwards' });
+  });
+}
+const temArquivo = e => e.dataTransfer && [...e.dataTransfer.types].includes('Files');
+function alvoFoto(e) {
+  const dr = e.target.closest && e.target.closest('#layer > .drawer.papel');
+  return dr && !dr.inert && !dr.classList.contains('abrindo') && !$('.lightbox') && $('#pt-fotos', dr) ? dr : null;
+}
+function marcaRecebe(dr) {
+  clearTimeout(ui.recebeT);
+  const atual = $('#layer > .drawer.recebe');
+  if (atual && atual !== dr) atual.classList.remove('recebe');
+  if (!dr) return;
+  if (!dr.classList.contains('recebe')) { dr.classList.add('recebe'); $('#pt-fotos', dr).scrollIntoView({ block: 'nearest', behavior: parado() ? 'auto' : 'smooth' }); }
+  ui.recebeT = setTimeout(() => marcaRecebe(null), 160);
 }
 async function fotoVer(id) {
   const p = patById(ui.editPat), url = await fotoGet(id); if (!p || !url) return;
@@ -2117,6 +2174,7 @@ const SOM = {
   teclas: [0.128, 0.467, 1.07, 2.146, 3.497, 4.159, 4.416, 4.659, 6.036, 6.375, 6.63, 6.817, 7.236, 7.466, 7.712, 8.36, 11.83, 12.064, 12.615, 13.278, 13.533, 13.777],
   linha: ['maquina', 13.9, 1.05, 1.4], tirar: ['papel', 19.4, 1.15, 6], colocar: ['papel', 15.2, .8, 4],
   abrir: ['folha', .3, .9, .8], fechar: ['folha', 3.8, .95, 1.45], amassar: ['papel', 6, 1.3, 5.5], carimbo: ['maquina', 2.146, .16, 1, .55],
+  pousa: ['papel', 15.2, .45, 2.5], clipe: ['maquina', 4.416, .08, .7, 1.8],
   risca: ['maquina', 6.036, .09, .8, 1.9], acende: ['folha', .3, .6, .55, .6], queima: ['fogo', 3.25, 2.5, .45], tampa: ['maquina', 4.159, .1, .9, 1.4],
 };
 let somCtx = null, somProm = null;
@@ -3073,6 +3131,16 @@ document.addEventListener('click', e => {
 document.addEventListener('input', e => { marcaSujo(e); const t = e.target.closest('[data-in]'); if (t) INPUTS[t.dataset.in](t, e); datilografa(e); });
 document.addEventListener('change', e => { marcaSujo(e); const t = e.target.closest('[data-ch]'); if (t) INPUTS[t.dataset.ch](t, e); datilografa(e); });
 document.addEventListener('paste', e => { marcaSujo(e); const t = e.target.closest('[data-paste]'); if (t) INPUTS[t.dataset.paste](t, e); });
+document.addEventListener('dragover', e => {
+  if (!temArquivo(e)) return;
+  e.preventDefault();
+  const dr = alvoFoto(e); e.dataTransfer.dropEffect = dr ? 'copy' : 'none'; marcaRecebe(dr);
+});
+document.addEventListener('drop', e => {
+  if (!temArquivo(e)) return;
+  e.preventDefault(); marcaRecebe(null);
+  if (alvoFoto(e) && e.dataTransfer.files.length) patFotoAdd(e.dataTransfer.files, { x: e.clientX, y: e.clientY });
+});
 document.addEventListener('keydown', e => {
   if (e.key === 'Escape' && $('.lightbox')) { ACTIONS['foto-fechar'](); return; }
   if (e.key === 'Escape' && $('#layer').innerHTML) { layerFora(); return; }
