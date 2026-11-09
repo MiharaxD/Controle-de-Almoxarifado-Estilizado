@@ -28,6 +28,8 @@
   --fogo: #FF9A2E; --fogo-claro: #FFEBB0; --fogo-fundo: #D9441A; --carvao: #1E140C; --tostado: rgba(120, 66, 20, .55); --fumaca: rgba(168, 158, 142, .30); --clarao: rgba(255, 140, 40, .20);
   --envelope: #CDB68A; --envelope-2: #B79D6E; --envelope-dentro: #6F5C3C; --envelope-borda: rgba(70, 50, 20, .38);
   --maquina: "Courier New", Courier, "Cascadia Mono", monospace;
+  --doc-papel: #FFFFFF; --doc-tinta: #111111; --doc-tinta-2: #4A4A4A; --doc-linha: #6B6B6B; --doc-falta: rgba(243, 174, 72, .28);
+  --doc-fonte: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --fibra: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .31 0 0 0 0 .16 0 0 0 .55 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   --manchas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .4 0 0 0 0 .18 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
   --papel-fundo: radial-gradient(ellipse 120% 95% at 50% 42%, transparent 52%, color-mix(in srgb, var(--papel-mancha) 30%, transparent)), var(--manchas) 0 0 / 600px 600px, var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--papel), var(--papel-2));
@@ -652,6 +654,42 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .inline-add { display: flex; gap: 6px; }
 .inline-add .input { height: 32px; width: 150px; }
 
+/* documentos */
+.doc-cat { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
+.doc-card { --tilt: -.6deg; display: flex; flex-direction: column; gap: 8px; padding: 18px; text-align: left; color: var(--text); cursor: pointer; transform: rotate(var(--tilt)); transition: transform .3s var(--out), border-color .2s, box-shadow .3s var(--out); }
+.doc-card:nth-child(even) { --tilt: .7deg; }
+.doc-card:hover, .doc-card:focus-visible { transform: rotate(0deg) translateY(-3px); border-color: var(--accent-line); box-shadow: var(--shadow-2), 0 10px 26px -12px var(--accent-glow); outline: none; }
+.doc-card b { display: flex; align-items: center; gap: 10px; font: 600 17px/1.15 var(--cond); font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; }
+.doc-card b svg.i { color: var(--accent); }
+.doc-card small { color: var(--text-2); font-size: 13px; line-height: 1.4; }
+.doc-ed { display: grid; grid-template-columns: minmax(300px, 2fr) minmax(0, 3fr); gap: 18px; align-items: start; }
+.doc-ed.rev { grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr); }
+.doc-campos { display: flex; flex-direction: column; gap: 14px; padding: 16px; }
+.doc-ed.rev .doc-campos { gap: 10px; }
+.doc-lado { position: sticky; top: 80px; max-height: calc(100vh - 96px); overflow-y: auto; }
+.doc-f { position: relative; }
+.doc-f .req { color: var(--danger); }
+.doc-f .doc-rest { position: absolute; top: -8px; right: 0; }
+.doc-f .doc-rest[hidden] { display: none; }
+.doc-pat { position: relative; }
+.doc-pat .cands { left: 0; right: 0; top: 100%; margin-top: 4px; }
+.doc-prev { container-type: inline-size; min-width: 0; }
+.doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; margin: 0 auto; padding: 4.724em 4.252em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
+.doc-folha h1 { margin: 1.2em 0 .9em; font-size: 1.3em; text-align: center; text-transform: uppercase; letter-spacing: .04em; }
+.doc-folha h2 { margin: 1.2em 0 .4em; font-size: 1em; text-transform: uppercase; }
+.doc-folha p { margin: 0 0 .8em; text-align: justify; }
+.doc-folha table { width: 100%; border-collapse: collapse; margin: .8em 0; }
+.doc-folha th, .doc-folha td { border: 1px solid var(--doc-linha); padding: .35em .5em; text-align: left; vertical-align: top; }
+.doc-folha .doc-cab { display: flex; justify-content: space-between; gap: 1em; padding-bottom: .5em; border-bottom: 1px solid var(--doc-linha); color: var(--doc-tinta-2); font-size: .8em; text-transform: uppercase; letter-spacing: .06em; }
+.doc-folha .doc-pre { white-space: pre-wrap; text-align: left; }
+.doc-folha .doc-branco { display: inline-block; min-width: 8em; height: 1em; vertical-align: baseline; border-bottom: 1px solid var(--doc-tinta); background: var(--doc-falta); }
+.doc-folha .doc-assin { display: grid; grid-template-columns: 1fr 1fr; gap: 3em; margin-top: 4.5em; break-inside: avoid; }
+.doc-folha .doc-assin div { padding-top: .3em; border-top: 1px solid var(--doc-tinta); text-align: center; font-size: .85em; }
+.doc-folha h1, .doc-folha h2 { break-after: avoid; }
+.doc-folha p { orphans: 3; widows: 3; }
+.doc-folha tr { break-inside: avoid; }
+.doc-erro { color: var(--danger-ink); }
+
 /* entrada de página (só ao trocar de aba) */
 .view.entering > * { animation: rise .26s var(--out) backwards; }
 .view.entering > :nth-child(2) { animation-delay: .03s; }
@@ -710,7 +748,8 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 
 @media (max-width: 1100px) {
   .g-kpi, .quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .g-2, .lanc, .lanc.txt, .g-half { grid-template-columns: minmax(0, 1fr); }
+  .g-2, .lanc, .lanc.txt, .g-half, .doc-ed, .doc-ed.rev { grid-template-columns: minmax(0, 1fr); }
+  .doc-lado { position: relative; top: auto; max-height: none; overflow: visible; }
   .fl-campos { padding-right: 0; }
   .fl-itens { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 1px dashed var(--border-strong); }
 }
@@ -787,7 +826,13 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
   #print .sign div { border-top: 1px solid #000; padding-top: 4pt; text-align: center; font-size: 10pt; }
   #print .via { page-break-after: always; }
   #print .via:last-child { page-break-after: auto; }
+  html.doc-imprimindo { color-scheme: light; }
+  .doc-imprimindo body { page: doc; background: var(--doc-papel); }
+  .doc-imprimindo body::before, .doc-imprimindo body::after { display: none; }
+  #print .doc-folha { width: auto; max-width: none; aspect-ratio: auto; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
+  #print .doc-folha .doc-branco { background: none; }
 }
+@page doc { size: A4; margin: 20mm 18mm; }
 </style>
 </head>
 <body>
@@ -859,6 +904,30 @@ const ORIGENS = ['Compra / fornecedor', 'Devolução de unidade', 'Retorno de ma
 const MEDIDAS = ['Unidade', 'Caixa', 'Pacote', 'Metro', 'Rolo'];
 const TONER_CORES = { Preto: '#111827', Ciano: '#06B6D4', Magenta: '#DB2777', Amarelo: '#EAB308' };
 const PAT_RE = /^\d{5,6}$/;
+// Modelos da aba Documentos (formato em docs/context/ROUTES.md, seção "Documentos").
+const MODELOS_DOC = [
+  // EXEMPLO: só valida a estrutura; apague quando chegarem os modelos reais.
+  {
+    id: 'exemplo',
+    titulo: 'Exemplo de documento',
+    descricao: 'Modelo de teste da estrutura (data, patrimônio, unidade e setor, observações). Será apagado.',
+    campos: [
+      { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: () => today() },
+      { id: 'bem', rotulo: 'Patrimônio', tipo: 'pat', dica: 'Busque pelo nº, marca, modelo ou unidade' },
+      { id: 'num', rotulo: 'Nº do patrimônio', tipo: 'texto', auto: (db, v) => { const p = docPat(db, v.bem); return p ? patIdent(p) : ''; } },
+      { id: 'equip', rotulo: 'Equipamento', tipo: 'texto', obrigatorio: true, auto: (db, v) => { const p = docPat(db, v.bem); return p ? patDesc(p) : ''; } },
+      { id: 'un', rotulo: 'Unidade', tipo: 'unidade', obrigatorio: true, auto: (db, v) => docPat(db, v.bem)?.un },
+      { id: 'setor', rotulo: 'Setor', tipo: 'setor', de: 'un', auto: (db, v) => docPat(db, v.bem)?.setor },
+      { id: 'situacao', rotulo: 'Situação', tipo: 'escolha', opcoes: ['Em uso', 'Em manutenção', 'Parado'], auto: () => 'Em uso' },
+      { id: 'obs', rotulo: 'Observações', tipo: 'area', dica: 'Aparece no fim do documento, se preenchida' },
+    ],
+    corpo: v => `<div class="doc-cab"><span>SASC · Tecnologia da Informação</span><span>Documento de exemplo</span></div>
+      <h1>Registro de situação de equipamento</h1>
+      <p>Em ${docData(v.data)}, a equipe de Tecnologia da Informação registrou o equipamento <b>${docEsc(v.equip)}</b>, patrimônio <b>${docEsc(v.num)}</b>, localizado em ${docEsc(v.setor ? `${v.un} › ${v.setor}` : v.un)}, na situação <b>${docEsc(v.situacao)}</b>.</p>
+      ${v.obs ? `<h2>Observações</h2><p class="doc-pre">${esc(v.obs)}</p>` : ''}
+      <div class="doc-assin"><div>Responsável TI</div><div>Responsável pela unidade</div></div>`,
+  },
+];
 
 const ICONS = {
   som: '<path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7M19 5a10 10 0 0 1 0 14"/>',
@@ -893,6 +962,7 @@ const ICONS = {
   sort: '<path d="m7 15 5 5 5-5M7 9l5-5 5 5"/>',
   form: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
   keyboard: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 16h8"/>',
+  doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
 };
 const icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
@@ -1103,7 +1173,7 @@ function emptyDb() {
 
 /* ---------- domínio ---------- */
 let db;
-const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, itSel: [], mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, draft: null, open: {}, lancModo: 'form', txt: '' };
+const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, itSel: [], mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, draft: null, open: {}, lancModo: 'form', txt: '', doc: null };
 
 const patIdent = p => p.num || (p.locadora ? `Loc. ${p.locadora}` : 'S.P.');
 const patDesc = p => [p.cat, p.marca, p.modelo].filter(Boolean).join(' · ');
@@ -1299,7 +1369,7 @@ const NAV = [
   ['', [['painel', 'Painel', 'painel'], ['lancar', 'Lançar movimentação', 'plus']]],
   ['Estoque', [['itens', 'Itens', 'box'], ['toners', 'Toners', 'toner']]],
   ['Patrimônios', [['patrimonios', 'Todos', 'tag'], ['cpu', 'CPU / Notebook', 'cpu'], ['monitor', 'Monitores', 'monitor'], ['impressora', 'Impressoras', 'printer'], ['estabilizador', 'Estabilizadores', 'zap'], ['outros', 'Outros', 'grid']]],
-  ['Registros', [['movimentacoes', 'Movimentações', 'history'], ['descarte', 'Descarte', 'trash'], ['config', 'Configurações', 'settings']]],
+  ['Registros', [['movimentacoes', 'Movimentações', 'history'], ['descarte', 'Descarte', 'trash'], ['documentos', 'Documentos', 'doc'], ['config', 'Configurações', 'settings']]],
 ];
 function navCount(key) {
   const ativos = db.pats.filter(p => p.status === 'ativo');
@@ -1322,7 +1392,7 @@ const VIEWS = {
   painel: viewPainel, lancar: viewLancar, itens: () => viewItens(), toners: viewToners,
   patrimonios: () => viewPats('patrimonios'), cpu: () => viewPats('cpu'), monitor: () => viewPats('monitor'),
   impressora: () => viewPats('impressora'), estabilizador: () => viewPats('estabilizador'), outros: () => viewPats('outros'),
-  movimentacoes: viewMovs, descarte: viewDescarte, config: viewConfig,
+  movimentacoes: viewMovs, descarte: viewDescarte, documentos: viewDocumentos, config: viewConfig,
 };
 function route() {
   const [path, q] = location.hash.replace(/^#\/?/, '').split('?');
@@ -2977,6 +3047,137 @@ function printProto(id) {
   window.print();
 }
 
+/* ---------- DOCUMENTOS ---------- */
+const MESES_EXT = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
+const docModelo = d => MODELOS_DOC.find(m => m.id === d.id);
+const docPat = (base, id) => id ? base.pats.find(p => p.id === id) : null;
+const docEsc = x => String(x ?? '').trim() ? esc(x) : '<span class="doc-branco"></span>';
+function docData(iso) {
+  if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return docEsc('');
+  const [a, m, d] = iso.split('-').map(Number);
+  return esc(`${d === 1 ? '1º' : d} de ${MESES_EXT[m - 1]} de ${a}`);
+}
+const docPatRot = p => `${patIdent(p)} · ${patDesc(p)}`;
+const docPatSel = p => p ? `Selecionado: ${docPatRot(p)} · ${loc(p.un, p.setor)}${p.status === 'descartado' ? ' (descartado)' : ''}` : 'Nenhum patrimônio selecionado.';
+function docAuto(f, v) {
+  let x = f.auto ? f.auto(db, v) : '';
+  x = x == null ? '' : String(x);
+  if (f.tipo === 'setor' && x && !setoresDe(v[f.de]).includes(x)) x = '';
+  return x;
+}
+function docNovo(id) {
+  const m = MODELOS_DOC.find(x => x.id === id); if (!m) return null;
+  const d = { id, etapa: 'form', v: {}, manual: {} };
+  m.campos.forEach(f => { d.v[f.id] = ''; });
+  m.campos.forEach(f => { if (f.auto) d.v[f.id] = docAuto(f, d.v); });
+  return d;
+}
+function docSet(d, id, valor) {
+  const campos = docModelo(d).campos, f = campos.find(c => c.id === id);
+  const antes = Object.fromEntries(campos.map(c => [c.id, docAuto(c, d.v)]));
+  d.v[id] = valor;
+  d.manual[id] = !!f.auto && valor !== antes[id];
+  campos.forEach(c => {
+    if (c.id === id) return;
+    if (c.tipo === 'setor' && c.de === id && d.v[c.id] && !setoresDe(valor).includes(d.v[c.id])) { d.v[c.id] = ''; d.manual[c.id] = false; }
+    if (!c.auto) return;
+    const novo = docAuto(c, d.v);
+    if (novo !== antes[c.id]) d.manual[c.id] = false;
+    if (!d.manual[c.id]) d.v[c.id] = novo;
+  });
+}
+const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== '');
+const docFalta = d => docModelo(d).campos.filter(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
+function docValida(d) {
+  const falta = docFalta(d);
+  if (!falta.length) return true;
+  falta.forEach(f => { const el = $('#doc-f-' + f.id); el && el.classList.add('err'); });
+  toast(`Preencha: ${falta.map(f => f.rotulo).join(', ')}.`, true);
+  const el = $('#doc-f-' + falta[0].id); el && el.focus();
+  return false;
+}
+function docOpts(d, f) {
+  const v = d.v[f.id] ?? '';
+  let ops = f.tipo === 'unidade' ? unitNames() : f.tipo === 'setor' ? setoresDe(d.v[f.de]) : (f.opcoes || []);
+  if (v && !ops.includes(v)) ops = [v, ...ops];
+  return `<option value="">—</option>` + ops.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('');
+}
+function docCampo(d, f, rev = false) {
+  const v = d.v[f.id] ?? '', a = `id="doc-f-${esc(f.id)}" data-id="${esc(f.id)}"`;
+  const rot = `<span>${esc(f.rotulo)}${f.obrigatorio ? '<span class="req" aria-hidden="true"> *</span>' : ''}</span>${!rev && f.dica ? ` <span class="hint">${esc(f.dica)}</span>` : ''}`;
+  const txt = `class="input" spellcheck="true" lang="pt-BR" data-in="doc" ${a}`;
+  if (f.tipo === 'pat') {
+    const p = docPat(db, v);
+    return `<div class="doc-f doc-pat"><label class="f">${rot}<span class="hint" id="doc-s-${esc(f.id)}">${esc(docPatSel(p))}</span><input class="input" type="search" ${a} data-in="doc-pat" data-enter="doc-pat-1" autocomplete="off" placeholder="Nº, marca, modelo ou unidade" value="${esc(p ? docPatRot(p) : '')}"></label><div class="cands" id="doc-c-${esc(f.id)}" hidden></div></div>`;
+  }
+  const ctl = f.tipo === 'area' ? `<textarea ${txt} rows="${rev ? 2 : 3}">${esc(v)}</textarea>`
+    : f.tipo === 'data' ? `<input class="input" type="date" data-in="doc" ${a} value="${esc(v)}">`
+    : ['unidade', 'setor', 'escolha'].includes(f.tipo) ? `<select class="input" data-ch="doc" ${a}>${docOpts(d, f)}</select>`
+    : `<input ${txt} value="${esc(v)}">`;
+  const rest = f.auto ? `<button class="btn icon sm ghost doc-rest" data-act="doc-restaurar" data-id="${esc(f.id)}" title="Restaurar valor automático" aria-label="Restaurar valor automático de ${esc(f.rotulo)}"${d.manual[f.id] ? '' : ' hidden'}>${icon('undo')}</button>` : '';
+  return `<div class="doc-f"><label class="f">${rot}${ctl}</label>${rest}</div>`;
+}
+function docFolha(d, m = docModelo(d)) {
+  let html;
+  try { html = m.corpo({ ...d.v }); } catch (e) { html = `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
+  return `<article class="doc-folha" lang="pt-BR">${html}</article>`;
+}
+function docSync(d, exceto) {
+  const m = docModelo(d);
+  m.campos.forEach(f => {
+    const el = $('#doc-f-' + f.id), v = d.v[f.id] ?? ''; if (!el) return;
+    if (f.tipo === 'pat') { const p = docPat(db, v); $('#doc-s-' + f.id).textContent = docPatSel(p); if (f.id !== exceto) el.value = p ? docPatRot(p) : ''; }
+    else if (f.id !== exceto && el.tagName === 'SELECT') { el.innerHTML = docOpts(d, f); el.value = v; }
+    else if (f.id !== exceto && el.value !== v) el.value = v;
+    const r = $(`.doc-rest[data-id="${f.id}"]`); if (r) r.hidden = !d.manual[f.id];
+    if (String(v).trim()) el.classList.remove('err');
+  });
+  $('#doc-prev').innerHTML = docFolha(d, m);
+}
+function docPatBusca(q) {
+  const nq = norm(q), n = q.trim();
+  if (!nq) return [];
+  return db.pats.filter(p => hit(norm([p.num, p.locadora, p.cat, p.marca, p.modelo, p.un, p.setor].join(' ')), nq))
+    .sort((a, b) => (b.num === n) - (a.num === n) || (a.status !== 'ativo') - (b.status !== 'ativo')).slice(0, 8);
+}
+function docPatCands(t) {
+  const id = t.dataset.id, box = $('#doc-c-' + id);
+  if (!t.value.trim()) { box.hidden = true; if (ui.doc.v[id]) { docSet(ui.doc, id, ''); docSync(ui.doc, id); } return; }
+  const lista = docPatBusca(t.value);
+  box.hidden = false;
+  box.innerHTML = lista.length ? lista.map(p => `<button data-act="doc-pat" data-campo="${esc(id)}" data-id="${esc(p.id)}">${patIdentHtml(p)}<span>${esc(patDesc(p))}</span><span class="sub">${p.status === 'descartado' ? 'Descartado · ' : ''}${esc(loc(p.un, p.setor))}</span></button>`).join('')
+    : `<div class="empty" style="padding:12px">Nenhum patrimônio encontrado.</div>`;
+}
+function viewDocumentos() {
+  const d = ui.doc, m = d && docModelo(d);
+  if (!m) return pageHead('Documentos', 'Etapa 1 de 3 · Escolha um modelo. Depois preencha, revise e gere o PDF.') +
+    (MODELOS_DOC.length ? `<div class="doc-cat">${MODELOS_DOC.map(x => `<button class="card doc-card" data-act="doc-novo" data-id="${esc(x.id)}"><b>${icon('doc')}${esc(x.titulo)}</b><small>${esc(x.descricao)}</small></button>`).join('')}</div>`
+      : `<div class="card empty"><b>Nenhum modelo</b>Ainda não há modelos de documento.</div>`);
+  return d.etapa === 'rev' ? docRevisao(d, m) : docForm(d, m);
+}
+function docForm(d, m) {
+  return pageHead(m.titulo, 'Etapa 2 de 3 · Preencha os campos. Os automáticos podem ser alterados.', `<button class="btn" data-act="doc-modelos">${icon('undo')}Modelos</button><button class="btn primary" data-act="doc-revisar">${icon('check')}Revisar</button>`) +
+    `<div class="doc-ed"><section class="card"><header><h2>Campos</h2></header><div class="doc-campos">${m.campos.map(f => docCampo(d, f)).join('')}</div></section>
+    <div class="doc-prev doc-lado" id="doc-prev">${docFolha(d, m)}</div></div>`;
+}
+function docRevisao(d, m) {
+  return pageHead(m.titulo, 'Etapa 3 de 3 · Confira a folha e corrija os valores. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<button class="btn" data-act="doc-voltar">${icon('edit')}Voltar ao preenchimento</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
+    `<div class="doc-ed rev"><div class="doc-prev" id="doc-prev">${docFolha(d, m)}</div>
+    <section class="card doc-lado"><header><h2>Valores</h2></header><div class="doc-campos">${m.campos.map(f => docCampo(d, f, true)).join('')}</div></section></div>`;
+}
+function docEtapa(etapa) { ui.doc.etapa = etapa; render(); window.scrollTo(0, 0); }
+function docPdf() {
+  const d = ui.doc, m = docModelo(d);
+  if (!docValida(d)) return;
+  $('#print').innerHTML = docFolha(d, m);
+  const t = document.title;
+  document.title = `${m.titulo} ${today()}`;
+  document.documentElement.classList.add('doc-imprimindo');
+  window.print();
+  document.documentElement.classList.remove('doc-imprimindo');
+  document.title = t;
+}
+
 /* ---------- busca global ---------- */
 function globalResults(q) {
   const nq = norm(q), groups = [];
@@ -3071,6 +3272,22 @@ const ACTIONS = {
   'txt-limpar': () => { const de = ui.carro; ui.txt = ''; ui.carro = 0; render(); $('#txt-in').focus(); retorno(de); },
   'txt-registrar': () => { clearTimeout(ui.txtT); txtRegistrar(); },
   print: t => printProto(t.dataset.id),
+  'doc-novo': t => { ui.doc = docNovo(t.dataset.id); docEtapa('form'); const el = $('#view .doc-campos .input'); el && el.focus({ preventScroll: true }); },
+  'doc-modelos': () => {
+    const sair = () => { ui.doc = null; render(); window.scrollTo(0, 0); };
+    if (!docSujo(ui.doc)) return sair();
+    confirmDialog('Voltar aos modelos?', 'Os valores preenchidos neste documento serão descartados.', 'Descartar', () => { closeLayer(); sair(); }, true);
+  },
+  'doc-revisar': () => { if (docValida(ui.doc)) docEtapa('rev'); },
+  'doc-voltar': () => docEtapa('form'),
+  'doc-pdf': docPdf,
+  'doc-restaurar': t => {
+    const id = t.dataset.id, f = docModelo(ui.doc).campos.find(c => c.id === id);
+    ui.doc.manual[id] = false; docSet(ui.doc, id, docAuto(f, ui.doc.v)); docSync(ui.doc);
+    $('#doc-f-' + id).focus();
+  },
+  'doc-pat': t => { const c = t.dataset.campo; docSet(ui.doc, c, t.dataset.id); docSync(ui.doc); $('#doc-c-' + c).hidden = true; $('#doc-f-' + c).focus(); },
+  'doc-pat-1': t => { const b = $(`#doc-c-${t.dataset.id}:not([hidden]) button`); b && b.click(); },
   undo: t => undoProto(t.dataset.id),
   'mov-toggle': (t, e) => { if (e.target.closest('button')) return; const n = t.dataset.num; ui.open[n] = !ui.open[n]; $('#mtable').innerHTML = movTable(); },
   'setor-add': t => { const i = +t.dataset.u, inp = $('#ns' + i), v = inp.value.trim(); if (!v) return inp.focus(); const u = db.unidades[i]; if (u.setores.some(s => norm(s) === norm(v))) return toast('Setor já existe.', true); u.setores.push(v); commit(); render(); $('#ns' + i).focus(); },
@@ -3116,12 +3333,15 @@ const INPUTS = {
   'lt-sp': t => { const n = $('[data-lt=num]', t.closest('li')); n.disabled = t.checked; if (t.checked) n.value = ''; loteCheck(); },
   'lt-paste': lotePaste,
   restore: t => { if (t.files[0]) restoreFile(t.files[0]); t.value = ''; },
+  doc: t => { docSet(ui.doc, t.dataset.id, t.value); docSync(ui.doc, t.dataset.id); },
+  'doc-pat': docPatCands,
   'pat-foto': t => { if (t.files.length) patFotoAdd(t.files); t.value = ''; },
 };
 
 document.addEventListener('click', e => {
   const t = e.target.closest('[data-act]');
   if (!e.target.closest('.gsearch')) $('#gresults').hidden = true;
+  if (!e.target.closest('.doc-pat')) $$('.doc-pat .cands').forEach(b => { b.hidden = true; });
   if (!t) return;
   const link = e.target.closest('a[href]');
   if (link && link !== t && t.contains(link)) return;
