@@ -59,5 +59,5 @@ Fluxo: `init()` → `loadDb()` (IndexedDB; vazio → `buildInitialDb()` do seed)
 - **Ir direto para:** seção `CONFIGURAÇÕES`: `viewConfig`, `backup` (async, inclui fotos), `restoreFile` (aceita backup sem fotos); `pats-zerar` e `reset` em `ACTIONS`.
 
 ## Build e mapa de arquivos
-- `build.ps1` troca `__SEED__` (JSON compactado, `</` escapado), `__SOM__`/`__SOM_PAPEL__`/`__SOM_FOLHA__`/`__SOM_FOGO__` pelos MP3 e `__BRASAO__` pelo PNG, em base64 → `Almoxarifado TI.html` (gerado, não editar nem ler).
+- `build.ps1` troca `__SEED__` (JSON compactado, `</` escapado), `__SOM__`/`__SOM_PAPEL__`/`__SOM_FOLHA__`/`__SOM_FOGO__` pelos MP3 e `__BRASAO__` pelo PNG, em base64 → `index.html` (gerado, não editar nem ler).
 - `src/app.html` (fonte), `src/seed.json` (dados da planilha), `src/som-*.mp3` (máquina, papel, folha, fogo; usos em `SOM`), `src/brasao.png` (brasão do timbre dos documentos), `tools/extrair-planilha.ps1`, `Controle de almoxarifado TI SASC.xlsx` (só leitura), `docs/context/`.

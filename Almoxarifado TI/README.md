@@ -43,14 +43,14 @@ Um único arquivo HTML. Sem servidor, sem login, sem internet.
 ## 🚀 Como usar
 
 1. Baixe ou clone este repositório.
-2. Abra o arquivo **`Almoxarifado TI.html`** no navegador (duplo clique).
+2. Abra o arquivo **`index.html`** no navegador (duplo clique).
 3. Pronto. Os dados ficam salvos no IndexedDB do próprio navegador.
 
 > ⚠️ Como os dados ficam só no navegador, limpar o histórico pode apagá-los. Faça backups periódicos pelo botão **Fazer backup**.
 
 ## 🛠️ Desenvolvimento
 
-O código-fonte fica em `src/app.html`. O arquivo `Almoxarifado TI.html` é **gerado** pelo build, então não o edite diretamente.
+O código-fonte fica em `src/app.html`. O arquivo `index.html` é **gerado** pelo build, então não o edite diretamente.
 
 ```powershell
 # Gera o entregável (junta app.html + seed.json + sons em base64)
@@ -71,7 +71,7 @@ Os dados iniciais vieram da planilha `Controle de almoxarifado TI SASC.xlsx`.
 ├── build.ps1          gera o HTML único
 ├── DESIGN.md          identidade visual
 ├── PRODUCT.md         definição do produto
-└── Almoxarifado TI.html   entregável gerado
+└── index.html         entregável gerado
 ```
 
 ## 🎨 Identidade visual
