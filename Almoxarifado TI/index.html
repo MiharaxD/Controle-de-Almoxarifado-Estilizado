@@ -28,7 +28,7 @@
   --fogo: #FF9A2E; --fogo-claro: #FFEBB0; --fogo-fundo: #D9441A; --carvao: #1E140C; --tostado: rgba(120, 66, 20, .55); --fumaca: rgba(168, 158, 142, .30); --clarao: rgba(255, 140, 40, .20);
   --envelope: #CDB68A; --envelope-2: #B79D6E; --envelope-dentro: #6F5C3C; --envelope-borda: rgba(70, 50, 20, .38);
   --maquina: "Courier New", Courier, "Cascadia Mono", monospace;
-  --doc-papel: #FFFFFF; --doc-tinta: #111111; --doc-tinta-2: #4A4A4A; --doc-linha: #6B6B6B; --doc-falta: rgba(243, 174, 72, .28);
+  --doc-papel: #FFFFFF; --doc-tinta: #111111; --doc-tinta-2: #4A4A4A; --doc-linha: #6B6B6B; --doc-falta: rgba(243, 174, 72, .28); --doc-orfao: rgba(220, 38, 38, .16); --doc-orfao-tinta: #B42318;
   --doc-fonte: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --fibra: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .31 0 0 0 0 .16 0 0 0 .55 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   --manchas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .4 0 0 0 0 .18 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
@@ -656,12 +656,39 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 
 /* documentos */
 .doc-cat { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
-.doc-card { --tilt: -.6deg; display: flex; flex-direction: column; gap: 8px; padding: 18px; text-align: left; color: var(--text); cursor: pointer; transform: rotate(var(--tilt)); transition: transform .3s var(--out), border-color .2s, box-shadow .3s var(--out); }
+.doc-card { --tilt: -.6deg; display: flex; flex-direction: column; padding: 0; color: var(--text); transform: rotate(var(--tilt)); transition: transform .3s var(--out), border-color .2s, box-shadow .3s var(--out); }
 .doc-card:nth-child(even) { --tilt: .7deg; }
-.doc-card:hover, .doc-card:focus-visible { transform: rotate(0deg) translateY(-3px); border-color: var(--accent-line); box-shadow: var(--shadow-2), 0 10px 26px -12px var(--accent-glow); outline: none; }
+.doc-card:hover, .doc-card:focus-within { transform: rotate(0deg) translateY(-3px); border-color: var(--accent-line); box-shadow: var(--shadow-2), 0 10px 26px -12px var(--accent-glow); outline: none; }
 .doc-card b { display: flex; align-items: center; gap: 10px; font: 600 17px/1.15 var(--cond); font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; }
 .doc-card b svg.i { color: var(--accent); }
 .doc-card small { color: var(--text-2); font-size: 13px; line-height: 1.4; }
+.doc-card .doc-usar { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 18px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.doc-card .doc-usar:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
+.doc-card footer { display: flex; align-items: center; gap: 2px; padding: 6px 8px 6px 18px; border-top: 1px solid var(--rule); }
+.doc-card .doc-origem { margin-right: auto; color: var(--text-3); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
+.ed-form { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
+.ed-campos { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 16px; list-style: none; }
+.ed-campo { padding: 10px 12px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--well); }
+.ed-campo-top { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
+.ed-campo-top code { font: 600 13px/1 var(--mono); color: var(--accent); overflow-wrap: anywhere; }
+.ed-campo-top .ed-tipo { margin: 0 auto 0 8px; color: var(--text-3); font-size: 12px; }
+.ed-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; align-items: end; }
+.ed-novo { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 0 16px 16px; }
+.ed-novo label.f:first-child { flex: 1 1 220px; }
+.ed-ins { display: flex; flex-direction: column; gap: 8px; }
+.ed-grupo { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
+.ed-grupo > span { min-width: 58px; color: var(--sage); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
+.ed-chip { min-height: 26px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); font: 13px/1 var(--font); cursor: pointer; transition: border-color .15s, color .15s, background-color .15s; }
+.ed-chip:hover, .ed-chip:focus-visible { border-color: var(--accent-line); color: var(--text); background: var(--accent-soft); }
+.ed-corpo { min-height: 320px; font: 14px/1.5 var(--mono); resize: vertical; }
+.ed-ajuda { color: var(--text-2); font-size: 13px; line-height: 1.5; }
+.ed-ajuda summary { color: var(--sage); cursor: pointer; font: 600 12px/1.2 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
+.ed-ajuda ul { margin: 8px 0 0; padding-left: 18px; }
+.ed-ajuda code { font: 12px var(--mono); color: var(--text); }
+.ed-erros { padding: 10px 12px; border: 1px solid var(--danger-line); border-radius: var(--radius); background: var(--danger-soft); color: var(--text); font-size: 13px; }
+.ed-erros ul { margin: 6px 0 0; padding-left: 18px; overflow-wrap: anywhere; }
+.ed-erros:has(.ok) { border-color: var(--accent-line); background: var(--accent-soft); }
+.ed-erros .ok { display: flex; align-items: center; gap: 8px; margin: 0; }
 .doc-ed { display: grid; grid-template-columns: minmax(300px, 2fr) minmax(0, 3fr); gap: 18px; align-items: start; }
 .doc-ed.rev { grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr); }
 .doc-campos { display: flex; flex-direction: column; gap: 14px; padding: 16px; }
@@ -704,13 +731,15 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .doc-folha .doc-linha > i.p { flex: .5; }
 .doc-folha .doc-receb { margin-top: 3em; break-inside: avoid; }
 .doc-folha .doc-receb .doc-linha { margin-bottom: 1.6em; }
-.doc-folha .doc-assin { display: flex; flex-direction: column; align-items: center; gap: 4em; margin-top: 4.5em; break-inside: avoid; }
-.doc-folha .doc-assin.perto { margin-top: 3em; }
+.doc-folha .doc-assin { display: flex; flex-direction: column; align-items: center; gap: 6em; margin-top: 8em; break-inside: avoid; }
+.doc-folha .doc-assin.perto { margin-top: 5em; }
 .doc-folha .doc-assin div { display: flex; flex-direction: column; width: 55%; padding-top: .2em; border-top: 1px solid var(--doc-tinta); text-align: center; font-weight: 700; line-height: 1.3; }
 .doc-folha h1, .doc-folha h2 { break-after: avoid; }
 .doc-folha p { orphans: 3; widows: 3; }
 .doc-folha tr { break-inside: avoid; }
 .doc-erro { color: var(--danger-ink); }
+.doc-folha .doc-orfao { padding: 0 .15em; background: var(--doc-orfao); color: var(--doc-orfao-tinta); outline: 1px dashed var(--doc-orfao-tinta); }
+.doc-folha .doc-quebra { margin: 1.5em 0; border-top: 1px dashed var(--doc-linha); }
 
 /* entrada de página (só ao trocar de aba) */
 .view.entering > * { animation: rise .26s var(--out) backwards; }
@@ -804,6 +833,8 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 }
 @media (max-width: 520px) {
   .g-kpi, .quick { grid-template-columns: minmax(0, 1fr); }
+  .ed-grade { grid-template-columns: minmax(0, 1fr); }
+  .ed-grupo > span { flex-basis: 100%; }
   .row2 { grid-template-columns: 1fr; }
   .alavanca, .solta, .placa { display: none; }
   .frente { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
@@ -851,13 +882,18 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
   html.doc-imprimindo { color-scheme: light; }
   .doc-imprimindo body { page: doc; background: var(--doc-papel); }
   .doc-imprimindo body::before, .doc-imprimindo body::after { display: none; }
-  #print .doc-folha { width: auto; max-width: none; aspect-ratio: auto; min-height: 272mm; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
+  #print .doc-pags { margin: 0; }
+  #print .doc-pags > * > tr > td { padding: 0; border: 0; }
+  #print .doc-pe { height: 20mm; }
+  #print .doc-folha { display: block; width: auto; max-width: none; aspect-ratio: auto; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
+  #print .doc-folha .doc-rodape { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; background: var(--doc-papel); }
   #print .doc-folha h1, #print .doc-folha h2 { margin: 1.6em 0 1.4em; font-size: 1em; }
   #print .doc-folha table { margin: .8em 0; }
   #print .doc-folha th, #print .doc-folha td { padding: .3em .5em; border-color: var(--doc-linha); font-size: 1em; }
   #print .doc-folha th { font-size: .85em; }
   #print .doc-folha th, #print .doc-folha td.q { text-align: center; }
   #print .doc-folha .doc-branco { background: none; }
+  #print .doc-folha .doc-quebra { margin: 0; border: 0; break-after: page; }
 }
 @page doc { size: A4; margin: 12mm 25mm 10mm; }
 </style>
@@ -950,121 +986,191 @@ const DOC_NOMES = {
   monitor: ['monitor', 'monitores', 'm'], impressora: ['impressora', 'impressoras', 'f'], projetor: ['projetor', 'projetores', 'm'],
   estabilizador: ['estabilizador', 'estabilizadores', 'm'], roteador: ['roteador', 'roteadores', 'm'],
 };
-// Campos comuns aos modelos (formato em docs/context/ROUTES.md, seção "Documentos").
-const DOC_CAMPO = {
-  data: { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: () => today() },
-  numero: { id: 'numero', rotulo: 'Nº da C.I', tipo: 'texto', obrigatorio: true, serie: 'ci', dica: 'Sugerido pela numeração; ao gerar o PDF, o próximo avança' },
-  resposta: { id: 'resposta', rotulo: 'Em resposta à', tipo: 'texto', dica: 'Opcional, ex.: C.I Nº 18/CREAS-SEMASC/2026' },
-  bens: [1, 2, 3].map(i => ({ id: `bem${i}`, rotulo: `Patrimônio ${i}`, tipo: 'pat', dica: i === 1 ? 'Busque pelo nº, marca, modelo ou unidade' : '' })),
-  outros: { id: 'outros', rotulo: 'Outros equipamentos', tipo: 'area', dica: 'Um por linha, ex.: CPU 2: SEM PATRIMÔNIO' },
-  un: { id: 'un', rotulo: 'Unidade', tipo: 'unidade', auto: (base, v) => docBemFora(base, v)?.un },
-  setor: { id: 'setor', rotulo: 'Setor', tipo: 'setor', de: 'un', auto: (base, v) => docBemFora(base, v)?.setor },
-  para: { id: 'para', rotulo: 'Para', tipo: 'texto', obrigatorio: true, dica: 'Vem da unidade e do setor', auto: (base, v) => docPara(v.un, v.setor) },
-  assin: { id: 'assin', rotulo: 'Assinado por', tipo: 'texto', obrigatorio: true, auto: () => DOC_ORGAO.assinante },
-  titular: { id: 'titular', rotulo: `Assinatura de ${DOC_ORGAO.titular}`, tipo: 'escolha', opcoes: ['Sim', 'Não'] },
+// Modelos de documento são dados (db.modelosDoc); formato e marcação do corpo em docs/context/ROUTES.md, seção "Documentos".
+const DOC_TIPOS = { texto: 'Texto curto', area: 'Texto longo', data: 'Data', unidade: 'Unidade', setor: 'Setor', pat: 'Patrimônio', escolha: 'Escolha', bens: 'Outros bens (lista)' };
+const DOC_RESERVADOS = ['bens', 'orgao'];
+const DOC_ORGAO_CHAVES = ['cidade', 'sigla', 'de', 'assinante', 'cargo', 'titular', 'titularCargo'];
+// Fonte automática de um campo: chave gravada no modelo → valor calculado aqui.
+const DOC_AUTO = {
+  hoje: { rotulo: 'Data de hoje', tipos: ['data'], fn: () => today() },
+  'num-ci': { rotulo: 'Próximo nº de C.I', tipos: ['texto'], serie: 'ci' },
+  'num-memorando': { rotulo: 'Próximo nº de memorando', tipos: ['texto'], serie: 'memorando' },
+  assinante: { rotulo: `Quem assina (${DOC_ORGAO.assinante})`, tipos: ['texto'], fn: () => DOC_ORGAO.assinante },
+  vocativo: { rotulo: 'Saudação à secretária', tipos: ['texto'], fn: () => DOC_ORGAO.vocativo },
+  'unidade-pat': { rotulo: 'Unidade do patrimônio escolhido (fora do estoque)', tipos: ['unidade'], fn: (base, v, m) => docBemFora(base, v, m)?.un },
+  'setor-pat': { rotulo: 'Setor do patrimônio escolhido (fora do estoque)', tipos: ['setor'], fn: (base, v, m) => docBemFora(base, v, m)?.setor },
+  destino: { rotulo: 'Setor e unidade escolhidos (ex.: PSB - SEMASC)', tipos: ['texto'], fn: (base, v, m) => docDestino(v, m) },
 };
-const docTitular = padrao => ({ ...DOC_CAMPO.titular, auto: () => padrao });
-const MODELOS_DOC = [
+// Peças do corpo: [nome] ou [nome: argumento], sempre em linha própria. `ins` é o que o botão do editor insere.
+const DOC_PECAS = {
+  'local e data': { ins: '[local e data]' },
+  'referencia': { ins: '[referência: C.I Nº {{numero.oficial}} | Outra linha]' },
+  'de e para': { ins: '[de e para: {{orgao.de}} | Destinatário]' },
+  'assinatura': { ins: '[assinatura: {{orgao.assinante}} | {{orgao.cargo}}]' },
+  'assinatura perto': { ins: '[assinatura perto: Assinatura e carimbo]' },
+  'linha': { ins: '[linha: Nome ___]' },
+  'recebimento': { ins: '[recebimento: Recebido por: ___]' },
+  'bens': { ins: '[bens]' },
+  'lista': { ins: '[lista: campo]', campo: 'area' },
+  'tabela de itens': { ins: '[tabela de itens: campo]', campo: 'area' },
+  'quebra': { ins: '[quebra]' },
+};
+const DOC_C = {
+  data: { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: 'hoje' },
+  numero: { id: 'numero', rotulo: 'Nº da C.I', tipo: 'texto', obrigatorio: true, auto: 'num-ci', dica: 'Sugerido pela numeração; ao gerar o PDF, o próximo avança' },
+  resposta: { id: 'resposta', rotulo: 'Em resposta à', tipo: 'texto', dica: 'Opcional, ex.: C.I Nº 18/CREAS-SEMASC/2026' },
+  bens: [1, 2, 3].map(i => ({ id: `bem${i}`, rotulo: `Patrimônio ${i}`, tipo: 'pat', ...(i === 1 ? { dica: 'Busque pelo nº, marca, modelo ou unidade' } : {}) })),
+  outros: { id: 'outros', rotulo: 'Outros equipamentos', tipo: 'bens', dica: 'Um por linha, ex.: CPU 2: SEM PATRIMÔNIO' },
+  un: { id: 'un', rotulo: 'Unidade', tipo: 'unidade', auto: 'unidade-pat' },
+  setor: { id: 'setor', rotulo: 'Setor', tipo: 'setor', depende: 'un', auto: 'setor-pat' },
+  para: { id: 'para', rotulo: 'Para', tipo: 'texto', obrigatorio: true, dica: 'Vem da unidade e do setor', auto: 'destino' },
+  assin: { id: 'assin', rotulo: 'Assinado por', tipo: 'texto', obrigatorio: true, auto: 'assinante' },
+  titular: padrao => ({ id: 'titular', rotulo: `Assinatura de ${DOC_ORGAO.titular}`, tipo: 'escolha', opcoes: ['Sim', 'Não'], padrao }),
+};
+const DOC_TOPO_CI = '[local e data]\n[referência: C.I Nº {{numero.oficial}}]\n[de e para: {{orgao.de}} | {{para}}]';
+const DOC_FECHO = '> Na oportunidade, apresentamos manifestação de elevada estima e consideração.\n\n> Atenciosamente,';
+const DOC_ASSIN = '[assinatura: {{assin}} | {{orgao.cargo}}]\n[assinatura: {{?titular=Sim:{{orgao.titular}}}} | {{orgao.titularCargo}}]';
+const DOC_PADRAO = [
   {
-    id: 'ci-envio',
+    id: 'ci-envio', origem: 'padrao',
     titulo: 'C.I · Envio de equipamento',
     descricao: 'Avisa o envio de computador, impressora ou outro bem para uma unidade, com os números de patrimônio.',
-    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, DOC_CAMPO.resposta, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para,
-      { id: 'objetivo', rotulo: 'Objetivo', tipo: 'texto', dica: 'Opcional; completa "com o objetivo de…"' }, DOC_CAMPO.assin, docTitular('Sim')],
-    corpo: v => {
-      const lin = docBens(v), g = docGrupo(lin);
-      return docTopo(v, { ref: docCI(v), resposta: v.resposta, para: v.para }) +
-        `<p class="ind">Venho por meio deste notificar que será feito o envio ${g.de} a seguir para a unidade <b>${docEsc(v.para)}</b>${v.objetivo ? `, com o objetivo de ${esc(v.objetivo)}` : ''}.</p>
-        <p class="ind">${g.n ? 'Seguem os números' : 'Segue o número'} de patrimônio:</p>${docLista(lin)}${docFecho()}${docAssin(v)}`;
-    },
+    campos: [DOC_C.data, DOC_C.numero, DOC_C.resposta, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
+      { id: 'objetivo', rotulo: 'Objetivo', tipo: 'texto', dica: 'Opcional; completa "com o objetivo de…"' }, DOC_C.assin, DOC_C.titular('Sim')],
+    corpo: `[local e data]
+[referência: C.I Nº {{numero.oficial}} | {{?resposta:Em resposta à }}]
+[de e para: {{orgao.de}} | {{para}}]
+
+> Venho por meio deste notificar que será feito o envio {{bens.de}} a seguir para a unidade **{{para}}**{{?objetivo:, com o objetivo de }}.
+
+> {{bens.n:Segue o número|Seguem os números}} de patrimônio:
+
+[bens]
+
+${DOC_FECHO}
+
+${DOC_ASSIN}`,
   },
   {
-    id: 'ci-devolucao',
+    id: 'ci-devolucao', origem: 'padrao',
     titulo: 'C.I · Devolução após manutenção',
     descricao: 'Registra a volta de um equipamento consertado para o setor de origem.',
-    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para, DOC_CAMPO.assin, docTitular('Não')],
-    corpo: v => {
-      const lin = docBens(v), g = docGrupo(lin);
-      return docTopo(v, { ref: docCI(v), para: v.para }) +
-        `<p class="ind">Informo por meio deste que ${docObjeto(lin, g)}, encaminhad${g.o} para manutenção, ${g.n ? 'estão' : 'está'} sendo devolvid${g.o} ao setor de origem após a realização dos procedimentos necessários.</p>
-        <p class="ind">Fica registrada, por meio deste documento, a devolução d${g.o} referid${g.o} ${g.nome}.</p>
-        <p class="ind">${g.n ? 'Seguem os números' : 'Segue o número'} de patrimônio:</p>${docLista(lin)}${docFecho()}${docAssin(v)}`;
-    },
+    campos: [DOC_C.data, DOC_C.numero, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para, DOC_C.assin, DOC_C.titular('Não')],
+    corpo: `${DOC_TOPO_CI}
+
+> Informo por meio deste que {{bens.objeto}}, encaminhad{{bens.o}} para manutenção, {{bens.n:está|estão}} sendo devolvid{{bens.o}} ao setor de origem após a realização dos procedimentos necessários.
+
+> Fica registrada, por meio deste documento, a devolução d{{bens.o}} referid{{bens.o}} {{bens.nome}}.
+
+> {{bens.n:Segue o número|Seguem os números}} de patrimônio:
+
+[bens]
+
+${DOC_FECHO}
+
+${DOC_ASSIN}`,
   },
   {
-    id: 'ci-comunicado',
+    id: 'ci-comunicado', origem: 'padrao',
     titulo: 'C.I · Comunicado ou relatório',
     descricao: 'Texto livre ao Gabinete ou a outro setor: relatório de visita, defeito, pedido de peça.',
-    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, { ...DOC_CAMPO.para, dica: 'Ex.: Gabinete SEMASC', auto: () => `Gabinete ${DOC_ORGAO.sigla}` },
-      { id: 'vocativo', rotulo: 'Saudação', tipo: 'texto', dica: 'Opcional', auto: () => DOC_ORGAO.vocativo },
+    campos: [DOC_C.data, DOC_C.numero, { ...DOC_C.para, auto: undefined, dica: 'Ex.: Gabinete SEMASC', padrao: `Gabinete ${DOC_ORGAO.sigla}` },
+      { id: 'vocativo', rotulo: 'Saudação', tipo: 'texto', dica: 'Opcional', auto: 'vocativo' },
       { id: 'texto', rotulo: 'Texto', tipo: 'area', obrigatorio: true, dica: 'Um parágrafo por linha; **assim** fica em negrito' },
-      DOC_CAMPO.assin, docTitular('Não')],
-    corpo: v => docTopo(v, { ref: docCI(v), para: v.para }) + (v.vocativo ? `<p>${esc(v.vocativo)}</p>` : '') + docTexto(v.texto) + docFecho() + docAssin(v),
+      DOC_C.assin, DOC_C.titular('Não')],
+    corpo: `${DOC_TOPO_CI}
+
+{{?vocativo:}}
+
+> {{texto}}
+
+${DOC_FECHO}
+
+${DOC_ASSIN}`,
   },
   {
-    id: 'requisicao',
+    id: 'requisicao', origem: 'padrao',
     titulo: 'Requisição de material',
     descricao: 'Pede itens ao Almoxarifado ou a Compras, com a tabela de quantidades solicitadas.',
-    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, { ...DOC_CAMPO.para, dica: 'Ex.: Almoxarifado ou Compras', auto: () => 'Almoxarifado' },
-      { id: 'texto', rotulo: 'Texto', tipo: 'area', obrigatorio: true, auto: () => 'Solicito o fornecimento dos itens relacionados neste documento, conforme as quantidades indicadas, para atender às necessidades do setor.' },
+    campos: [DOC_C.data, DOC_C.numero, { ...DOC_C.para, auto: undefined, dica: 'Ex.: Almoxarifado ou Compras', padrao: 'Almoxarifado' },
+      { id: 'texto', rotulo: 'Texto', tipo: 'area', obrigatorio: true, padrao: 'Solicito o fornecimento dos itens relacionados neste documento, conforme as quantidades indicadas, para atender às necessidades do setor.' },
       { id: 'itens', rotulo: 'Itens', tipo: 'area', obrigatorio: true, dica: 'Um por linha: quantidade x descrição, ex.: 2 caixas x Conector RJ45' },
-      { id: 'solicitante', rotulo: 'Solicitante', tipo: 'texto', obrigatorio: true, auto: () => DOC_ORGAO.assinante }],
-    corpo: v => {
-      const itens = docItensReq(v.itens), vazio = '<td class="q"></td><td class="q"></td>';
-      return docTopo(v, { ref: docCI(v), para: v.para }) + docTexto(v.texto) +
-        `<p><b>Nome do solicitante:</b> ${docEsc(v.solicitante)}</p><div class="doc-assin perto"><div>Assinatura e carimbo</div></div>
-        <h2>Requisição de material geral</h2>
-        <table><thead><tr><th>Descrição do material</th><th>Quantidade solicitada</th><th>Quantidade autorizada</th><th>Quantidade liberada</th></tr></thead>
-        <tbody>${itens.length ? itens.map(([d, q]) => `<tr><td>${esc(d)}</td><td class="q">${esc(q)}</td>${vazio}</tr>`).join('') : `<tr><td>${docEsc('')}</td><td class="q"></td>${vazio}</tr>`}</tbody></table>`;
-    },
+      { id: 'solicitante', rotulo: 'Solicitante', tipo: 'texto', obrigatorio: true, auto: 'assinante' }],
+    corpo: `${DOC_TOPO_CI}
+
+> {{texto}}
+
+**Nome do solicitante:** {{solicitante}}
+
+[assinatura perto: Assinatura e carimbo]
+
+## Requisição de material geral
+
+[tabela de itens: itens]`,
   },
   {
-    id: 'protocolo-entrega',
+    id: 'protocolo-entrega', origem: 'padrao',
     titulo: 'Protocolo de entrega de material',
     descricao: 'Acompanha a entrega de periféricos e materiais; a unidade assina o recebimento.',
-    campos: [DOC_CAMPO.data, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para, { ...DOC_CAMPO.resposta, rotulo: 'Pedido da unidade', dica: 'Opcional, ex.: C.I nº 073/SASC/CRASI/2024' },
+    campos: [DOC_C.data, DOC_C.un, DOC_C.setor, DOC_C.para, { ...DOC_C.resposta, rotulo: 'Pedido da unidade', dica: 'Opcional, ex.: C.I nº 073/SASC/CRASI/2024' },
       { id: 'itens', rotulo: 'Itens entregues', tipo: 'area', obrigatorio: true, dica: 'Um por linha, ex.: 2 x Teclados' }],
-    corpo: v => {
-      const itens = docLinhas(v.itens);
-      return docTopo(v, { para: v.para }) + `<h1>Protocolo de entrega de material geral</h1>
-        <p>Conforme solicitado${v.resposta ? ` na ${esc(v.resposta)}` : ''}, estamos enviando ${itens.length > 1 ? 'os itens' : 'o item'} abaixo.</p>
-        <div class="doc-lista forte sub">${itens.length ? itens.map(l => `<div>${esc(l)}</div>`).join('') : `<div>${docEsc('')}</div>`}</div>
-        <p>Favor conferir o material entregue e assinar o seu recebimento neste protocolo de entrega.</p>
-        <div class="doc-receb"><div class="doc-linha">Recebido por:<i></i></div><div class="doc-linha">Data: ${docDataVazia()}</div></div>`;
-    },
+    corpo: `[local e data]
+[de e para: {{orgao.de}} | {{para}}]
+
+# Protocolo de entrega de material geral
+
+Conforme solicitado{{?resposta: na }}, estamos enviando {{itens.n:o item|os itens}} abaixo.
+
+[lista: itens]
+
+Favor conferir o material entregue e assinar o seu recebimento neste protocolo de entrega.
+
+[recebimento: Recebido por: ___]
+[recebimento: Data: __/__/____]`,
   },
   {
-    id: 'termo-responsabilidade',
+    id: 'termo-responsabilidade', origem: 'padrao',
     titulo: 'Termo de responsabilidade de equipamento',
     descricao: 'Empréstimo de notebook, projetor ou outro bem a um servidor, com assinatura de devolução.',
-    campos: [DOC_CAMPO.data, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para,
+    campos: [DOC_C.data, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
       { id: 'nome', rotulo: 'Nome do responsável', tipo: 'texto', dica: 'Em branco, fica a linha para preencher à mão' },
       { id: 'matricula', rotulo: 'Matrícula', tipo: 'texto' }, { id: 'cargo', rotulo: 'Cargo', tipo: 'texto' }],
-    corpo: v => {
-      const lin = docBens(v), g = docGrupo(lin);
-      return docTopo(v, { de: DOC_ORGAO.titularCargo, para: v.para }) + `<h1>Termo de responsabilidade para utilização de equipamento</h1>
-        <div class="doc-linha">Eu<i>${esc(v.nome)}</i></div>
-        <div class="doc-linha">Matrícula<i class="p">${esc(v.matricula)}</i>Cargo:<i>${esc(v.cargo)}</i></div>
-        <div class="doc-linha">Data ${docDataVazia()}</div>
-        <p>Lotado(a) nesta ${esc(DOC_ORGAO.titularCargo)}, assumo responsabilidade plena e integral pel${g.o} ${g.nome} abaixo citad${g.o} para uso exclusivo das atividades profissionais deste setor.</p>
-        ${docLista(lin, true)}
-        <div class="doc-receb"><div class="doc-linha">Assinatura de devolução:<i></i>Data ${docDataVazia()}</div></div>`;
-    },
+    corpo: `[local e data]
+[de e para: {{orgao.titularCargo}} | {{para}}]
+
+# Termo de responsabilidade para utilização de equipamento
+
+[linha: Eu {{nome}}]
+[linha: Matrícula {{matricula}} Cargo: {{cargo}}]
+[linha: Data __/__/____]
+
+Lotado(a) nesta {{orgao.titularCargo}}, assumo responsabilidade plena e integral pel{{bens.o}} {{bens.nome}} abaixo citad{{bens.o}} para uso exclusivo das atividades profissionais deste setor.
+
+[bens: termo]
+
+[recebimento: Assinatura de devolução: ___ Data __/__/____]`,
   },
   {
-    id: 'memorando',
+    id: 'memorando', origem: 'padrao',
     titulo: 'Memorando a outra secretaria',
     descricao: 'Encaminha equipamento a outra secretaria e pede o registro da transferência.',
-    campos: [DOC_CAMPO.data, { ...DOC_CAMPO.numero, rotulo: 'Nº do memorando', serie: 'memorando' },
+    campos: [DOC_C.data, { ...DOC_C.numero, rotulo: 'Nº do memorando', auto: 'num-memorando' },
       { id: 'dest', rotulo: 'Destinatário', tipo: 'texto', obrigatorio: true, dica: 'Ex.: Secretaria de Segurança Pública e Controle Urbano' },
-      ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.assin],
-    corpo: v => {
-      const lin = docBens(v), g = docGrupo(lin);
-      return `${docLocal(v)}<div class="doc-ref"><div>${docCI(v, 'Memorando nº')}</div></div><p>À ${docEsc(v.dest)}</p>
-        <p class="ind">Encaminho à ${docEsc(v.dest)} ${docObjeto(lin, g)}, para as providências cabíveis. Solicitamos o recebimento e o devido registro da transferência d${g.o} ${g.nome}.</p>
-        <p class="ind">Sem mais para o momento, aproveitamos a oportunidade para renovar protestos de estima e consideração.</p>
-        <p class="ind">${g.n ? 'Patrimônios' : 'Patrimônio'} d${g.o} ${g.nome} entregue${g.n ? 's' : ''}:</p>${docLista(lin)}${docAssin(v)}`;
-    },
+      ...DOC_C.bens, DOC_C.outros, DOC_C.assin],
+    corpo: `[local e data]
+[referência: Memorando nº {{numero.oficial}}]
+
+À {{dest}}
+
+> Encaminho à {{dest}} {{bens.objeto}}, para as providências cabíveis. Solicitamos o recebimento e o devido registro da transferência {{bens.de}}.
+
+> Sem mais para o momento, aproveitamos a oportunidade para renovar protestos de estima e consideração.
+
+> {{bens.n:Patrimônio|Patrimônios}} {{bens.de}} entregue{{bens.n:|s}}:
+
+[bens]
+
+[assinatura: {{assin}} | {{orgao.cargo}}]`,
   },
 ];
 
@@ -1102,6 +1208,9 @@ const ICONS = {
   form: '<rect x="3" y="3" width="18" height="18" rx="2"/><path d="M7 8h10M7 12h10M7 16h6"/>',
   keyboard: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 16h8"/>',
   doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
+  copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  up: '<path d="m18 15-6-6-6 6"/>',
+  down: '<path d="m6 9 6 6 6-6"/>',
 };
 const icon = (n, cls = '') => `<svg class="i ${cls}" viewBox="0 0 24 24" aria-hidden="true">${ICONS[n] || ''}</svg>`;
 
@@ -1133,16 +1242,18 @@ function idb() {
   });
 }
 async function loadDb() {
+  let r = null;
   try {
     const d = await idb();
-    return await new Promise((res, rej) => {
+    r = await new Promise((res, rej) => {
       const q = d.transaction(IDB_STORE).objectStore(IDB_STORE).get('db');
       q.onsuccess = () => res(q.result);
       q.onerror = () => rej(q.error);
     });
   } catch {
-    try { return JSON.parse(localStorage.getItem('almoxarifado-ti') || 'null'); } catch { return null; }
+    try { r = JSON.parse(localStorage.getItem('almoxarifado-ti') || 'null'); } catch {}
   }
+  return docModelosGarantir(r);
 }
 async function persist() {
   try {
@@ -1304,7 +1415,7 @@ function buildInitialDb() {
     if (a && !a._drop) { a._drop = true; d.conferir = `Constava ativo em ${loc(a.un, a.setor)} na planilha, mas também na aba Descarte.`; d.un = a.un; d.setor = a.setor; d.marca ||= a.marca; }
   }
   db.pats = [...ativos.filter(p => !p._drop), ...descartados].map(({ _proto, _drop, ...p }) => p);
-  return db;
+  return docModelosGarantir(db);
 }
 function emptyDb() {
   return { versao: 1, criado: new Date().toISOString(), config: { protoNext: 1, lastBackup: null }, unidades: [], categorias: [], produtos: [], pats: [], protocolos: [] };
@@ -3165,7 +3276,7 @@ function restoreFile(file) {
     confirmDialog('Restaurar backup?', `Os dados atuais serão substituídos pelo backup (${plural(dados.pats.length, 'patrimônio')}, ${plural(dados.protocolos.length, 'protocolo')}${Object.keys(fotos).length ? ', ' + plural(Object.keys(fotos).length, 'foto') : ''}).`, 'Restaurar', async () => {
       let falhou = 0;
       for (const [id, u] of Object.entries(fotos)) await fotoPut(id, u).catch(() => falhou++);
-      db = dados; commit(); closeLayer(); render(); fotosGc();
+      db = docModelosGarantir(dados); commit(); closeLayer(); render(); fotosGc();
       toast(falhou ? `Backup restaurado, mas ${plural(falhou, 'foto')} não puderam ser salvas.` : 'Backup restaurado.', !!falhou);
     }, true);
   };
@@ -3190,43 +3301,38 @@ function printProto(id) {
 
 /* ---------- DOCUMENTOS ---------- */
 const MESES_EXT = ['janeiro', 'fevereiro', 'março', 'abril', 'maio', 'junho', 'julho', 'agosto', 'setembro', 'outubro', 'novembro', 'dezembro'];
-const docModelo = d => MODELOS_DOC.find(m => m.id === d.id);
+const DOC_GAP = '<span class="doc-branco"></span>';
+const docCopia = x => JSON.parse(JSON.stringify(x));
+function docModelosGarantir(base) {
+  if (base && !Array.isArray(base.modelosDoc)) base.modelosDoc = docCopia(DOC_PADRAO);
+  return base;
+}
+const docModelos = () => db.modelosDoc || [];
+const docModelo = d => d && docModelos().find(m => m.id === d.id);
 const docPat = (base, id) => id ? base.pats.find(p => p.id === id) : null;
-const docEsc = x => String(x ?? '').trim() ? esc(x) : '<span class="doc-branco"></span>';
+const docEsc = x => String(x ?? '').trim() ? esc(x) : DOC_GAP;
 function docData(iso) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return docEsc('');
   const [a, m, d] = iso.split('-').map(Number);
   return esc(`${String(d).padStart(2, '0')} de ${MESES_EXT[m - 1]} de ${a}`);
 }
-const docLocal = v => `<p class="doc-local">${esc(DOC_ORGAO.cidade)}, ${docData(v.data)}</p>`;
 const docAno = data => (/^\d{4}/.test(data || '') ? data : today()).slice(0, 4);
-function docCI(v, pre = 'C.I Nº') {
-  const n = String(v.numero ?? '').trim();
-  return `${pre} ${n ? esc(/^\d$/.test(n) ? '0' + n : n) : docEsc('')}/${esc(DOC_ORGAO.sigla)}/TI/${docAno(v.data)}`;
-}
+const docDataId = m => m.campos.find(c => c.tipo === 'data')?.id;
+const docAnoM = (m, v) => docAno(v[docDataId(m)]);
 const DOC_SERIES = { ci: 'C.I', memorando: 'memorando' };
 const docNumProx = (serie, ano) => db.config.docNum?.[`${serie}-${ano}`] || 1;
-const docNumSugerido = (f, v) => String(docNumProx(f.serie, docAno(v.data))).padStart(2, '0');
+const docNumSugerido = (serie, ano) => String(docNumProx(serie, ano)).padStart(2, '0');
 function docNumGrava(d, m) {
   let mudou = false;
-  m.campos.filter(f => f.serie).forEach(f => {
-    const n = String(d.v[f.id] ?? '').trim(), ano = docAno(d.v.data);
-    if (!/^\d+$/.test(n) || docNumProx(f.serie, ano) > +n) return;
-    (db.config.docNum ||= {})[`${f.serie}-${ano}`] = +n + 1; mudou = true;
+  m.campos.forEach(f => {
+    const serie = DOC_AUTO[f.auto]?.serie; if (!serie) return;
+    const n = String(d.v[f.id] ?? '').trim(), ano = docAnoM(m, d.v);
+    if (!/^\d+$/.test(n) || docNumProx(serie, ano) > +n) return;
+    (db.config.docNum ||= {})[`${serie}-${ano}`] = +n + 1; mudou = true;
   });
   if (mudou) commit();
 }
-function docTopo(v, o) {
-  return docLocal(v) + `<div class="doc-ref">${o.ref ? `<div>${o.ref}</div>` : ''}${o.resposta ? `<div>Em resposta à ${esc(o.resposta)}</div>` : ''}
-    <div class="dp"><div>De: ${docEsc(o.de ?? DOC_ORGAO.de)}</div><div>Para: ${docEsc(o.para)}</div></div></div>`;
-}
-const docFecho = () => '<p class="ind">Na oportunidade, apresentamos manifestação de elevada estima e consideração.</p><p class="ind">Atenciosamente,</p>';
-function docAssin(v) {
-  const tit = v.titular === 'Sim' ? `<div>${esc(DOC_ORGAO.titular)}<span>${esc(DOC_ORGAO.titularCargo)}</span></div>` : '';
-  return `<div class="doc-assin"><div>${docEsc(v.assin)}<span>${esc(DOC_ORGAO.cargo)}</span></div>${tit}</div>`;
-}
 const docLinhas = s => String(s ?? '').split('\n').map(l => l.trim()).filter(Boolean);
-const docTexto = s => docLinhas(s).map(l => `<p class="ind">${esc(l).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')}</p>`).join('') || `<p>${docEsc('')}</p>`;
 const docDataVazia = () => '<span><span class="doc-vazio p"></span>/<span class="doc-vazio p"></span>/<span class="doc-vazio"></span></span>';
 function docItensReq(s) {
   return docLinhas(s).map(l => {
@@ -3236,20 +3342,25 @@ function docItensReq(s) {
     return m ? [m[1], m[2]] : [l, ''];
   });
 }
-const docBemFora = (base, v) => ['bem1', 'bem2', 'bem3'].map(k => docPat(base, v[k])).find(p => p && p.un !== ESTOQUE);
+const docPats = (base, v, m) => [...new Set(m.campos.filter(c => c.tipo === 'pat').map(c => v[c.id]).filter(Boolean))].map(id => docPat(base, id)).filter(Boolean);
+const docBemFora = (base, v, m) => docPats(base, v, m).find(p => p.un !== ESTOQUE);
+const docApelido = un => DOC_ORGAO.apelidos[un] || un || '';
 function docPara(un, setor) {
-  const u = DOC_ORGAO.apelidos[un] || un || '';
+  const u = docApelido(un);
   return !u ? '' : setor ? `${setor} - ${u}` : u;
 }
-function docBens(v) {
-  const ps = [...new Set(['bem1', 'bem2', 'bem3'].map(k => v[k]).filter(Boolean))].map(id => docPat(db, id)).filter(Boolean);
-  const total = {}, conta = {};
+function docDestino(v, m) {
+  const u = m.campos.find(c => c.tipo === 'unidade'), s = u && m.campos.find(c => c.tipo === 'setor' && c.depende === u.id);
+  return u ? docPara(v[u.id], s ? v[s.id] : '') : '';
+}
+function docBens(v, m) {
+  const ps = docPats(db, v, m), total = {}, conta = {};
   ps.forEach(p => { total[p.cat] = (total[p.cat] || 0) + 1; });
   const lin = ps.map(p => ({ cat: p.cat, rot: (total[p.cat] > 1 ? `${p.cat} ${conta[p.cat] = (conta[p.cat] || 0) + 1}` : p.cat).toUpperCase(), num: p.num || (p.locadora ? `LOCADORA ${p.locadora}` : 'SEM PATRIMÔNIO') }));
-  docLinhas(v.outros).forEach(l => {
+  m.campos.filter(c => c.tipo === 'bens').forEach(c => docLinhas(v[c.id]).forEach(l => {
     const i = l.indexOf(':'), rot = i < 0 ? l : l.slice(0, i).trim();
     lin.push({ cat: rot, rot, num: i < 0 ? '' : l.slice(i + 1).trim() });
-  });
+  }));
   return lin;
 }
 function docGrupo(lin) {
@@ -3263,6 +3374,184 @@ function docLista(lin, termo = false) {
   const linhas = lin.length ? lin.map(l => `<div>${esc(l.rot)}${l.num ? (termo ? ` Patrimônio: ${esc(l.num)}` : `: <b>${esc(l.num)}</b>`) : ''}</div>`).join('') : `<div>${docEsc('')}</div>`;
   return `<div class="doc-lista${termo ? ' forte' : ''}">${linhas}</div>`;
 }
+
+/* ---------- marcação do corpo (tudo escapado antes de virar HTML) ---------- */
+const DOC_SUB = { data: ['ano', 'curta'], texto: ['oficial'], pat: ['marca', 'modelo', 'num', 'setor', 'unidade', 'categoria'], area: ['n'], bens: ['n'] };
+const DOC_SUB_BENS = ['o', 'nome', 'de', 'objeto', 'n'];
+const DOC_PH = /\{\{([^{}]*)\}\}/g;
+const docNegrito = h => h.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
+const docOrgao = (h, e = esc) => h.replace(/\{\{\s*orgao\.(\w+)\s*\}\}/g, (x, k) => DOC_ORGAO_CHAVES.includes(k) ? e(DOC_ORGAO[k]) : x);
+function docPhParse(s) {
+  const r = String(s).match(/^\s*(\?)?\s*([a-z0-9-]+)(?:\.([A-Za-z]+))?\s*(?:=([^:]*))?(?::([\s\S]*))?$/);
+  return r && { cond: !!r[1], id: r[2], sub: r[3] || '', eq: r[4], txt: r[5] };
+}
+function docPhErro(p, m) {
+  if (!p) return 'marcação inválida';
+  if (p.eq !== undefined && !p.cond) return 'use {{?campo=valor:texto}}';
+  if (p.txt !== undefined && !p.cond && p.sub !== 'n') return 'texto depois de ":" só vale em {{?campo:…}} ou {{campo.n:um|vários}}';
+  if (p.sub === 'n' && (p.cond || p.txt === undefined)) return 'use {{campo.n:um|vários}}';
+  if (p.id === 'orgao') return 'dado do órgão inexistente';
+  if (p.id === 'bens') return p.cond ? 'condição não vale para bens' : DOC_SUB_BENS.includes(p.sub) || !p.sub ? '' : 'subcampo de bens inexistente';
+  const f = m.campos.find(c => c.id === p.id);
+  if (!f) return 'campo inexistente';
+  if (p.sub && !(DOC_SUB[f.tipo] || []).includes(p.sub)) return `subcampo .${p.sub} não existe para ${DOC_TIPOS[f.tipo] || f.tipo}`;
+  return '';
+}
+function docPartes(s) {
+  const r = []; let cur = '', fundo = 0;
+  for (let i = 0; i < s.length; i++) {
+    if (s.startsWith('{{', i)) { fundo++; cur += '{{'; i++; }
+    else if (s.startsWith('}}', i) && fundo) { fundo--; cur += '}}'; i++; }
+    else if (s[i] === '|' && !fundo) { r.push(cur.trim()); cur = ''; }
+    else cur += s[i];
+  }
+  r.push(cur.trim());
+  return r;
+}
+function docPecaParse(l) {
+  const r = l.match(/^\[\s*([^\]:]+?)\s*(?::\s*([\s\S]*?))?\s*\]$/);
+  if (!r) return null;
+  const nome = norm(r[1]).replace(/\s+/g, ' ');
+  return { nome, arg: r[2] || '', ok: !!DOC_PECAS[nome] };
+}
+function docPlural(n, txt) {
+  const i = txt.indexOf('|');
+  return i < 0 ? txt : n > 1 ? txt.slice(i + 1) : txt.slice(0, i);
+}
+function docValor(ctx, f, sub) {
+  const val = ctx.v[f.id] ?? '', s = String(val).trim();
+  if (f.tipo === 'pat') {
+    const p = docPat(db, val); if (!p) return '';
+    const x = { marca: p.marca, modelo: p.modelo, num: patIdent(p), setor: p.setor, unidade: docApelido(p.un), categoria: p.cat };
+    return esc(sub ? x[sub] : [p.cat, p.marca, p.modelo].filter(Boolean).join(' ') + (p.num ? `, patrimônio nº ${p.num}` : p.locadora ? `, locadora nº ${p.locadora}` : ', sem patrimônio'));
+  }
+  if (sub === 'oficial') return `${s ? esc(/^\d$/.test(s) ? '0' + s : s) : DOC_GAP}/${esc(DOC_ORGAO.sigla)}/TI/${docAnoM(ctx.m, ctx.v)}`;
+  if (!s) return '';
+  if (f.tipo === 'data') return sub === 'ano' ? esc(s.slice(0, 4)) : sub === 'curta' ? esc(fmtD(s)) : docData(s);
+  if (f.tipo === 'unidade') return esc(docApelido(s));
+  if (f.tipo === 'area' || f.tipo === 'bens') return docLinhas(s).map(l => docNegrito(esc(l))).join('<br>');
+  return esc(s);
+}
+function docPh(inner, ctx, plain = false) {
+  const p = docPhParse(inner);
+  if (docPhErro(p, ctx.m)) return null;
+  if (p.id === 'bens') {
+    const lin = ctx.bens(), g = docGrupo(lin);
+    return p.sub === 'n' ? docPlural(lin.length, p.txt) : p.sub === 'objeto' ? docObjeto(lin, g) : esc(p.sub ? g[p.sub] : `${g.o} ${g.nome}`);
+  }
+  const f = ctx.campo[p.id];
+  if (p.sub === 'n') return docPlural(docLinhas(ctx.v[f.id]).length, p.txt);
+  const h = docValor(ctx, f, p.sub);
+  if (p.cond) return p.eq !== undefined ? (esc(String(ctx.v[f.id] ?? '').trim()) === p.eq.trim() ? p.txt ?? '' : '') : h ? (p.txt ?? '') + h : '';
+  return h || (plain ? '' : DOC_GAP);
+}
+const docOrfao = x => `<mark class="doc-orfao" title="Marcação sem campo correspondente">${x}</mark>`;
+const docInline = (s, ctx) => docNegrito(docOrgao(esc(s))).replace(DOC_PH, (x, inner) => docPh(inner, ctx) ?? docOrfao(x));
+function docLinhaHtml(s, ctx) {
+  let h = docNegrito(docOrgao(esc(s))).replace(/__\/__\/____/g, docDataVazia()).replace(/_{3,}/g, '<i></i>')
+    .replace(DOC_PH, (x, inner) => { const r = docPh(inner, ctx, true); return r == null ? docOrfao(x) : `<i>${r}</i>`; })
+    .replace(/\s+(?=<i>|<span>)/g, '').replace(/(<\/i>|<\/span><\/span>)\s+/g, '$1').trim();
+  const n = (h.match(/<i>/g) || []).length; let k = 0;
+  return h.replace(/<i>/g, () => ++k < n ? '<i class="p">' : '<i>');
+}
+function docCtx(m, v) {
+  let bens;
+  return { m, v, campo: Object.fromEntries(m.campos.map(f => [f.id, f])), bens: () => bens ||= docBens(v, m) };
+}
+function docPeca(pc, ctx, out) {
+  const { v } = ctx, a = pc.arg, f = ctx.campo[a];
+  const linhas = () => docLinhas(v[a]);
+  switch (pc.nome) {
+    case 'local e data': return out.push(`<p class="doc-local">${esc(DOC_ORGAO.cidade)}, ${docData(v[a || docDataId(ctx.m)])}</p>`);
+    case 'referencia': return out.push({ ref: docPartes(a).map(x => docInline(x, ctx)).filter(x => x.trim()), dp: '' });
+    case 'de e para': {
+      const [de = '', para = ''] = docPartes(a), ult = out[out.length - 1];
+      const dp = `<div class="dp"><div>De: ${docInline(de, ctx) || DOC_GAP}</div><div>Para: ${docInline(para, ctx) || DOC_GAP}</div></div>`;
+      return ult && typeof ult === 'object' && !ult.dp ? (ult.dp = dp) : out.push({ ref: [], dp });
+    }
+    case 'linha': return out.push(`<div class="doc-linha">${docLinhaHtml(a, ctx)}</div>`);
+    case 'bens': return out.push(docLista(ctx.bens(), norm(a) === 'termo'));
+    case 'lista': return out.push(!f ? `<p>${docOrfao(esc(`[lista: ${a}]`))}</p>` : `<div class="doc-lista forte sub">${linhas().length ? linhas().map(l => `<div>${esc(l)}</div>`).join('') : `<div>${DOC_GAP}</div>`}</div>`);
+    case 'tabela de itens': {
+      if (!f) return out.push(`<p>${docOrfao(esc(`[tabela de itens: ${a}]`))}</p>`);
+      const itens = docItensReq(v[a]), vazio = '<td class="q"></td><td class="q"></td>';
+      return out.push(`<table><thead><tr><th>Descrição do material</th><th>Quantidade solicitada</th><th>Quantidade autorizada</th><th>Quantidade liberada</th></tr></thead>
+        <tbody>${itens.length ? itens.map(([d, q]) => `<tr><td>${esc(d)}</td><td class="q">${esc(q)}</td>${vazio}</tr>`).join('') : `<tr><td>${DOC_GAP}</td><td class="q"></td>${vazio}</tr>`}</tbody></table>`);
+    }
+    case 'quebra': return out.push('<div class="doc-quebra" role="separator" aria-label="Quebra de página"></div>');
+  }
+}
+function docMarcar(m, v) {
+  const ctx = docCtx(m, v), out = [];
+  let par = [], grupo = null;
+  const fimGrupo = () => {
+    if (grupo && grupo.itens.length) out.push(grupo.tipo === 'assin' ? `<div class="doc-assin${grupo.perto ? ' perto' : ''}">${grupo.itens.join('')}</div>` : `<div class="doc-receb">${grupo.itens.join('')}</div>`);
+    grupo = null;
+  };
+  const fimPar = () => {
+    if (!par.length) return;
+    const ind = /^>/.test(par[0]), cls = ind ? ' class="ind"' : '';
+    if (ind) par[0] = par[0].replace(/^>\s?/, '');
+    const so = par.length === 1 && par[0].match(/^\{\{\s*([a-z0-9-]+)\s*\}\}$/), f = so && ctx.campo[so[1]];
+    if (f && f.tipo === 'area') out.push(docLinhas(v[f.id]).map(l => `<p${cls}>${docNegrito(esc(l))}</p>`).join('') || `<p>${DOC_GAP}</p>`);
+    else { const h = par.map(l => docInline(l, ctx)).filter(x => x.trim()).join('<br>'); if (h) out.push(`<p${cls}>${h}</p>`); }
+    par = [];
+  };
+  const noGrupo = (tipo, perto, item) => {
+    if (!grupo || grupo.tipo !== tipo || grupo.perto !== perto) { fimGrupo(); grupo = { tipo, perto, itens: [] }; }
+    if (item) grupo.itens.push(item);
+  };
+  for (const bruta of String(m.corpo || '').replace(/\r/g, '').split('\n')) {
+    const l = bruta.trim();
+    if (!l) { fimPar(); fimGrupo(); continue; }
+    const pc = docPecaParse(l);
+    if (pc && pc.ok) {
+      fimPar();
+      if (pc.nome === 'assinatura' || pc.nome === 'assinatura perto') {
+        const [a = '', b = ''] = docPartes(pc.arg), h1 = docInline(a, ctx), h2 = b ? docInline(b, ctx) : '';
+        noGrupo('assin', pc.nome !== 'assinatura', h1.trim() ? `<div>${h1}${h2.trim() ? `<span>${h2}</span>` : ''}</div>` : '');
+      } else if (pc.nome === 'recebimento') noGrupo('receb', false, `<div class="doc-linha">${docLinhaHtml(pc.arg, ctx)}</div>`);
+      else { fimGrupo(); docPeca(pc, ctx, out); }
+      continue;
+    }
+    const h = l.match(/^(#{1,2})\s+(.*)$/);
+    if (h) { fimPar(); fimGrupo(); out.push(`<h${h[1].length}>${docInline(h[2], ctx)}</h${h[1].length}>`); continue; }
+    fimGrupo(); par.push(l);
+  }
+  fimPar(); fimGrupo();
+  return out.map(x => typeof x === 'string' ? x : `<div class="doc-ref">${x.ref.map(r => `<div>${r}</div>`).join('')}${x.dp}</div>`).join('');
+}
+function docMarcas(corpo) {
+  return [...docOrgao(String(corpo || ''), () => '').matchAll(DOC_PH)].map(r => r[1]);
+}
+function docProblemas(m) {
+  const e = [], vistos = new Set();
+  if (!String(m.titulo || '').trim()) e.push('Dê um título ao modelo.');
+  if (!m.campos.length) e.push('Inclua pelo menos um campo.');
+  m.campos.forEach(f => {
+    const nome = String(f.rotulo || '').trim() || f.id;
+    if (vistos.has(f.id)) e.push(`Id de campo repetido: ${f.id}.`);
+    vistos.add(f.id);
+    if (!/^[a-z][a-z0-9-]*$/.test(f.id) || DOC_RESERVADOS.includes(f.id)) e.push(`Id de campo inválido: ${f.id}.`);
+    if (!String(f.rotulo || '').trim()) e.push(`O campo ${f.id} está sem rótulo.`);
+    if (!DOC_TIPOS[f.tipo]) e.push(`${nome}: tipo inválido.`);
+    if (f.tipo === 'escolha' && !(f.opcoes || []).length) e.push(`${nome}: informe as opções.`);
+    if (f.tipo === 'setor' && !m.campos.some(c => c.id === f.depende && c.tipo === 'unidade')) e.push(`${nome}: escolha de qual unidade o setor depende.`);
+    if (f.auto && !DOC_AUTO[f.auto]?.tipos.includes(f.tipo)) e.push(`${nome}: fonte automática não combina com o tipo.`);
+  });
+  docMarcas(m.corpo).forEach(x => { const er = docPhErro(docPhParse(x), m); if (er) e.push(`{{${x}}}: ${er}.`); });
+  String(m.corpo || '').split('\n').map(l => l.trim()).forEach(l => {
+    const pc = docPecaParse(l); if (!pc) return;
+    if (!pc.ok) return e.push(`${l}: peça desconhecida.`);
+    const tipo = DOC_PECAS[pc.nome].campo, f = m.campos.find(c => c.id === pc.arg);
+    if (tipo && f?.tipo !== tipo) e.push(`${l}: indique o id de um campo de ${DOC_TIPOS[tipo]}.`);
+    if (pc.nome === 'local e data' && pc.arg && f?.tipo !== 'data') e.push(`${l}: indique o id de um campo de data.`);
+  });
+  return [...new Set(e)];
+}
+const docUsa = (m, id) => docMarcas(m.corpo).some(x => docPhParse(x)?.id === id) ||
+  String(m.corpo || '').split('\n').some(l => { const pc = docPecaParse(l.trim()); return pc && pc.arg.trim() === id; });
+
 let docBrasaoUrl;
 function docBrasao() {
   if (docBrasaoUrl === undefined) {
@@ -3273,35 +3562,39 @@ function docBrasao() {
 }
 const docPatRot = p => `${patIdent(p)} · ${patDesc(p)}`;
 const docPatSel = p => p ? `Selecionado: ${docPatRot(p)} · ${loc(p.un, p.setor)}${p.status === 'descartado' ? ' (descartado)' : ''}` : 'Nenhum patrimônio selecionado.';
-function docAuto(f, v) {
-  let x = f.auto ? f.auto(db, v) : '';
+function docAuto(f, v, m) {
+  const a = DOC_AUTO[f.auto]; if (!a) return '';
+  let x = a.serie ? docNumSugerido(a.serie, docAnoM(m, v)) : a.fn(db, v, m, f);
   x = x == null ? '' : String(x);
-  if (f.tipo === 'setor' && x && !setoresDe(v[f.de]).includes(x)) x = '';
+  if (f.tipo === 'setor' && x && !setoresDe(v[f.depende]).includes(x)) x = '';
   return x;
 }
 function docNovo(id) {
-  const m = MODELOS_DOC.find(x => x.id === id); if (!m) return null;
+  const m = docModelos().find(x => x.id === id); if (!m) return null;
   const d = { id, etapa: 'form', v: {}, manual: {} };
-  m.campos.forEach(f => { d.v[f.id] = ''; });
-  m.campos.forEach(f => { if (f.auto) d.v[f.id] = docAuto(f, d.v); });
-  m.campos.forEach(f => { if (f.serie) d.v[f.id] = docNumSugerido(f, d.v); });
+  m.campos.forEach(f => { d.v[f.id] = f.padrao ?? ''; });
+  for (let i = 0; i < 2; i++) m.campos.forEach(f => { if (f.auto) d.v[f.id] = docAuto(f, d.v, m); });
   return d;
 }
+function docRevalida(d, m) {
+  m.campos.forEach(f => { if (!(f.id in d.v)) d.v[f.id] = f.auto ? docAuto(f, d.v, m) : f.padrao ?? ''; });
+  m.campos.forEach(f => { if (f.tipo === 'setor' && d.v[f.id] && !setoresDe(d.v[f.depende]).includes(d.v[f.id])) d.v[f.id] = ''; });
+}
 function docSet(d, id, valor) {
-  const campos = docModelo(d).campos, f = campos.find(c => c.id === id);
-  const antes = Object.fromEntries(campos.map(c => [c.id, docAuto(c, d.v)]));
+  const m = docModelo(d), campos = m.campos, f = campos.find(c => c.id === id);
+  const antes = Object.fromEntries(campos.map(c => [c.id, docAuto(c, d.v, m)]));
   d.v[id] = valor;
   d.manual[id] = !!f.auto && valor !== antes[id];
   campos.forEach(c => {
     if (c.id === id) return;
-    if (c.tipo === 'setor' && c.de === id && d.v[c.id] && !setoresDe(valor).includes(d.v[c.id])) { d.v[c.id] = ''; d.manual[c.id] = false; }
+    if (c.tipo === 'setor' && c.depende === id && d.v[c.id] && !setoresDe(valor).includes(d.v[c.id])) { d.v[c.id] = ''; d.manual[c.id] = false; }
     if (!c.auto) return;
-    const novo = docAuto(c, d.v);
+    const novo = docAuto(c, d.v, m);
     if (novo !== antes[c.id]) d.manual[c.id] = false;
     if (!d.manual[c.id]) d.v[c.id] = novo;
   });
 }
-const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== (f.serie ? docNumSugerido(f, d.v) : ''));
+const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== String(f.padrao ?? ''));
 const docFalta = d => docModelo(d).campos.filter(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
 function docValida(d) {
   const falta = docFalta(d);
@@ -3313,7 +3606,7 @@ function docValida(d) {
 }
 function docOpts(d, f) {
   const v = d.v[f.id] ?? '';
-  let ops = f.tipo === 'unidade' ? unitNames() : f.tipo === 'setor' ? setoresDe(d.v[f.de]) : (f.opcoes || []);
+  let ops = f.tipo === 'unidade' ? unitNames() : f.tipo === 'setor' ? setoresDe(d.v[f.depende]) : (f.opcoes || []);
   if (v && !ops.includes(v)) ops = [v, ...ops];
   return `<option value="">—</option>` + ops.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('');
 }
@@ -3325,7 +3618,7 @@ function docCampo(d, f, rev = false) {
     const p = docPat(db, v);
     return `<div class="doc-f doc-pat"><label class="f">${rot}<span class="hint" id="doc-s-${esc(f.id)}">${esc(docPatSel(p))}</span><input class="input" type="search" ${a} data-in="doc-pat" data-enter="doc-pat-1" autocomplete="off" placeholder="Nº, marca, modelo ou unidade" value="${esc(p ? docPatRot(p) : '')}"></label><div class="cands" id="doc-c-${esc(f.id)}" hidden></div></div>`;
   }
-  const ctl = f.tipo === 'area' ? `<textarea ${txt} rows="${rev ? 2 : 3}">${esc(v)}</textarea>`
+  const ctl = f.tipo === 'area' || f.tipo === 'bens' ? `<textarea ${txt} rows="${rev ? 2 : 3}">${esc(v)}</textarea>`
     : f.tipo === 'data' ? `<input class="input" type="date" data-in="doc" ${a} value="${esc(v)}">`
     : ['unidade', 'setor', 'escolha'].includes(f.tipo) ? `<select class="input" data-ch="doc" ${a}>${docOpts(d, f)}</select>`
     : `<input ${txt} value="${esc(v)}">`;
@@ -3333,7 +3626,7 @@ function docCampo(d, f, rev = false) {
   return `<div class="doc-f"><label class="f">${rot}${ctl}</label>${rest}</div>`;
 }
 function docCorpo(d, m) {
-  try { return m.corpo({ ...d.v }); } catch (e) { return `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
+  try { return docMarcar(m, d.v || {}); } catch (e) { return `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
 }
 function docFolha(d, m = docModelo(d)) {
   const img = docBrasao();
@@ -3367,11 +3660,19 @@ function docPatCands(t) {
   box.innerHTML = lista.length ? lista.map(p => `<button data-act="doc-pat" data-campo="${esc(id)}" data-id="${esc(p.id)}">${patIdentHtml(p)}<span>${esc(patDesc(p))}</span><span class="sub">${p.status === 'descartado' ? 'Descartado · ' : ''}${esc(loc(p.un, p.setor))}</span></button>`).join('')
     : `<div class="empty" style="padding:12px">Nenhum patrimônio encontrado.</div>`;
 }
+function docCard(m) {
+  const id = esc(m.id), t = esc(m.titulo);
+  return `<article class="card doc-card"><button class="doc-usar" data-act="doc-novo" data-id="${id}"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small></button>
+    <footer><span class="doc-origem">${m.origem === 'padrao' ? 'Padrão' : 'Meu modelo'}</span><button class="btn sm ghost" data-act="doc-ed" data-id="${id}" aria-label="Editar ${t}">${icon('edit')}Editar</button><button class="btn sm ghost" data-act="doc-dup" data-id="${id}" aria-label="Duplicar ${t}">${icon('copy')}Duplicar</button><button class="btn icon sm ghost danger" data-act="doc-rm" data-id="${id}" title="Remover" aria-label="Remover ${t}">${icon('trash')}</button></footer></article>`;
+}
 function viewDocumentos() {
-  const d = ui.doc, m = d && docModelo(d);
-  if (!m) return pageHead('Documentos', 'Etapa 1 de 3 · Escolha um modelo. Depois preencha, revise e gere o PDF.') +
-    (MODELOS_DOC.length ? `<div class="doc-cat">${MODELOS_DOC.map(x => `<button class="card doc-card" data-act="doc-novo" data-id="${esc(x.id)}"><b>${icon('doc')}${esc(x.titulo)}</b><small>${esc(x.descricao)}</small></button>`).join('')}</div>`
-      : `<div class="card empty"><b>Nenhum modelo</b>Ainda não há modelos de documento.</div>`);
+  if (ui.docEd) return docEditor(ui.docEd);
+  let d = ui.doc, m = docModelo(d);
+  if (d && !m) { ui.doc = d = null; toast('O modelo que estava em uso foi removido.', true); }
+  if (!m) return pageHead('Documentos', 'Etapa 1 de 3 · Escolha um modelo. Depois preencha, revise e gere o PDF.', `<button class="btn" data-act="doc-padroes">${icon('undo')}Restaurar padrões</button><button class="btn primary" data-act="doc-ed-novo">${icon('plus')}Novo modelo</button>`) +
+    (docModelos().length ? `<div class="doc-cat">${docModelos().map(docCard).join('')}</div>`
+      : `<div class="card empty"><b>Nenhum modelo</b>Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".</div>`);
+  docRevalida(d, m);
   return d.etapa === 'rev' ? docRevisao(d, m) : docForm(d, m);
 }
 function docForm(d, m) {
@@ -3389,7 +3690,7 @@ async function docPdf() {
   const d = ui.doc, m = docModelo(d);
   if (!docValida(d)) return;
   docNumGrava(d, m);
-  $('#print').innerHTML = docFolha(d, m);
+  $('#print').innerHTML = `<table class="doc-pags"><tbody><tr><td>${docFolha(d, m)}</td></tr></tbody><tfoot><tr><td class="doc-pe"></td></tr></tfoot></table>`;
   const img = $('#print .doc-timbre img');
   if (img) await Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 800))]);
   const t = document.title;
@@ -3398,6 +3699,190 @@ async function docPdf() {
   window.print();
   document.documentElement.classList.remove('doc-imprimindo');
   document.title = t;
+}
+
+/* ---------- editor de modelos ---------- */
+function docSlug(s, usados, base = 'campo') {
+  let b = norm(s).replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '').slice(0, 24).replace(/-+$/, '') || base;
+  if (!/^[a-z]/.test(b)) b = `${base}-${b}`;
+  let id = b, n = 2;
+  while (usados.includes(id) || DOC_RESERVADOS.includes(id)) id = `${b}-${n++}`;
+  return id;
+}
+function docModeloNovo() {
+  return { id: null, origem: 'usuario', titulo: '', descricao: '', campos: [docCopia(DOC_C.data), docCopia(DOC_C.assin)],
+    corpo: '[local e data]\n\n# Título do documento\n\n> Escreva o texto aqui. Use os botões acima para inserir os campos.\n\n[assinatura: {{assin}} | {{orgao.cargo}}]' };
+}
+function docEdAbrir(m, novo) {
+  ui.docEd = { m, novo, orig: JSON.stringify(m) };
+  render(); window.scrollTo(0, 0);
+  $('#ed-titulo')?.focus({ preventScroll: true });
+}
+function docExemplo(m) {
+  const v = {}, pats = db.pats.filter(p => p.status === 'ativo' && p.un !== ESTOQUE && p.num);
+  const un = db.unidades.find(u => u.nome !== ESTOQUE && u.setores.length) || db.unidades[0];
+  let ip = 0;
+  m.campos.forEach(f => {
+    v[f.id] = f.tipo === 'pat' ? pats[ip++]?.id || '' : f.tipo === 'unidade' ? un?.nome || '' : f.tipo === 'data' ? today()
+      : f.tipo === 'escolha' ? f.padrao || f.opcoes?.[0] || '' : f.padrao || '';
+  });
+  m.campos.forEach(f => { if (f.auto) { const x = docAuto(f, v, m); if (x) v[f.id] = x; } });
+  m.campos.forEach(f => {
+    if (f.tipo === 'setor' && !setoresDe(v[f.depende]).includes(v[f.id])) v[f.id] = setoresDe(v[f.depende])[0] || '';
+    if (f.auto === 'destino') v[f.id] = docDestino(v, m);
+    if (String(v[f.id] ?? '').trim()) return;
+    if (f.tipo === 'area') v[f.id] = `${f.rotulo}: linha 1\n${f.rotulo}: linha 2`;
+    else if (f.tipo === 'bens') v[f.id] = 'CPU 2: SEM PATRIMÔNIO';
+    else if (f.tipo === 'texto') v[f.id] = f.rotulo;
+  });
+  return v;
+}
+const docEdCorpo = m => docCorpo({ v: docExemplo(m) }, m);
+function docEdErros(m) {
+  const e = docProblemas(m);
+  return e.length ? `<b>${plural(e.length, 'pendência', 'pendências')} para salvar</b><ul>${e.map(x => `<li>${esc(x)}</li>`).join('')}</ul>`
+    : `<p class="ok">${icon('check')}Tudo certo para salvar.</p>`;
+}
+function docEdBotoes(m) {
+  const b = (txt, rot, bloco = false) => `<button type="button" class="ed-chip" data-act="ed-ins" data-txt="${esc(txt)}"${bloco ? ' data-bloco="1"' : ''} title="${esc(txt)}">${esc(rot)}</button>`;
+  const grupo = (nome, html) => html ? `<div class="ed-grupo"><span>${nome}</span>${html}</div>` : '';
+  const campos = m.campos.map(f => {
+    const r = f.rotulo || f.id;
+    const subs = f.tipo === 'pat' ? [['num', 'nº'], ['marca', 'marca'], ['modelo', 'modelo'], ['setor', 'setor'], ['unidade', 'unidade']]
+      : f.tipo === 'data' ? [['curta', 'dd/mm/aaaa'], ['ano', 'ano']] : DOC_AUTO[f.auto]?.serie ? [['oficial', 'oficial']]
+      : f.tipo === 'area' || f.tipo === 'bens' ? [['n:um|vários', 'singular|plural']] : [];
+    return b(`{{${f.id}}}`, r) + subs.map(([s, n]) => b(`{{${f.id}.${s}}}`, `${r} · ${n}`)).join('');
+  }).join('');
+  const temBens = m.campos.some(f => f.tipo === 'pat' || f.tipo === 'bens');
+  const lista = m.campos.find(f => f.tipo === 'area')?.id || 'campo';
+  return grupo('Campos', campos) +
+    grupo('Bens', temBens ? [['{{bens}}', 'o computador'], ['{{bens.de}}', 'do computador'], ['{{bens.o}}', 'o/a/os/as'], ['{{bens.nome}}', 'computador(es)'], ['{{bens.objeto}}', 'o computador de patrimônio nº'], ['{{bens.n:um|vários}}', 'singular|plural']].map(([t, r]) => b(t, r)).join('') : '') +
+    grupo('Órgão', DOC_ORGAO_CHAVES.map(k => b(`{{orgao.${k}}}`, DOC_ORGAO[k])).join('')) +
+    grupo('Peças', Object.entries(DOC_PECAS).map(([k, p]) => b(p.campo ? p.ins.replace('campo', lista) : p.ins, p.ins.match(/^\[([^\]:]+)/)[1], true)).join(''));
+}
+function docEdCampo(m, f, i) {
+  const a = `data-i="${i}"`, n = m.campos.length, rot = esc(f.rotulo || f.id);
+  const tipos = Object.entries(DOC_TIPOS).map(([k, r]) => `<option value="${k}" ${k === f.tipo ? 'selected' : ''}>${esc(r)}</option>`).join('');
+  const autos = Object.entries(DOC_AUTO).filter(([, x]) => x.tipos.includes(f.tipo)).map(([k, x]) => `<option value="${k}" ${k === f.auto ? 'selected' : ''}>${esc(x.rotulo)}</option>`).join('');
+  const uns = m.campos.filter(c => c.tipo === 'unidade').map(c => `<option value="${esc(c.id)}" ${c.id === f.depende ? 'selected' : ''}>${esc(c.rotulo || c.id)}</option>`).join('');
+  return `<li class="ed-campo"><div class="ed-campo-top"><code>{{${esc(f.id)}}}</code><span class="ed-tipo">${esc(DOC_TIPOS[f.tipo] || f.tipo)}</span>
+      <button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="-1" aria-label="Subir ${rot}" ${i ? '' : 'disabled'}>${icon('up')}</button><button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="1" aria-label="Descer ${rot}" ${i < n - 1 ? '' : 'disabled'}>${icon('down')}</button><button class="btn icon sm ghost danger" data-act="ed-campo-rm" ${a} aria-label="Remover ${rot}">${icon('trash')}</button></div>
+    <div class="ed-grade">
+      <label class="f">Rótulo<input class="input" data-in="ed-f" ${a} data-k="rotulo" value="${esc(f.rotulo)}" spellcheck="true" lang="pt-BR"></label>
+      <label class="f">Tipo<select class="input" data-ch="ed-f" ${a} data-k="tipo">${tipos}</select></label>
+      <label class="f">Dica<input class="input" data-in="ed-f" ${a} data-k="dica" value="${esc(f.dica || '')}" spellcheck="true" lang="pt-BR" placeholder="Opcional"></label>
+      ${autos ? `<label class="f">Fonte automática<select class="input" data-ch="ed-f" ${a} data-k="auto"><option value="">Nenhuma</option>${autos}</select></label>` : ''}
+      ${f.tipo === 'area' ? `<label class="f">Valor inicial<textarea class="input" rows="2" data-in="ed-f" ${a} data-k="padrao" placeholder="Opcional" spellcheck="true" lang="pt-BR">${esc(f.padrao || '')}</textarea></label>`
+        : ['texto', 'escolha'].includes(f.tipo) ? `<label class="f">Valor inicial<input class="input" data-in="ed-f" ${a} data-k="padrao" value="${esc(f.padrao || '')}" placeholder="Opcional"></label>` : ''}
+      ${f.tipo === 'escolha' ? `<label class="f">Opções<span class="hint">Uma por linha</span><textarea class="input" rows="3" data-in="ed-f" ${a} data-k="opcoes">${esc((f.opcoes || []).join('\n'))}</textarea></label>` : ''}
+      ${f.tipo === 'setor' ? `<label class="f">Depende da unidade<select class="input" data-ch="ed-f" ${a} data-k="depende"><option value="">—</option>${uns}</select></label>` : ''}
+      <label class="check"><input type="checkbox" data-ch="ed-f" ${a} data-k="obrigatorio" ${f.obrigatorio ? 'checked' : ''}>Obrigatório</label>
+    </div></li>`;
+}
+const DOC_AJUDA = `<details class="ed-ajuda"><summary>Como escrever o texto</summary><ul>
+  <li>Linha em branco separa parágrafos. Começar com <code>&gt; </code> dá recuo na primeira linha.</li>
+  <li><code># Título</code> (centralizado), <code>## Subtítulo</code> e <code>**negrito**</code>.</li>
+  <li><code>{{campo}}</code> mostra o valor; vazio vira lacuna. Patrimônio: <code>.num</code>, <code>.marca</code>, <code>.modelo</code>, <code>.setor</code>, <code>.unidade</code>, <code>.categoria</code>. Data: por extenso, <code>.curta</code> ou <code>.ano</code>. Número com série: <code>.oficial</code> (07/${esc(DOC_ORGAO.sigla)}/TI/${today().slice(0, 4)}).</li>
+  <li><code>{{?campo:texto }}</code> escreve o texto e o valor só se o campo estiver preenchido; <code>{{?campo=Sim:texto}}</code> só se o valor for igual.</li>
+  <li><code>{{campo.n:um|vários}}</code> e <code>{{bens.n:um|vários}}</code> escolhem singular ou plural pela quantidade de linhas ou de bens.</li>
+  <li>Peças, cada uma em linha própria: <code>[local e data]</code>, <code>[referência: linha | linha]</code>, <code>[de e para: remetente | destinatário]</code>, <code>[assinatura: nome | cargo]</code> (some se o nome ficar vazio), <code>[assinatura perto: …]</code>, <code>[linha: Nome ___]</code> (<code>___</code> = linha para preencher, <code>__/__/____</code> = data em branco), <code>[recebimento: …]</code>, <code>[bens]</code>, <code>[bens: termo]</code>, <code>[lista: campo]</code>, <code>[tabela de itens: campo]</code> e <code>[quebra]</code> (nova página).</li>
+  <li>Cabeçalho e rodapé são fixos e entram sozinhos em todo documento.</li></ul></details>`;
+function docEdForm(m) {
+  return `<section class="card"><header><h2>Modelo</h2></header><div class="doc-campos">
+      <label class="f"><span>Título<span class="req" aria-hidden="true"> *</span></span><input class="input" id="ed-titulo" data-in="ed" data-k="titulo" value="${esc(m.titulo)}" spellcheck="true" lang="pt-BR"></label>
+      <label class="f">Descrição<span class="hint">Aparece no catálogo</span><textarea class="input" rows="2" data-in="ed" data-k="descricao" spellcheck="true" lang="pt-BR">${esc(m.descricao)}</textarea></label>
+    </div></section>
+    <section class="card"><header><h2>Campos</h2></header>
+      <ol class="ed-campos">${m.campos.map((f, i) => docEdCampo(m, f, i)).join('') || '<li class="empty" style="padding:16px">Nenhum campo ainda.</li>'}</ol>
+      <div class="ed-novo"><label class="f">Novo campo<input class="input" id="ed-novo-rot" placeholder="Rótulo, ex.: Nome do servidor" data-enter="ed-campo-add" spellcheck="true" lang="pt-BR"></label>
+        <label class="f">Tipo<select class="input" id="ed-novo-tipo">${Object.entries(DOC_TIPOS).map(([k, r]) => `<option value="${k}">${esc(r)}</option>`).join('')}</select></label>
+        <button class="btn" data-act="ed-campo-add">${icon('plus')}Adicionar campo</button></div></section>
+    <section class="card"><header><h2>Texto do documento</h2></header><div class="doc-campos">
+      <div class="ed-ins" id="ed-ins">${docEdBotoes(m)}</div>
+      <label class="f">Corpo<span class="hint">Os botões acima inserem no ponto do cursor</span><textarea class="input ed-corpo" id="ed-corpo" rows="18" spellcheck="true" lang="pt-BR" data-in="ed-corpo">${esc(m.corpo)}</textarea></label>
+      ${DOC_AJUDA}
+      <div class="ed-erros" id="ed-erros" role="status">${docEdErros(m)}</div>
+    </div></section>`;
+}
+function docEditor(e) {
+  return pageHead(e.novo ? 'Novo modelo' : 'Editar modelo', 'Monte os campos e o texto; a prévia usa valores de exemplo.', `<button class="btn" data-act="ed-cancelar">${icon('x')}Cancelar</button><button class="btn primary" data-act="ed-salvar">${icon('check')}Salvar modelo</button>`) +
+    `<div class="doc-ed"><div class="ed-form" id="ed-form">${docEdForm(e.m)}</div><div class="doc-prev doc-lado" id="doc-prev">${docFolha({ v: docExemplo(e.m) }, e.m)}</div></div>`;
+}
+function docEdAtualiza(barra = false) {
+  const m = ui.docEd?.m; if (!m) return;
+  const c = $('#doc-prev .doc-corpo'); if (c) c.innerHTML = docEdCorpo(m);
+  const er = $('#ed-erros'); if (er) er.innerHTML = docEdErros(m);
+  if (barra) { const b = $('#ed-ins'); if (b) b.innerHTML = docEdBotoes(m); }
+}
+function docEdRedesenha() {
+  const y = window.scrollY;
+  $('#ed-form').innerHTML = docEdForm(ui.docEd.m);
+  docEdAtualiza();
+  window.scrollTo(0, y);
+}
+function docEdCampoSet(t) {
+  const m = ui.docEd.m, f = m.campos[+t.dataset.i], k = t.dataset.k; if (!f) return;
+  if (k === 'obrigatorio') { if (t.checked) f.obrigatorio = true; else delete f.obrigatorio; return docEdAtualiza(); }
+  if (k === 'opcoes') { f.opcoes = docLinhas(t.value); return docEdAtualiza(); }
+  if (k === 'tipo') {
+    f.tipo = t.value;
+    if (f.auto && !DOC_AUTO[f.auto]?.tipos.includes(f.tipo)) delete f.auto;
+    if (f.tipo !== 'escolha') delete f.opcoes;
+    if (!['texto', 'area', 'escolha'].includes(f.tipo)) delete f.padrao;
+    if (f.tipo === 'setor') f.depende ||= m.campos.find(c => c.tipo === 'unidade')?.id; else delete f.depende;
+    return docEdRedesenha();
+  }
+  const v = k === 'rotulo' ? t.value : t.value.trim();
+  if (v || k === 'rotulo') f[k] = v; else delete f[k];
+  docEdAtualiza(k === 'rotulo');
+}
+function docEdIns(t) {
+  const ta = $('#ed-corpo'); if (!ta) return;
+  let txt = t.dataset.txt, s = ta.selectionStart, e = ta.selectionEnd;
+  if (t.dataset.bloco) {
+    if (s > 0 && ta.value[s - 1] !== '\n') txt = '\n' + txt;
+    if (ta.value[e] !== '\n') txt += '\n';
+  }
+  ta.focus();
+  ta.setRangeText(txt, s, e, 'end');
+  ui.docEd.m.corpo = ta.value;
+  docEdAtualiza();
+}
+function docEdCampoAdd() {
+  const m = ui.docEd.m, inp = $('#ed-novo-rot'), rotulo = inp.value.trim(), tipo = $('#ed-novo-tipo').value;
+  if (!rotulo) { toast('Escreva o rótulo do campo.', true); return inp.focus(); }
+  const f = { id: docSlug(rotulo, m.campos.map(c => c.id)), rotulo, tipo };
+  if (tipo === 'escolha') f.opcoes = ['Sim', 'Não'];
+  if (tipo === 'setor') { const u = m.campos.find(c => c.tipo === 'unidade'); if (u) f.depende = u.id; }
+  m.campos.push(f);
+  docEdRedesenha(); docEdAtualiza(true);
+  $('#ed-novo-tipo').value = tipo; $('#ed-novo-rot').focus();
+  toast(`Campo adicionado: {{${f.id}}}.`);
+}
+function docEdCampoRm(i) {
+  const m = ui.docEd.m, f = m.campos[i]; if (!f) return;
+  const tira = () => {
+    m.campos.splice(i, 1);
+    m.campos.forEach(c => { if (c.depende === f.id) delete c.depende; });
+    docEdRedesenha(); docEdAtualiza(true);
+  };
+  if (!docUsa(m, f.id)) return tira();
+  confirmDialog(`Remover o campo "${f.rotulo || f.id}"?`, `O texto ainda usa {{${esc(f.id)}}}. Se remover, esses trechos ficam marcados como erro e o modelo só salva depois de corrigidos.`, 'Remover campo', () => { closeLayer(); tira(); }, true);
+}
+function docEdSalvar() {
+  const e = ui.docEd, m = e.m;
+  m.titulo = m.titulo.trim(); m.descricao = String(m.descricao || '').trim();
+  m.campos.forEach(f => { f.rotulo = String(f.rotulo || '').trim(); });
+  const pb = docProblemas(m);
+  if (pb.length) { $('#ed-erros').innerHTML = docEdErros(m); $('#ed-erros').scrollIntoView({ block: 'center', behavior: 'smooth' }); return toast(`Corrija antes de salvar: ${pb[0]}${pb.length > 1 ? ` (e mais ${pb.length - 1})` : ''}`, true); }
+  const lista = docModelos();
+  if (!m.id) m.id = docSlug(m.titulo, lista.map(x => x.id), 'modelo');
+  const i = lista.findIndex(x => x.id === m.id);
+  if (i < 0) lista.push(m); else lista[i] = m;
+  db.modelosDoc = lista;
+  commit();
+  ui.docEd = null; render(); window.scrollTo(0, 0);
+  toast(`Modelo "${m.titulo}" salvo.`);
 }
 
 /* ---------- busca global ---------- */
@@ -3504,9 +3989,49 @@ const ACTIONS = {
   'doc-voltar': () => docEtapa('form'),
   'doc-pdf': docPdf,
   'doc-restaurar': t => {
-    const id = t.dataset.id, f = docModelo(ui.doc).campos.find(c => c.id === id);
-    ui.doc.manual[id] = false; docSet(ui.doc, id, docAuto(f, ui.doc.v)); docSync(ui.doc);
+    const id = t.dataset.id, m = docModelo(ui.doc), f = m.campos.find(c => c.id === id);
+    ui.doc.manual[id] = false; docSet(ui.doc, id, docAuto(f, ui.doc.v, m)); docSync(ui.doc);
     $('#doc-f-' + id).focus();
+  },
+  'doc-ed-novo': () => docEdAbrir(docModeloNovo(), true),
+  'doc-ed': t => { const m = docModelos().find(x => x.id === t.dataset.id); if (m) docEdAbrir(docCopia(m), false); },
+  'doc-dup': t => {
+    const lista = docModelos(), i = lista.findIndex(x => x.id === t.dataset.id); if (i < 0) return;
+    const c = { ...docCopia(lista[i]), origem: 'usuario', titulo: `${lista[i].titulo} (cópia)` };
+    c.id = docSlug(c.titulo, lista.map(x => x.id), 'modelo');
+    lista.splice(i + 1, 0, c); db.modelosDoc = lista; commit(); render();
+    toast(`Criado "${c.titulo}".`);
+  },
+  'doc-rm': t => {
+    const m = docModelos().find(x => x.id === t.dataset.id); if (!m) return;
+    confirmDialog(`Remover "${m.titulo}"?`, m.origem === 'padrao' ? 'O modelo sai do catálogo. Para trazê-lo de volta como veio com o app, use "Restaurar padrões".' : 'O modelo sai do catálogo e não tem como desfazer. Documentos já gerados não são afetados.', 'Remover modelo', () => {
+      db.modelosDoc = docModelos().filter(x => x.id !== m.id);
+      if (ui.doc?.id === m.id) ui.doc = null;
+      commit(); closeLayer(); render(); toast(`Modelo "${m.titulo}" removido.`);
+    }, true);
+  },
+  'doc-padroes': () => {
+    const ids = new Set(docModelos().map(x => x.id)), faltam = DOC_PADRAO.filter(p => !ids.has(p.id));
+    if (!faltam.length) return toast('Todos os modelos padrão já estão no catálogo.');
+    confirmDialog('Restaurar modelos padrão?', `Volta${faltam.length > 1 ? 'm' : ''} ao catálogo: <b>${faltam.map(p => esc(p.titulo)).join('</b>, <b>')}</b>. Modelos que já estão no catálogo, inclusive os padrão que você editou, não são alterados.`, 'Restaurar', () => {
+      db.modelosDoc = [...docModelos(), ...docCopia(faltam)];
+      commit(); closeLayer(); render(); toast(`${plural(faltam.length, 'modelo padrão restaurado', 'modelos padrão restaurados')}.`);
+    });
+  },
+  'ed-cancelar': () => {
+    const sair = () => { ui.docEd = null; render(); window.scrollTo(0, 0); };
+    if (JSON.stringify(ui.docEd.m) === ui.docEd.orig) return sair();
+    confirmDialog('Descartar alterações?', 'As mudanças neste modelo não foram salvas.', 'Descartar', () => { closeLayer(); sair(); }, true);
+  },
+  'ed-salvar': docEdSalvar,
+  'ed-ins': docEdIns,
+  'ed-campo-add': docEdCampoAdd,
+  'ed-campo-rm': t => docEdCampoRm(+t.dataset.i),
+  'ed-campo-mover': t => {
+    const cs = ui.docEd.m.campos, i = +t.dataset.i, j = i + +t.dataset.d; if (!cs[j]) return;
+    [cs[i], cs[j]] = [cs[j], cs[i]];
+    docEdRedesenha(); docEdAtualiza(true);
+    const b = $(`#ed-form [data-act="ed-campo-mover"][data-i="${j}"][data-d="${t.dataset.d}"]:not([disabled])`) || $(`#ed-form [data-act="ed-campo-mover"][data-i="${j}"]:not([disabled])`); b && b.focus();
   },
   'doc-pat': t => { const c = t.dataset.campo; docSet(ui.doc, c, t.dataset.id); docSync(ui.doc); $('#doc-c-' + c).hidden = true; $('#doc-f-' + c).focus(); },
   'doc-pat-1': t => { const b = $(`#doc-c-${t.dataset.id}:not([hidden]) button`); b && b.click(); },
@@ -3562,6 +4087,9 @@ const INPUTS = {
   restore: t => { if (t.files[0]) restoreFile(t.files[0]); t.value = ''; },
   doc: t => { docSet(ui.doc, t.dataset.id, t.value); docSync(ui.doc, t.dataset.id); },
   'doc-pat': docPatCands,
+  ed: t => { ui.docEd.m[t.dataset.k] = t.value; docEdAtualiza(); },
+  'ed-f': docEdCampoSet,
+  'ed-corpo': t => { ui.docEd.m.corpo = t.value; clearTimeout(ui.edT); ui.edT = setTimeout(docEdAtualiza, 90); },
   'pat-foto': t => { if (t.files.length) patFotoAdd(t.files); t.value = ''; },
 };
 
