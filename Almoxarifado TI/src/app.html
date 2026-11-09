@@ -674,17 +674,39 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .doc-pat { position: relative; }
 .doc-pat .cands { left: 0; right: 0; top: 100%; margin-top: 4px; }
 .doc-prev { container-type: inline-size; min-width: 0; }
-.doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; margin: 0 auto; padding: 4.724em 4.252em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
-.doc-folha h1 { margin: 1.2em 0 .9em; font-size: 1.3em; text-align: center; text-transform: uppercase; letter-spacing: .04em; }
-.doc-folha h2 { margin: 1.2em 0 .4em; font-size: 1em; text-transform: uppercase; }
+.doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; display: flex; flex-direction: column; margin: 0 auto; padding: 2.835em 5.906em 2.362em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
+.doc-folha .doc-timbre { display: flex; align-items: center; gap: 1em; margin-bottom: 1.8em; }
+.doc-folha .doc-timbre div { display: flex; flex: 1; flex-direction: column; text-align: center; line-height: 1.25; }
+.doc-folha .doc-timbre b { font-size: 1.4em; }
+.doc-folha .doc-timbre img { width: 11em; height: auto; }
+.doc-folha .doc-corpo { flex: 1; }
+.doc-folha .doc-rodape { margin-top: 1.5em; padding-top: .5em; border-top: 1px solid var(--doc-linha); color: var(--doc-tinta-2); text-align: center; font-size: .62em; line-height: 1.45; break-inside: avoid; }
+.doc-folha .doc-rodape div:first-child { font-size: 1.3em; }
+.doc-folha h1, .doc-folha h2 { margin: 1.6em 0 1.4em; font-size: 1em; text-align: center; text-transform: uppercase; }
 .doc-folha p { margin: 0 0 .8em; text-align: justify; }
+.doc-folha p.ind { text-indent: 2.5em; }
+.doc-folha .doc-local { margin-bottom: 2.2em; text-align: right; font-weight: 700; }
+.doc-folha .doc-ref { margin-bottom: 2.2em; font-weight: 700; line-height: 1.35; }
+.doc-folha .doc-ref .dp { margin-top: 1.2em; }
+.doc-folha .doc-lista { margin: 0 0 1.2em 2.5em; }
+.doc-folha .doc-lista.forte { margin-left: 0; font-weight: 700; }
+.doc-folha .doc-lista.sub div { text-decoration: underline; }
 .doc-folha table { width: 100%; border-collapse: collapse; margin: .8em 0; }
-.doc-folha th, .doc-folha td { border: 1px solid var(--doc-linha); padding: .35em .5em; text-align: left; vertical-align: top; }
-.doc-folha .doc-cab { display: flex; justify-content: space-between; gap: 1em; padding-bottom: .5em; border-bottom: 1px solid var(--doc-linha); color: var(--doc-tinta-2); font-size: .8em; text-transform: uppercase; letter-spacing: .06em; }
-.doc-folha .doc-pre { white-space: pre-wrap; text-align: left; }
+.doc-folha th, .doc-folha td { border: 1px solid var(--doc-linha); padding: .3em .5em; text-align: left; vertical-align: top; }
+.doc-folha th, .doc-folha td.q { width: 17%; text-align: center; }
+.doc-folha th { font-size: .85em; line-height: 1.25; overflow-wrap: normal; }
+.doc-folha th:first-child { width: auto; }
 .doc-folha .doc-branco { display: inline-block; min-width: 8em; height: 1em; vertical-align: baseline; border-bottom: 1px solid var(--doc-tinta); background: var(--doc-falta); }
-.doc-folha .doc-assin { display: grid; grid-template-columns: 1fr 1fr; gap: 3em; margin-top: 4.5em; break-inside: avoid; }
-.doc-folha .doc-assin div { padding-top: .3em; border-top: 1px solid var(--doc-tinta); text-align: center; font-size: .85em; }
+.doc-folha .doc-vazio { display: inline-block; width: 8em; height: 1em; vertical-align: baseline; border-bottom: 1px solid var(--doc-tinta); }
+.doc-folha .doc-vazio.p { width: 2.5em; }
+.doc-folha .doc-linha { display: flex; align-items: baseline; gap: .3em; margin: 0 0 .9em; }
+.doc-folha .doc-linha > i { flex: 1; min-height: 1.2em; padding-left: .3em; border-bottom: 1px solid var(--doc-tinta); font-style: normal; }
+.doc-folha .doc-linha > i.p { flex: .5; }
+.doc-folha .doc-receb { margin-top: 3em; break-inside: avoid; }
+.doc-folha .doc-receb .doc-linha { margin-bottom: 1.6em; }
+.doc-folha .doc-assin { display: flex; flex-direction: column; align-items: center; gap: 4em; margin-top: 4.5em; break-inside: avoid; }
+.doc-folha .doc-assin.perto { margin-top: 3em; }
+.doc-folha .doc-assin div { display: flex; flex-direction: column; width: 55%; padding-top: .2em; border-top: 1px solid var(--doc-tinta); text-align: center; font-weight: 700; line-height: 1.3; }
 .doc-folha h1, .doc-folha h2 { break-after: avoid; }
 .doc-folha p { orphans: 3; widows: 3; }
 .doc-folha tr { break-inside: avoid; }
@@ -829,10 +851,15 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
   html.doc-imprimindo { color-scheme: light; }
   .doc-imprimindo body { page: doc; background: var(--doc-papel); }
   .doc-imprimindo body::before, .doc-imprimindo body::after { display: none; }
-  #print .doc-folha { width: auto; max-width: none; aspect-ratio: auto; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
+  #print .doc-folha { width: auto; max-width: none; aspect-ratio: auto; min-height: 272mm; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
+  #print .doc-folha h1, #print .doc-folha h2 { margin: 1.6em 0 1.4em; font-size: 1em; }
+  #print .doc-folha table { margin: .8em 0; }
+  #print .doc-folha th, #print .doc-folha td { padding: .3em .5em; border-color: var(--doc-linha); font-size: 1em; }
+  #print .doc-folha th { font-size: .85em; }
+  #print .doc-folha th, #print .doc-folha td.q { text-align: center; }
   #print .doc-folha .doc-branco { background: none; }
 }
-@page doc { size: A4; margin: 20mm 18mm; }
+@page doc { size: A4; margin: 12mm 25mm 10mm; }
 </style>
 </head>
 <body>
@@ -870,6 +897,7 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 <script id="som-papel" type="text/plain">__SOM_PAPEL__</script>
 <script id="som-folha" type="text/plain">__SOM_FOLHA__</script>
 <script id="som-fogo" type="text/plain">__SOM_FOGO__</script>
+<script id="brasao" type="text/plain">__BRASAO__</script>
 <script>
 'use strict';
 
@@ -904,28 +932,139 @@ const ORIGENS = ['Compra / fornecedor', 'Devolução de unidade', 'Retorno de ma
 const MEDIDAS = ['Unidade', 'Caixa', 'Pacote', 'Metro', 'Rolo'];
 const TONER_CORES = { Preto: '#111827', Ciano: '#06B6D4', Magenta: '#DB2777', Amarelo: '#EAB308' };
 const PAT_RE = /^\d{5,6}$/;
-// Modelos da aba Documentos (formato em docs/context/ROUTES.md, seção "Documentos").
+// Documentos: timbre, rodapé e quem assina (troque aqui se mudar endereço, telefone ou responsável).
+const DOC_ORGAO = {
+  cidade: 'Carapicuíba',
+  prefeitura: 'Prefeitura de Carapicuíba',
+  secretaria: 'Secretaria Municipal da Mulher, Assistência Social e Cidadania',
+  rodape: ['Secretaria da Mulher, Assistência Social e Cidadania', 'almoxarifado.sasc@gmail.com | (11) 4164-1624 ou 4184-1217', 'Av. Celeste, 180- Centro, Carapicuíba | CEP: 06320-030'],
+  sigla: 'SEMASC', apelidos: { SASC: 'SEMASC' },
+  de: 'Departamento de T.I',
+  assinante: 'Yuri Mihara', cargo: 'Setor de Informática',
+  titular: 'Andrea Carmo', titularCargo: 'Secretaria da Mulher, Assistência Social e Cidadania',
+  vocativo: 'Prezada Secretária Andréa do Carmo,',
+};
+// Categoria por extenso no texto: [singular, plural, gênero].
+const DOC_NOMES = {
+  cpu: ['computador', 'computadores', 'm'], computador: ['computador', 'computadores', 'm'], notebook: ['notebook', 'notebooks', 'm'],
+  monitor: ['monitor', 'monitores', 'm'], impressora: ['impressora', 'impressoras', 'f'], projetor: ['projetor', 'projetores', 'm'],
+  estabilizador: ['estabilizador', 'estabilizadores', 'm'], roteador: ['roteador', 'roteadores', 'm'],
+};
+// Campos comuns aos modelos (formato em docs/context/ROUTES.md, seção "Documentos").
+const DOC_CAMPO = {
+  data: { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: () => today() },
+  numero: { id: 'numero', rotulo: 'Nº da C.I', tipo: 'texto', obrigatorio: true, serie: 'ci', dica: 'Sugerido pela numeração; ao gerar o PDF, o próximo avança' },
+  resposta: { id: 'resposta', rotulo: 'Em resposta à', tipo: 'texto', dica: 'Opcional, ex.: C.I Nº 18/CREAS-SEMASC/2026' },
+  bens: [1, 2, 3].map(i => ({ id: `bem${i}`, rotulo: `Patrimônio ${i}`, tipo: 'pat', dica: i === 1 ? 'Busque pelo nº, marca, modelo ou unidade' : '' })),
+  outros: { id: 'outros', rotulo: 'Outros equipamentos', tipo: 'area', dica: 'Um por linha, ex.: CPU 2: SEM PATRIMÔNIO' },
+  un: { id: 'un', rotulo: 'Unidade', tipo: 'unidade', auto: (base, v) => docBemFora(base, v)?.un },
+  setor: { id: 'setor', rotulo: 'Setor', tipo: 'setor', de: 'un', auto: (base, v) => docBemFora(base, v)?.setor },
+  para: { id: 'para', rotulo: 'Para', tipo: 'texto', obrigatorio: true, dica: 'Vem da unidade e do setor', auto: (base, v) => docPara(v.un, v.setor) },
+  assin: { id: 'assin', rotulo: 'Assinado por', tipo: 'texto', obrigatorio: true, auto: () => DOC_ORGAO.assinante },
+  titular: { id: 'titular', rotulo: `Assinatura de ${DOC_ORGAO.titular}`, tipo: 'escolha', opcoes: ['Sim', 'Não'] },
+};
+const docTitular = padrao => ({ ...DOC_CAMPO.titular, auto: () => padrao });
 const MODELOS_DOC = [
-  // EXEMPLO: só valida a estrutura; apague quando chegarem os modelos reais.
   {
-    id: 'exemplo',
-    titulo: 'Exemplo de documento',
-    descricao: 'Modelo de teste da estrutura (data, patrimônio, unidade e setor, observações). Será apagado.',
-    campos: [
-      { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: () => today() },
-      { id: 'bem', rotulo: 'Patrimônio', tipo: 'pat', dica: 'Busque pelo nº, marca, modelo ou unidade' },
-      { id: 'num', rotulo: 'Nº do patrimônio', tipo: 'texto', auto: (db, v) => { const p = docPat(db, v.bem); return p ? patIdent(p) : ''; } },
-      { id: 'equip', rotulo: 'Equipamento', tipo: 'texto', obrigatorio: true, auto: (db, v) => { const p = docPat(db, v.bem); return p ? patDesc(p) : ''; } },
-      { id: 'un', rotulo: 'Unidade', tipo: 'unidade', obrigatorio: true, auto: (db, v) => docPat(db, v.bem)?.un },
-      { id: 'setor', rotulo: 'Setor', tipo: 'setor', de: 'un', auto: (db, v) => docPat(db, v.bem)?.setor },
-      { id: 'situacao', rotulo: 'Situação', tipo: 'escolha', opcoes: ['Em uso', 'Em manutenção', 'Parado'], auto: () => 'Em uso' },
-      { id: 'obs', rotulo: 'Observações', tipo: 'area', dica: 'Aparece no fim do documento, se preenchida' },
-    ],
-    corpo: v => `<div class="doc-cab"><span>SASC · Tecnologia da Informação</span><span>Documento de exemplo</span></div>
-      <h1>Registro de situação de equipamento</h1>
-      <p>Em ${docData(v.data)}, a equipe de Tecnologia da Informação registrou o equipamento <b>${docEsc(v.equip)}</b>, patrimônio <b>${docEsc(v.num)}</b>, localizado em ${docEsc(v.setor ? `${v.un} › ${v.setor}` : v.un)}, na situação <b>${docEsc(v.situacao)}</b>.</p>
-      ${v.obs ? `<h2>Observações</h2><p class="doc-pre">${esc(v.obs)}</p>` : ''}
-      <div class="doc-assin"><div>Responsável TI</div><div>Responsável pela unidade</div></div>`,
+    id: 'ci-envio',
+    titulo: 'C.I · Envio de equipamento',
+    descricao: 'Avisa o envio de computador, impressora ou outro bem para uma unidade, com os números de patrimônio.',
+    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, DOC_CAMPO.resposta, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para,
+      { id: 'objetivo', rotulo: 'Objetivo', tipo: 'texto', dica: 'Opcional; completa "com o objetivo de…"' }, DOC_CAMPO.assin, docTitular('Sim')],
+    corpo: v => {
+      const lin = docBens(v), g = docGrupo(lin);
+      return docTopo(v, { ref: docCI(v), resposta: v.resposta, para: v.para }) +
+        `<p class="ind">Venho por meio deste notificar que será feito o envio ${g.de} a seguir para a unidade <b>${docEsc(v.para)}</b>${v.objetivo ? `, com o objetivo de ${esc(v.objetivo)}` : ''}.</p>
+        <p class="ind">${g.n ? 'Seguem os números' : 'Segue o número'} de patrimônio:</p>${docLista(lin)}${docFecho()}${docAssin(v)}`;
+    },
+  },
+  {
+    id: 'ci-devolucao',
+    titulo: 'C.I · Devolução após manutenção',
+    descricao: 'Registra a volta de um equipamento consertado para o setor de origem.',
+    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para, DOC_CAMPO.assin, docTitular('Não')],
+    corpo: v => {
+      const lin = docBens(v), g = docGrupo(lin);
+      return docTopo(v, { ref: docCI(v), para: v.para }) +
+        `<p class="ind">Informo por meio deste que ${docObjeto(lin, g)}, encaminhad${g.o} para manutenção, ${g.n ? 'estão' : 'está'} sendo devolvid${g.o} ao setor de origem após a realização dos procedimentos necessários.</p>
+        <p class="ind">Fica registrada, por meio deste documento, a devolução d${g.o} referid${g.o} ${g.nome}.</p>
+        <p class="ind">${g.n ? 'Seguem os números' : 'Segue o número'} de patrimônio:</p>${docLista(lin)}${docFecho()}${docAssin(v)}`;
+    },
+  },
+  {
+    id: 'ci-comunicado',
+    titulo: 'C.I · Comunicado ou relatório',
+    descricao: 'Texto livre ao Gabinete ou a outro setor: relatório de visita, defeito, pedido de peça.',
+    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, { ...DOC_CAMPO.para, dica: 'Ex.: Gabinete SEMASC', auto: () => `Gabinete ${DOC_ORGAO.sigla}` },
+      { id: 'vocativo', rotulo: 'Saudação', tipo: 'texto', dica: 'Opcional', auto: () => DOC_ORGAO.vocativo },
+      { id: 'texto', rotulo: 'Texto', tipo: 'area', obrigatorio: true, dica: 'Um parágrafo por linha; **assim** fica em negrito' },
+      DOC_CAMPO.assin, docTitular('Não')],
+    corpo: v => docTopo(v, { ref: docCI(v), para: v.para }) + (v.vocativo ? `<p>${esc(v.vocativo)}</p>` : '') + docTexto(v.texto) + docFecho() + docAssin(v),
+  },
+  {
+    id: 'requisicao',
+    titulo: 'Requisição de material',
+    descricao: 'Pede itens ao Almoxarifado ou a Compras, com a tabela de quantidades solicitadas.',
+    campos: [DOC_CAMPO.data, DOC_CAMPO.numero, { ...DOC_CAMPO.para, dica: 'Ex.: Almoxarifado ou Compras', auto: () => 'Almoxarifado' },
+      { id: 'texto', rotulo: 'Texto', tipo: 'area', obrigatorio: true, auto: () => 'Solicito o fornecimento dos itens relacionados neste documento, conforme as quantidades indicadas, para atender às necessidades do setor.' },
+      { id: 'itens', rotulo: 'Itens', tipo: 'area', obrigatorio: true, dica: 'Um por linha: quantidade x descrição, ex.: 2 caixas x Conector RJ45' },
+      { id: 'solicitante', rotulo: 'Solicitante', tipo: 'texto', obrigatorio: true, auto: () => DOC_ORGAO.assinante }],
+    corpo: v => {
+      const itens = docItensReq(v.itens), vazio = '<td class="q"></td><td class="q"></td>';
+      return docTopo(v, { ref: docCI(v), para: v.para }) + docTexto(v.texto) +
+        `<p><b>Nome do solicitante:</b> ${docEsc(v.solicitante)}</p><div class="doc-assin perto"><div>Assinatura e carimbo</div></div>
+        <h2>Requisição de material geral</h2>
+        <table><thead><tr><th>Descrição do material</th><th>Quantidade solicitada</th><th>Quantidade autorizada</th><th>Quantidade liberada</th></tr></thead>
+        <tbody>${itens.length ? itens.map(([d, q]) => `<tr><td>${esc(d)}</td><td class="q">${esc(q)}</td>${vazio}</tr>`).join('') : `<tr><td>${docEsc('')}</td><td class="q"></td>${vazio}</tr>`}</tbody></table>`;
+    },
+  },
+  {
+    id: 'protocolo-entrega',
+    titulo: 'Protocolo de entrega de material',
+    descricao: 'Acompanha a entrega de periféricos e materiais; a unidade assina o recebimento.',
+    campos: [DOC_CAMPO.data, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para, { ...DOC_CAMPO.resposta, rotulo: 'Pedido da unidade', dica: 'Opcional, ex.: C.I nº 073/SASC/CRASI/2024' },
+      { id: 'itens', rotulo: 'Itens entregues', tipo: 'area', obrigatorio: true, dica: 'Um por linha, ex.: 2 x Teclados' }],
+    corpo: v => {
+      const itens = docLinhas(v.itens);
+      return docTopo(v, { para: v.para }) + `<h1>Protocolo de entrega de material geral</h1>
+        <p>Conforme solicitado${v.resposta ? ` na ${esc(v.resposta)}` : ''}, estamos enviando ${itens.length > 1 ? 'os itens' : 'o item'} abaixo.</p>
+        <div class="doc-lista forte sub">${itens.length ? itens.map(l => `<div>${esc(l)}</div>`).join('') : `<div>${docEsc('')}</div>`}</div>
+        <p>Favor conferir o material entregue e assinar o seu recebimento neste protocolo de entrega.</p>
+        <div class="doc-receb"><div class="doc-linha">Recebido por:<i></i></div><div class="doc-linha">Data: ${docDataVazia()}</div></div>`;
+    },
+  },
+  {
+    id: 'termo-responsabilidade',
+    titulo: 'Termo de responsabilidade de equipamento',
+    descricao: 'Empréstimo de notebook, projetor ou outro bem a um servidor, com assinatura de devolução.',
+    campos: [DOC_CAMPO.data, ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.un, DOC_CAMPO.setor, DOC_CAMPO.para,
+      { id: 'nome', rotulo: 'Nome do responsável', tipo: 'texto', dica: 'Em branco, fica a linha para preencher à mão' },
+      { id: 'matricula', rotulo: 'Matrícula', tipo: 'texto' }, { id: 'cargo', rotulo: 'Cargo', tipo: 'texto' }],
+    corpo: v => {
+      const lin = docBens(v), g = docGrupo(lin);
+      return docTopo(v, { de: DOC_ORGAO.titularCargo, para: v.para }) + `<h1>Termo de responsabilidade para utilização de equipamento</h1>
+        <div class="doc-linha">Eu<i>${esc(v.nome)}</i></div>
+        <div class="doc-linha">Matrícula<i class="p">${esc(v.matricula)}</i>Cargo:<i>${esc(v.cargo)}</i></div>
+        <div class="doc-linha">Data ${docDataVazia()}</div>
+        <p>Lotado(a) nesta ${esc(DOC_ORGAO.titularCargo)}, assumo responsabilidade plena e integral pel${g.o} ${g.nome} abaixo citad${g.o} para uso exclusivo das atividades profissionais deste setor.</p>
+        ${docLista(lin, true)}
+        <div class="doc-receb"><div class="doc-linha">Assinatura de devolução:<i></i>Data ${docDataVazia()}</div></div>`;
+    },
+  },
+  {
+    id: 'memorando',
+    titulo: 'Memorando a outra secretaria',
+    descricao: 'Encaminha equipamento a outra secretaria e pede o registro da transferência.',
+    campos: [DOC_CAMPO.data, { ...DOC_CAMPO.numero, rotulo: 'Nº do memorando', serie: 'memorando' },
+      { id: 'dest', rotulo: 'Destinatário', tipo: 'texto', obrigatorio: true, dica: 'Ex.: Secretaria de Segurança Pública e Controle Urbano' },
+      ...DOC_CAMPO.bens, DOC_CAMPO.outros, DOC_CAMPO.assin],
+    corpo: v => {
+      const lin = docBens(v), g = docGrupo(lin);
+      return `${docLocal(v)}<div class="doc-ref"><div>${docCI(v, 'Memorando nº')}</div></div><p>À ${docEsc(v.dest)}</p>
+        <p class="ind">Encaminho à ${docEsc(v.dest)} ${docObjeto(lin, g)}, para as providências cabíveis. Solicitamos o recebimento e o devido registro da transferência d${g.o} ${g.nome}.</p>
+        <p class="ind">Sem mais para o momento, aproveitamos a oportunidade para renovar protestos de estima e consideração.</p>
+        <p class="ind">${g.n ? 'Patrimônios' : 'Patrimônio'} d${g.o} ${g.nome} entregue${g.n ? 's' : ''}:</p>${docLista(lin)}${docAssin(v)}`;
+    },
   },
 ];
 
@@ -2983,6 +3122,8 @@ function viewConfig() {
       <section class="card"><header><h2>Protocolos</h2></header><div class="body form-stack">
         <label class="f">Próximo número de protocolo<span class="hint">Use para continuar a numeração do papel, se precisar</span><input class="input" type="number" min="1" id="cfg-proto" value="${db.config.protoNext}" style="max-width:160px"></label>
         <div><button class="btn sm" data-act="proto-save">${icon('check')}Salvar numeração</button></div>
+        ${Object.entries(DOC_SERIES).map(([s, nome]) => `<label class="f">Próximo nº de ${nome} em ${today().slice(0, 4)}<span class="hint">Sugerido nos Documentos; avança ao gerar o PDF</span><input class="input" type="number" min="1" id="cfg-doc-${s}" value="${docNumProx(s, today().slice(0, 4))}" style="max-width:160px"></label>`).join('')}
+        <div><button class="btn sm" data-act="docnum-save">${icon('check')}Salvar numeração dos documentos</button></div>
       </div></section>
     </div>
     <section class="card"><header><h2>Backup</h2></header><div class="body form-stack">
@@ -3055,7 +3196,80 @@ const docEsc = x => String(x ?? '').trim() ? esc(x) : '<span class="doc-branco">
 function docData(iso) {
   if (!/^\d{4}-\d{2}-\d{2}$/.test(iso || '')) return docEsc('');
   const [a, m, d] = iso.split('-').map(Number);
-  return esc(`${d === 1 ? '1º' : d} de ${MESES_EXT[m - 1]} de ${a}`);
+  return esc(`${String(d).padStart(2, '0')} de ${MESES_EXT[m - 1]} de ${a}`);
+}
+const docLocal = v => `<p class="doc-local">${esc(DOC_ORGAO.cidade)}, ${docData(v.data)}</p>`;
+const docAno = data => (/^\d{4}/.test(data || '') ? data : today()).slice(0, 4);
+function docCI(v, pre = 'C.I Nº') {
+  const n = String(v.numero ?? '').trim();
+  return `${pre} ${n ? esc(/^\d$/.test(n) ? '0' + n : n) : docEsc('')}/${esc(DOC_ORGAO.sigla)}/TI/${docAno(v.data)}`;
+}
+const DOC_SERIES = { ci: 'C.I', memorando: 'memorando' };
+const docNumProx = (serie, ano) => db.config.docNum?.[`${serie}-${ano}`] || 1;
+const docNumSugerido = (f, v) => String(docNumProx(f.serie, docAno(v.data))).padStart(2, '0');
+function docNumGrava(d, m) {
+  let mudou = false;
+  m.campos.filter(f => f.serie).forEach(f => {
+    const n = String(d.v[f.id] ?? '').trim(), ano = docAno(d.v.data);
+    if (!/^\d+$/.test(n) || docNumProx(f.serie, ano) > +n) return;
+    (db.config.docNum ||= {})[`${f.serie}-${ano}`] = +n + 1; mudou = true;
+  });
+  if (mudou) commit();
+}
+function docTopo(v, o) {
+  return docLocal(v) + `<div class="doc-ref">${o.ref ? `<div>${o.ref}</div>` : ''}${o.resposta ? `<div>Em resposta à ${esc(o.resposta)}</div>` : ''}
+    <div class="dp"><div>De: ${docEsc(o.de ?? DOC_ORGAO.de)}</div><div>Para: ${docEsc(o.para)}</div></div></div>`;
+}
+const docFecho = () => '<p class="ind">Na oportunidade, apresentamos manifestação de elevada estima e consideração.</p><p class="ind">Atenciosamente,</p>';
+function docAssin(v) {
+  const tit = v.titular === 'Sim' ? `<div>${esc(DOC_ORGAO.titular)}<span>${esc(DOC_ORGAO.titularCargo)}</span></div>` : '';
+  return `<div class="doc-assin"><div>${docEsc(v.assin)}<span>${esc(DOC_ORGAO.cargo)}</span></div>${tit}</div>`;
+}
+const docLinhas = s => String(s ?? '').split('\n').map(l => l.trim()).filter(Boolean);
+const docTexto = s => docLinhas(s).map(l => `<p class="ind">${esc(l).replace(/\*\*(.+?)\*\*/g, '<b>$1</b>')}</p>`).join('') || `<p>${docEsc('')}</p>`;
+const docDataVazia = () => '<span><span class="doc-vazio p"></span>/<span class="doc-vazio p"></span>/<span class="doc-vazio"></span></span>';
+function docItensReq(s) {
+  return docLinhas(s).map(l => {
+    let m = l.match(/^(\d.*?)\s*x\s+(.+)$/i);
+    if (m) return [m[2], m[1]];
+    m = l.match(/^(.+?);\s*(.*)$/);
+    return m ? [m[1], m[2]] : [l, ''];
+  });
+}
+const docBemFora = (base, v) => ['bem1', 'bem2', 'bem3'].map(k => docPat(base, v[k])).find(p => p && p.un !== ESTOQUE);
+function docPara(un, setor) {
+  const u = DOC_ORGAO.apelidos[un] || un || '';
+  return !u ? '' : setor ? `${setor} - ${u}` : u;
+}
+function docBens(v) {
+  const ps = [...new Set(['bem1', 'bem2', 'bem3'].map(k => v[k]).filter(Boolean))].map(id => docPat(db, id)).filter(Boolean);
+  const total = {}, conta = {};
+  ps.forEach(p => { total[p.cat] = (total[p.cat] || 0) + 1; });
+  const lin = ps.map(p => ({ cat: p.cat, rot: (total[p.cat] > 1 ? `${p.cat} ${conta[p.cat] = (conta[p.cat] || 0) + 1}` : p.cat).toUpperCase(), num: p.num || (p.locadora ? `LOCADORA ${p.locadora}` : 'SEM PATRIMÔNIO') }));
+  docLinhas(v.outros).forEach(l => {
+    const i = l.indexOf(':'), rot = i < 0 ? l : l.slice(0, i).trim();
+    lin.push({ cat: rot, rot, num: i < 0 ? '' : l.slice(i + 1).trim() });
+  });
+  return lin;
+}
+function docGrupo(lin) {
+  const ks = [...new Set(lin.map(l => norm(l.cat).replace(/[\s\d]+$/, '')))];
+  const [um, varios, gen] = (ks.length === 1 && DOC_NOMES[ks[0]]) || ['equipamento', 'equipamentos', 'm'];
+  const n = lin.length > 1, o = (gen === 'f' ? 'a' : 'o') + (n ? 's' : ''), nome = n ? varios : um;
+  return { n, o, nome, de: `d${o} ${nome}` };
+}
+const docObjeto = (lin, g) => !g.n && /^\d/.test(lin[0]?.num || '') ? `${g.o} ${g.nome} de patrimônio nº <b>${esc(lin[0].num)}</b>` : `${g.o} ${g.nome} abaixo`;
+function docLista(lin, termo = false) {
+  const linhas = lin.length ? lin.map(l => `<div>${esc(l.rot)}${l.num ? (termo ? ` Patrimônio: ${esc(l.num)}` : `: <b>${esc(l.num)}</b>`) : ''}</div>`).join('') : `<div>${docEsc('')}</div>`;
+  return `<div class="doc-lista${termo ? ' forte' : ''}">${linhas}</div>`;
+}
+let docBrasaoUrl;
+function docBrasao() {
+  if (docBrasaoUrl === undefined) {
+    const t = ($('#brasao')?.textContent || '').trim();
+    docBrasaoUrl = /^[A-Za-z0-9+/]+=*$/.test(t) ? URL.createObjectURL(new Blob([Uint8Array.from(atob(t), c => c.charCodeAt(0))], { type: 'image/png' })) : '';
+  }
+  return docBrasaoUrl;
 }
 const docPatRot = p => `${patIdent(p)} · ${patDesc(p)}`;
 const docPatSel = p => p ? `Selecionado: ${docPatRot(p)} · ${loc(p.un, p.setor)}${p.status === 'descartado' ? ' (descartado)' : ''}` : 'Nenhum patrimônio selecionado.';
@@ -3070,6 +3284,7 @@ function docNovo(id) {
   const d = { id, etapa: 'form', v: {}, manual: {} };
   m.campos.forEach(f => { d.v[f.id] = ''; });
   m.campos.forEach(f => { if (f.auto) d.v[f.id] = docAuto(f, d.v); });
+  m.campos.forEach(f => { if (f.serie) d.v[f.id] = docNumSugerido(f, d.v); });
   return d;
 }
 function docSet(d, id, valor) {
@@ -3086,7 +3301,7 @@ function docSet(d, id, valor) {
     if (!d.manual[c.id]) d.v[c.id] = novo;
   });
 }
-const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== '');
+const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== (f.serie ? docNumSugerido(f, d.v) : ''));
 const docFalta = d => docModelo(d).campos.filter(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
 function docValida(d) {
   const falta = docFalta(d);
@@ -3117,10 +3332,13 @@ function docCampo(d, f, rev = false) {
   const rest = f.auto ? `<button class="btn icon sm ghost doc-rest" data-act="doc-restaurar" data-id="${esc(f.id)}" title="Restaurar valor automático" aria-label="Restaurar valor automático de ${esc(f.rotulo)}"${d.manual[f.id] ? '' : ' hidden'}>${icon('undo')}</button>` : '';
   return `<div class="doc-f"><label class="f">${rot}${ctl}</label>${rest}</div>`;
 }
+function docCorpo(d, m) {
+  try { return m.corpo({ ...d.v }); } catch (e) { return `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
+}
 function docFolha(d, m = docModelo(d)) {
-  let html;
-  try { html = m.corpo({ ...d.v }); } catch (e) { html = `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
-  return `<article class="doc-folha" lang="pt-BR">${html}</article>`;
+  const img = docBrasao();
+  return `<article class="doc-folha" lang="pt-BR"><header class="doc-timbre"><div><b>${esc(DOC_ORGAO.prefeitura)}</b><span>${esc(DOC_ORGAO.secretaria)}</span></div>${img ? `<img src="${img}" alt="Brasão de ${esc(DOC_ORGAO.cidade)}">` : ''}</header>
+    <div class="doc-corpo">${docCorpo(d, m)}</div><footer class="doc-rodape">${DOC_ORGAO.rodape.map(l => `<div>${esc(l)}</div>`).join('')}</footer></article>`;
 }
 function docSync(d, exceto) {
   const m = docModelo(d);
@@ -3132,7 +3350,8 @@ function docSync(d, exceto) {
     const r = $(`.doc-rest[data-id="${f.id}"]`); if (r) r.hidden = !d.manual[f.id];
     if (String(v).trim()) el.classList.remove('err');
   });
-  $('#doc-prev').innerHTML = docFolha(d, m);
+  const corpo = $('#doc-prev .doc-corpo');
+  if (corpo) corpo.innerHTML = docCorpo(d, m); else $('#doc-prev').innerHTML = docFolha(d, m);
 }
 function docPatBusca(q) {
   const nq = norm(q), n = q.trim();
@@ -3166,10 +3385,13 @@ function docRevisao(d, m) {
     <section class="card doc-lado"><header><h2>Valores</h2></header><div class="doc-campos">${m.campos.map(f => docCampo(d, f, true)).join('')}</div></section></div>`;
 }
 function docEtapa(etapa) { ui.doc.etapa = etapa; render(); window.scrollTo(0, 0); }
-function docPdf() {
+async function docPdf() {
   const d = ui.doc, m = docModelo(d);
   if (!docValida(d)) return;
+  docNumGrava(d, m);
   $('#print').innerHTML = docFolha(d, m);
+  const img = $('#print .doc-timbre img');
+  if (img) await Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 800))]);
   const t = document.title;
   document.title = `${m.titulo} ${today()}`;
   document.documentElement.classList.add('doc-imprimindo');
@@ -3296,6 +3518,11 @@ const ACTIONS = {
   'un-rm': t => { db.unidades.splice(+t.dataset.u, 1); commit(); render(); },
   'cat-add': () => { const v = $('#nc').value.trim(); if (!v) return $('#nc').focus(); if (db.categorias.some(c => norm(c) === norm(v))) return toast('Categoria já existe.', true); db.categorias.push(v); commit(); render(); },
   'cat-rm': t => { db.categorias.splice(+t.dataset.i, 1); commit(); render(); },
+  'docnum-save': () => {
+    const ano = today().slice(0, 4), v = Object.keys(DOC_SERIES).map(s => [s, parseInt($('#cfg-doc-' + s).value, 10)]);
+    if (v.some(([, n]) => !(n >= 1))) return toast('Use números a partir de 1.', true);
+    v.forEach(([s, n]) => { (db.config.docNum ||= {})[`${s}-${ano}`] = n; }); commit(); toast('Numeração dos documentos salva.');
+  },
   'proto-save': () => { const v = parseInt($('#cfg-proto').value, 10); const max = db.protocolos.reduce((m, p) => Math.max(m, p.num), 0); if (!(v > max)) return toast(`O número precisa ser maior que ${max}.`, true); db.config.protoNext = v; commit(); toast('Numeração salva.'); },
 };
 function rerenderBehind() { const y = window.scrollY; const layer = $('#layer').innerHTML; renderNav(); $('#view').innerHTML = VIEWS[ui.route](); $('#layer').innerHTML = layer; window.scrollTo(0, y); }
