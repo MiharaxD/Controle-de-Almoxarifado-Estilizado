@@ -29,6 +29,10 @@ colors:
   paper-print: "#2C4A46"
   brass: "#C99A4B"
   chrome: "#B9B3A2"
+  folder: "#D3B987"
+  folder-2: "#BC9E66"
+  folder-inside: "#957646"
+  graphite: "#3A3C41"
 typography:
   display:
     fontFamily: "Cartaz, \"Sitka Banner\", \"Sitka Display\", Georgia, \"Times New Roman\", serif"
@@ -196,6 +200,7 @@ A folha (`.papel`) é papel envelhecido: creme (paper → paper-2), ou verde-cla
 **Display Font:** Playfair Display (SIL OFL 1.1), embutida em base64 no `@font-face` com o nome `Cartaz`. É um subconjunto latino (A–Z, a–z, 0–9, acentos do português, pontuação básica), variável de 400 a 800 e usada a 600, com algarismos alinhados (`lining-nums`). Se faltar, cai para Sitka Banner, Georgia e Times New Roman. O comentário de copyright e licença fica junto do `@font-face`. Para trocar a fonte: baixe o woff2 com `&text=` na API do Google Fonts e substitua o base64.
 **Body Font:** Bahnschrift (com Segoe UI, system-ui)
 **Label/Mono Font:** Bahnschrift Condensed (com Bahnschrift, Arial Narrow); Cascadia Mono (com Consolas)
+**Hand Font** (`--mao`): Ink Free (com Segoe Print, Segoe Script). Só para o que é escrito a lápis: descrição das pastas e valores dos campos do bloco de notas de Documentos.
 
 **Character:** Serifa de cartaz em caixa alta contra uma grotesca industrial condensada e espaçada: o título é o cartaz, o resto é a etiqueta de inventário. A serifa vai embutida no próprio HTML e as demais são fontes do Windows, então o arquivo continua offline e sem fontes externas.
 
@@ -298,6 +303,12 @@ O protocolo é datilografado: a folha `.papel` (cabeçalho impresso "SASC · Tec
   - Descarte: um isqueiro de metal com tampa aberta (SVG `ISQUEIRO`) sobe de baixo à esquerda da folha, falha a ignição 1 ou 2 vezes (roda gira, faíscas, sopro de chama), acende, encosta na borda e fecha a tampa ao sair. A folha queima até sumir (~1,5s): máscara de vários círculos que crescem em velocidades diferentes (borda irregular), anel de brasa, carvão e tostado (`.queima`), chamas, brasas, fumaça e clarão laranja. Som de fogo (`som-fogo.mp3`, baixo).
   - Transferência: a folha sai da máquina e encolhe para uma carta no centro, dobra em três (baixo para cima, depois cima para baixo, mostrando o verso), um envelope pardo entra e a carta desce no bolso; a aba fecha, o lacre roxo é pressionado, o envelope gira mostrando a frente (selo postal "TI", carimbo postal, nº e destino datilografados) e se abre no modal (morph do tamanho do envelope para o do modal).
   - Com movimento reduzido, todos usam só o som de arrancar a folha.
+
+### Documentos: pastas, bloco de notas e lápis
+- **Pastas** (catálogo de modelos): pasta de arquivo parda (`--pasta`, `--pasta-2`, interior `--pasta-dentro`, fibra) com aba em trapézio que diz "Padrão" ou "Meu modelo" (aba à esquerda, no meio e à direita, alternando), folhas pautadas espiando do bolso, frente com recorte de polegar, etiqueta creme de filete duplo com o título em Courier caixa alta e descrição a lápis. Giradas ±.7°; no hover endireitam, sobem 4px, a frente cede 9° para fora, as folhas sobem 12px e acende o brilho verde.
+- **Abrir uma pasta** (~2,6s, WAAPI): as outras saem para a direita com giro (a mais à direita primeiro, 26ms entre elas) e o cabeçalho esmaece; a escolhida cede (antecipação), sobe num arco e chega perto (escala até 1,25, sombra alta) com o som de folha; a folha do documento de verdade sai do bolso com cuidado (hesita, balança ±1°, a frente cede), com o farfalhar de tirar a folha; a pasta cai de lado e a folha flutua até o lugar da prévia, passa um pouco, sobe 5px e pousa com o som de pousar. O bloco de notas entra pela esquerda girando 1,4°. Com movimento reduzido, abre direto.
+- **Bloco de notas** (campos): papel `.papel` sem moldura Déco, espiral de arame (`--metal`) com furos no topo, picote pontilhado, margem dupla vermelha (`--margem`), páginas empilhadas embaixo. Campos sem caixa: linha azul de caderno (`--pauta-forte`), valor a lápis (`--mao`, `--grafite`), textarea pautada. Foco: linha verde de papel.
+- **Lápis:** lápis petróleo laqueado com virola de latão e borracha; cada alteração é passada a limpo: o valor fica claro (`--grafite-claro`, rascunho) e o lápis chega de cima, escreve da esquerda para a direita (linha a linha nos textos longos), com tremida leve e raspado de grafite sintetizado, e sobe ao terminar. Escolha passa na hora; texto digitado espera 1s sem digitar ou sair do campo; o campo que muda por consequência (ex.: Para) é escrito em seguida.
 
 ### Selo do protocolo (assinatura)
 O texto e a tinta do selo dependem do tipo (`SELO_TIPO`): Recebido (verde), Entregue (azul), Transferido (roxo), Descartado (vermelho); vários protocolos de tipos diferentes ficam "Registrados" em verde. A batida toca o som do carimbo. Vindo do envelope (`.envelopado`), o carimbo começa 440ms depois.

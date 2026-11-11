@@ -30,6 +30,10 @@
   --maquina: "Courier New", Courier, "Cascadia Mono", monospace;
   --doc-papel: #FFFFFF; --doc-tinta: #111111; --doc-tinta-2: #4A4A4A; --doc-linha: #6B6B6B; --doc-falta: rgba(243, 174, 72, .28); --doc-orfao: rgba(220, 38, 38, .16); --doc-orfao-tinta: #B42318;
   --doc-fonte: Arial, "Helvetica Neue", Helvetica, sans-serif;
+  --pasta: #D3B987; --pasta-2: #BC9E66; --pasta-dentro: #957646; --pasta-borda: rgba(74, 52, 20, .42); --pasta-sombra: rgba(58, 38, 12, .45);
+  --grafite: #3A3C41; --grafite-claro: color-mix(in srgb, var(--grafite) 38%, transparent);
+  --pauta: color-mix(in srgb, var(--papel-azul) 20%, transparent); --pauta-forte: color-mix(in srgb, var(--papel-azul) 48%, transparent); --margem: color-mix(in srgb, var(--danger-ink) 45%, transparent);
+  --mao: "Ink Free", "Segoe Print", "Segoe Script", "Comic Sans MS", cursive;
   --fibra: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='260' height='260'%3E%3Cfilter id='f'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .42 0 0 0 0 .31 0 0 0 0 .16 0 0 0 .55 -.2'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
   --manchas: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='600' height='600'%3E%3Cfilter id='m'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.006' numOctaves='3' seed='4' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .55 0 0 0 0 .4 0 0 0 0 .18 0 0 0 1.4 -.62'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23m)'/%3E%3C/svg%3E");
   --papel-fundo: radial-gradient(ellipse 120% 95% at 50% 42%, transparent 52%, color-mix(in srgb, var(--papel-mancha) 30%, transparent)), var(--manchas) 0 0 / 600px 600px, var(--fibra) 0 0 / 260px 260px, linear-gradient(172deg, var(--papel), var(--papel-2));
@@ -655,25 +659,49 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .inline-add .input { height: 32px; width: 150px; }
 
 /* documentos */
-.doc-cat { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 18px; }
-.doc-card { --tilt: -.6deg; display: flex; flex-direction: column; padding: 0; color: var(--text); transform: rotate(var(--tilt)); transition: transform .3s var(--out), border-color .2s, box-shadow .3s var(--out); }
-.doc-card:nth-child(even) { --tilt: .7deg; }
-.doc-card:hover, .doc-card:focus-within { transform: rotate(0deg) translateY(-3px); border-color: var(--accent-line); box-shadow: var(--shadow-2), 0 10px 26px -12px var(--accent-glow); outline: none; }
-.doc-card b { display: flex; align-items: center; gap: 10px; font: 600 17px/1.15 var(--cond); font-stretch: condensed; letter-spacing: .08em; text-transform: uppercase; }
-.doc-card b svg.i { color: var(--accent); }
-.doc-card small { color: var(--text-2); font-size: 13px; line-height: 1.4; }
-.doc-card .doc-usar { display: flex; flex: 1; flex-direction: column; gap: 8px; padding: 18px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
-.doc-card .doc-usar:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
-.doc-card footer { display: flex; align-items: center; gap: 2px; padding: 6px 8px 6px 18px; border-top: 1px solid var(--rule); }
-.doc-card .doc-origem { margin-right: auto; color: var(--text-3); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
-.doc-card .doc-preencher { display: flex; align-items: center; margin-top: auto; padding-top: 8px; }
-.doc-card .doc-ir { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); font: 600 12px/1 var(--cond); font-stretch: condensed; letter-spacing: .14em; text-transform: uppercase; }
-.doc-card .doc-ir::after { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 1.5px 1.5px 0 0; rotate: 45deg; transition: translate .2s var(--out); }
-.doc-card:hover .doc-ir::after, .doc-card:focus-within .doc-ir::after { translate: 3px 0; }
-.doc-card.ger { --tilt: 0deg; }
-.doc-card.ger .doc-usar { cursor: default; }
-.doc-card footer .doc-rm { margin-left: 12px; }
-.doc-grupo + .doc-grupo { margin-top: 28px; }
+.doc-cat { display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 26px 22px; }
+/* pasta de arquivo: costas com aba, folhas no bolso, frente com etiqueta datilografada e descrição a lápis */
+.pasta {
+  --tilt: -.7deg; --aba-x: 12px;
+  --text: var(--papel-tinta); --text-2: color-mix(in srgb, var(--papel-tinta) 80%, var(--pasta)); --text-3: color-mix(in srgb, var(--papel-tinta) 62%, var(--pasta));
+  --accent: var(--papel-verde); --accent-soft: color-mix(in srgb, var(--papel-verde) 12%, transparent); --accent-line: color-mix(in srgb, var(--papel-verde) 45%, transparent);
+  --danger: var(--danger-ink); --danger-soft: color-mix(in srgb, var(--danger-ink) 12%, transparent); --danger-line: color-mix(in srgb, var(--danger-ink) 45%, transparent);
+  --border-strong: var(--pasta-borda);
+  position: relative; display: flex; min-height: 218px; color: var(--text); transform: rotate(var(--tilt)); filter: drop-shadow(0 3px 4px rgba(0, 0, 0, .5)) drop-shadow(0 0 0 transparent); transition: transform .3s var(--out), filter .3s var(--out);
+}
+.pasta:nth-child(even) { --tilt: .8deg; }
+.pasta:nth-child(3n+2) { --aba-x: calc(50% - 48px); }
+.pasta:nth-child(3n) { --aba-x: calc(100% - 108px); }
+.pasta:hover, .pasta:focus-within { transform: rotate(0deg) translateY(-4px); filter: drop-shadow(0 16px 16px rgba(0, 0, 0, .5)) drop-shadow(0 8px 20px var(--accent-glow)); }
+.pasta-bt { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; padding: 18px 0 0; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; }
+.pasta-bt:focus-visible { outline: 2px solid var(--focus); outline-offset: 5px; }
+.pasta-costas { position: absolute; inset: 18px 0 0; border-radius: 3px; background: linear-gradient(180deg, var(--pasta-2), var(--pasta-dentro)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--foto-papel) 30%, transparent); }
+.pasta-aba { position: absolute; bottom: 100%; left: var(--aba-x); display: flex; align-items: center; justify-content: center; width: 96px; height: 19px; padding-top: 2px; background: var(--pasta-2); clip-path: polygon(9px 0, calc(100% - 9px) 0, 100% 100%, 0 100%); border-radius: 3px 3px 0 0; color: color-mix(in srgb, var(--papel-tinta) 75%, var(--pasta-2)); font: 600 10.5px/1 var(--cond); font-stretch: condensed; letter-spacing: .16em; text-transform: uppercase; }
+.pasta-bolso { position: absolute; inset: 18px 0 0; }
+.pasta-papel { position: absolute; z-index: 0; top: 9px; left: 7%; right: 9%; height: 58%; background: repeating-linear-gradient(180deg, transparent 0 9px, var(--pauta) 9px 10px) 0 16px / 100% calc(100% - 16px) no-repeat, var(--foto-papel); box-shadow: 0 0 0 1px color-mix(in srgb, var(--papel-mancha) 22%, transparent), 0 -1px 3px rgba(22, 14, 4, .2); transition: translate .35s var(--out); }
+.pasta-papel::before { content: ""; position: absolute; inset: 0; z-index: -1; background: var(--papel); rotate: -2.2deg; translate: -5px -4px; box-shadow: 0 0 0 1px color-mix(in srgb, var(--papel-mancha) 22%, transparent); }
+.pasta-frente { position: relative; z-index: 1; display: flex; flex: 1; flex-direction: column; gap: 9px; margin-top: 46px; padding: 20px 16px 12px; border-radius: 2px 2px 3px 3px; background: var(--fibra) 0 0 / 260px 260px, linear-gradient(174deg, var(--pasta), var(--pasta-2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--foto-papel) 50%, transparent), inset 0 -10px 18px -14px var(--pasta-sombra); transform-origin: 50% 100%; transition: transform .35s var(--out); -webkit-mask: radial-gradient(circle 16px at 50% 0, transparent 15px, black 16px); mask: radial-gradient(circle 16px at 50% 0, transparent 15px, black 16px); }
+.pasta:hover .pasta-papel, .pasta:focus-within .pasta-papel, .pasta.voando .pasta-papel { translate: 0 -12px; }
+.pasta:hover .pasta-frente, .pasta:focus-within .pasta-frente, .pasta.voando .pasta-frente { transform: perspective(700px) rotateX(-9deg); }
+.pasta-etiqueta { align-self: flex-start; max-width: 100%; padding: 7px 11px 6px; background: var(--foto-papel); box-shadow: inset 0 0 0 2px var(--foto-papel), inset 0 0 0 3px var(--pasta-borda), 0 1px 2px rgba(22, 14, 4, .3); rotate: -.6deg; color: var(--papel-tinta); font: 700 14.5px/1.2 var(--maquina); letter-spacing: .02em; text-transform: uppercase; text-shadow: 0 0 .6px var(--papel-tinta); overflow-wrap: anywhere; }
+.pasta:nth-child(even) .pasta-etiqueta { rotate: .5deg; }
+.pasta-desc { color: var(--grafite); font: 400 16px/1.25 var(--mao); text-shadow: 0 0 .5px var(--grafite); }
+.pasta-pe { display: flex; align-items: center; gap: 10px; margin-top: auto; padding-top: 7px; border-top: 1px dashed var(--pasta-borda); }
+.pasta .doc-ir { display: inline-flex; align-items: center; gap: 7px; margin-left: auto; color: var(--papel-impresso); font: 600 12px/1 var(--cond); font-stretch: condensed; letter-spacing: .14em; text-transform: uppercase; }
+.pasta .doc-ir::after { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 1.5px 1.5px 0 0; rotate: 45deg; transition: translate .2s var(--out); }
+.pasta:hover .doc-ir::after, .pasta:focus-within .doc-ir::after { translate: 3px 0; }
+.pasta.ger { --tilt: 0deg; }
+.pasta.ger .pasta-bt { cursor: default; }
+.pasta-acoes { display: flex; flex-wrap: wrap; gap: 2px; margin: 0 -8px -4px; }
+.pasta-acoes .doc-rm { margin-left: auto; }
+.pasta-palco { position: fixed; inset: 0; z-index: 40; }
+.pasta.voando { position: fixed; z-index: 1; margin: 0; transition: none; pointer-events: none; }
+.pasta.voando .pasta-frente { transition: none; }
+.pasta.voando .pasta-bolso { clip-path: inset(-600% -60% 0 -60%); }
+.pasta-doc { position: absolute; top: 12px; left: 7%; width: 86%; aspect-ratio: 210 / 297; container-type: inline-size; background: var(--doc-papel); box-shadow: 0 0 0 1px rgba(22, 14, 4, .12), 0 -2px 6px rgba(22, 14, 4, .25); }
+.pasta-palco > .pasta-doc { position: fixed; z-index: 2; transform-origin: 0 0; }
+.pasta-doc .doc-folha { box-shadow: none; }
+.doc-grupo + .doc-grupo { margin-top: 30px; }
 .doc-grupo > .sect-title { margin-bottom: 14px; }
 .doc-dica { display: flex; align-items: center; gap: 8px; margin: -6px 0 22px; color: var(--text-2); font-size: 13px; }
 .doc-dica .i { flex: none; color: var(--sage); }
@@ -750,6 +778,43 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
 .doc-num-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
 .doc-num-in .input { width: 110px; }
 .doc-feito, .doc-andamento { align-items: center; }
+/* bloco de notas (campos): espiral no topo, margem dupla vermelha, escrita a lápis */
+.doc-form.bloco { margin-top: 12px; border: 0; border-radius: 2px; box-shadow: 0 3px 0 -1px var(--papel-2), 0 6px 0 -2px color-mix(in srgb, var(--papel-2) 80%, var(--papel-mancha)), 0 26px 46px -22px rgba(0, 0, 0, .85); }
+.bloco::before { inset: 0 auto 0 34px; border: 0; border-left: 4px double var(--margem); border-radius: 0; }
+.bloco::after { display: none; }
+.bloco > header { position: relative; padding: 26px 18px 12px 52px; border-bottom: 2px dotted color-mix(in srgb, var(--papel-tinta) 26%, transparent); background: none; }
+.bloco > header::before { content: ""; position: absolute; top: -11px; left: 12px; right: 12px; height: 32px; pointer-events: none; filter: drop-shadow(0 1.5px 1px rgba(22, 14, 4, .45));
+  background: radial-gradient(ellipse 4px 11px at 50% 11px, transparent 2px, var(--metal) 2.4px, color-mix(in srgb, var(--metal) 70%, var(--foto-papel)) 3px, var(--metal) 3.4px, transparent 3.9px) 0 0 / 20px 22px repeat-x,
+    radial-gradient(circle 4px at 50% 22px, var(--bg) 3px, transparent 3.7px) 0 0 / 20px 32px repeat-x; }
+.bloco > header h2 { color: var(--papel-impresso); }
+.bloco .doc-campos { gap: 16px; padding: 18px 20px 22px 56px; }
+.bloco .doc-det > .doc-campos { padding: 14px 0 0; }
+.bloco #doc-num-aviso:not(:empty) { padding: 16px 20px 0 56px; }
+.bloco .input { height: 40px; padding: 6px 4px 0; border: 0; border-bottom: 1.5px solid var(--pauta-forte); border-radius: 0; background-color: transparent; box-shadow: none; color: var(--grafite); font: 400 20px/1.2 var(--mao); transition: border-color .15s, box-shadow .15s, color .2s; }
+.bloco .input::placeholder { color: var(--text-3); font: 400 13px var(--font); }
+.bloco .input:hover { border-bottom-color: var(--papel-impresso); }
+.bloco .input:focus { border-bottom-color: var(--papel-verde); box-shadow: 0 1.5px 0 var(--papel-verde); }
+.bloco .input.err { border-bottom-color: var(--danger); box-shadow: 0 1.5px 0 var(--danger); }
+.bloco .input.rascunho { color: var(--grafite-claro); }
+.bloco select.input { padding-right: 26px; background-position: right 11px top 60%, right 6px top 60%; }
+.bloco textarea.input { height: auto; padding: 0 4px; border: 0; line-height: 30px; font-size: 19px; background: repeating-linear-gradient(180deg, transparent 0 29px, var(--pauta-forte) 29px 30px) 0 0 / 100% 30px local; }
+.bloco textarea.input:focus { box-shadow: none; outline: 1px dashed var(--papel-verde); outline-offset: 3px; }
+.bloco textarea.input.err { box-shadow: none; outline: 1px dashed var(--danger); outline-offset: 3px; }
+.bloco .doc-sel li { padding: 2px 0 2px 4px; border: 0; border-bottom: 1px dashed var(--pauta-forte); border-radius: 0; background: none; }
+.bloco .doc-sel .grow { color: var(--grafite); font: 400 18px/1.2 var(--mao); }
+.bloco .doc-sel .sub { font: 12px/1.3 var(--font); color: var(--text-3); }
+.bloco .doc-det { border-top-color: var(--pauta-forte); }
+.lapis-escrita { position: absolute; z-index: 2; display: flex; align-items: center; overflow: hidden; color: var(--grafite); white-space: pre; text-shadow: 0 0 .5px var(--grafite); pointer-events: none; }
+.lapis-escrita.multi { display: block; white-space: pre-wrap; overflow-wrap: break-word; }
+.lapis { position: absolute; top: 0; left: 0; z-index: 6; width: 98px; height: 14px; opacity: 0; transform-origin: 0 50%; pointer-events: none; filter: drop-shadow(4px 8px 3px rgba(22, 14, 4, .3)); }
+.lapis svg { display: block; width: 100%; height: 100%; }
+.lp-corpo { fill: var(--papel-impresso); }
+.lp-faceta { fill: color-mix(in srgb, var(--papel-impresso) 65%, var(--foto-papel)); }
+.lp-madeira { fill: var(--envelope); }
+.lp-grafite { fill: var(--grafite); }
+.lp-anel { fill: var(--latao); }
+.lp-sulco { fill: none; stroke: color-mix(in srgb, var(--latao) 55%, var(--breu)); stroke-width: .8; }
+.lp-borracha { fill: color-mix(in srgb, var(--danger-ink) 65%, var(--papel)); }
 .doc-prev { container-type: inline-size; min-width: 0; }
 .doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; display: flex; flex-direction: column; margin: 0 auto; padding: 2.835em 5.906em 2.362em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
 .doc-folha .doc-timbre { display: flex; align-items: center; gap: 1em; margin-bottom: 1.8em; }
@@ -860,7 +925,11 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   .fl-itens { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 1px dashed var(--border-strong); }
 }
 @media (max-width: 860px) {
-  .doc-fill .btn.sm, .doc-card .btn.sm, .doc-sel .btn, .doc-abas button, .doc-num-in .btn { min-height: 44px; }
+  .doc-fill .btn.sm, .pasta .btn.sm, .doc-sel .btn, .doc-abas button, .doc-num-in .btn { min-height: 44px; }
+  .bloco::before { left: 24px; }
+  .bloco > header { padding-left: 40px; }
+  .bloco .doc-campos { padding: 16px 14px 20px 42px; }
+  .bloco #doc-num-aviso:not(:empty) { padding: 14px 14px 0 42px; }
   .doc-fill .btn.icon.sm, .doc-sel .btn.icon { width: 44px; }
   .app { grid-template-columns: 1fr; }
   .sidebar { position: fixed; z-index: 45; left: 0; width: 268px; transform: translateX(-100%); transition: transform .28s var(--out); }
@@ -2554,7 +2623,7 @@ const SOM = {
   teclas: [0.128, 0.467, 1.07, 2.146, 3.497, 4.159, 4.416, 4.659, 6.036, 6.375, 6.63, 6.817, 7.236, 7.466, 7.712, 8.36, 11.83, 12.064, 12.615, 13.278, 13.533, 13.777],
   linha: ['maquina', 13.9, 1.05, 1.4], tirar: ['papel', 19.4, 1.15, 6], colocar: ['papel', 15.2, .8, 4],
   abrir: ['folha', .3, .9, .8], fechar: ['folha', 3.8, .95, 1.45], amassar: ['papel', 6, 1.3, 5.5], carimbo: ['maquina', 2.146, .16, 1, .55],
-  pousa: ['papel', 15.2, .45, 2.5], clipe: ['maquina', 4.416, .08, .7, 1.8],
+  pousa: ['papel', 15.2, .45, 2.5], pasta: ['folha', .3, .6, .6], clipe: ['maquina', 4.416, .08, .7, 1.8],
   risca: ['maquina', 6.036, .09, .8, 1.9], acende: ['folha', .3, .6, .55, .6], queima: ['fogo', 3.25, 2.5, .45], tampa: ['maquina', 4.159, .1, .9, 1.4],
 };
 let somCtx = null, somProm = null;
@@ -3745,13 +3814,15 @@ function docFolha(d, m = docModelo(d)) {
     <div class="doc-corpo">${docCorpo(d, m)}</div><footer class="doc-rodape">${DOC_ORGAO.rodape.map(l => `<div>${esc(l)}</div>`).join('')}</footer></article>`;
 }
 function docSync(d, exceto) {
-  const m = docModelo(d);
+  const m = docModelo(d), escritos = [];
   m.campos.forEach(f => {
     const el = $('#doc-f-' + f.id), v = d.v[f.id] ?? ''; if (!el) return;
+    const antes = el.value;
     if (f.tipo === 'pats') $('#doc-l-' + f.id).innerHTML = docSelHtml(f, v);
     else if (f.tipo === 'pat') { const p = docPat(db, v); $('#doc-s-' + f.id).textContent = docPatSel(p); if (f.id !== exceto) el.value = p ? docPatRot(p) : ''; }
     else if (f.id !== exceto && el.tagName === 'SELECT') { el.innerHTML = docOpts(d, f); el.value = v; }
     else if (f.id !== exceto && el.value !== v) el.value = v;
+    if (f.id !== exceto && el.value !== antes) escritos.push(el);
     const w = $('#doc-w-' + f.id); if (w) w.hidden = docOculto(m, d.v, f);
     const r = $(`.doc-rest[data-id="${f.id}"]`); if (r) r.hidden = !d.manual[f.id] || !docAuto(f, d.v, m);
     if (String(v).trim()) docErro(f.id, '');
@@ -3760,6 +3831,7 @@ function docSync(d, exceto) {
   const av = $('#doc-num-aviso'); if (av && !av.contains(document.activeElement)) av.innerHTML = docNumAvisoHtml(d, m);
   const corpo = $('#doc-prev .doc-corpo');
   if (corpo) corpo.innerHTML = docCorpo(d, m); else $('#doc-prev').innerHTML = docFolha(d, m);
+  escritos.forEach(lapisDepois);
   docGuarda();
 }
 function docPatBusca(q, fora = []) {
@@ -3869,10 +3941,12 @@ function docNumeros(d, m) {
 const DOC_GRUPOS = ['Enviar e devolver equipamento', 'Entregar e emprestar', 'Pedir material', 'Comunicar'];
 const docHash = () => new URLSearchParams(location.hash.split('?')[1] || '');
 function docCard(m, ger) {
-  const id = esc(m.id), t = esc(m.titulo), origem = `<span class="doc-origem">${m.origem === 'padrao' ? 'Padrão' : 'Meu modelo'}</span>`;
-  if (!ger) return `<article class="card doc-card"><button class="doc-usar" data-act="doc-abrir" data-id="${id}"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small><span class="doc-preencher">${origem}<span class="doc-ir">Preencher</span></span></button></article>`;
-  return `<article class="card doc-card ger"><div class="doc-usar"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small></div>
-    <footer>${origem}<button class="btn sm ghost" data-act="doc-ed" data-id="${id}" aria-label="Editar ${t}">${icon('edit')}Editar</button><button class="btn sm ghost" data-act="doc-dup" data-id="${id}" aria-label="Duplicar ${t}">${icon('copy')}Duplicar</button><button class="btn sm ghost danger doc-rm" data-act="doc-rm" data-id="${id}" aria-label="Remover ${t}">${icon('trash')}Remover</button></footer></article>`;
+  const id = esc(m.id), t = esc(m.titulo), tag = ger ? 'div' : 'button';
+  const pe = ger ? `<span class="pasta-acoes"><button class="btn sm ghost" data-act="doc-ed" data-id="${id}" aria-label="Editar ${t}">${icon('edit')}Editar</button><button class="btn sm ghost" data-act="doc-dup" data-id="${id}" aria-label="Duplicar ${t}">${icon('copy')}Duplicar</button><button class="btn sm ghost danger doc-rm" data-act="doc-rm" data-id="${id}" aria-label="Remover ${t}">${icon('trash')}Remover</button></span>`
+    : '<span class="doc-ir">Abrir pasta</span>';
+  return `<article class="pasta${ger ? ' ger' : ''}"><${tag} class="pasta-bt"${ger ? '' : ` data-act="doc-abrir" data-id="${id}"`}>
+    <span class="pasta-costas" aria-hidden="true"><span class="pasta-aba">${m.origem === 'padrao' ? 'Padrão' : 'Meu modelo'}</span></span><span class="pasta-bolso" aria-hidden="true"><span class="pasta-papel"></span></span>
+    <span class="pasta-frente"><span class="pasta-etiqueta">${t}</span><span class="pasta-desc">${esc(m.descricao)}</span><span class="pasta-pe">${pe}</span></span></${tag}></article>`;
 }
 function docCatalogo() {
   const ger = ui.docGer, lista = docModelos(), em = ui.doc && docSujo(ui.doc) && docModelo(ui.doc);
@@ -3914,7 +3988,7 @@ function docForm(d, m) {
   return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
     `<div id="doc-feito">${docFeitoHtml(d)}</div>
     <div class="seg doc-abas" role="group" aria-label="Mostrar">${[['campos', 'Campos', 'form'], ['folha', 'Folha', 'doc']].map(([k, l, ic]) => `<button data-act="doc-aba" data-aba="${k}" aria-pressed="${aba === k}">${icon(ic)}${l}</button>`).join('')}</div>
-    <div class="doc-ed doc-fill${ui.docAmplo ? ' amplo' : ''}${aba === 'folha' ? ' ver-folha' : ''}" id="doc-ed"><section class="card doc-form"><header><h2>Campos</h2></header><div id="doc-num-aviso">${docNumAvisoHtml(d, m)}</div>
+    <div class="doc-ed doc-fill${ui.docAmplo ? ' amplo' : ''}${aba === 'folha' ? ' ver-folha' : ''}" id="doc-ed"><section class="card doc-form papel bloco"><header><h2>Campos</h2></header><div id="doc-num-aviso">${docNumAvisoHtml(d, m)}</div>
       <div class="doc-campos">${main.map(f => docCampo(d, f, m)).join('')}
       ${det.length ? `<details class="doc-det" id="doc-det"${abre ? ' open' : ''}><summary><span class="doc-det-t">Detalhes</span><span class="doc-det-alt"><span class="a">Alterar</span><span class="r">Recolher</span></span><span class="doc-det-res" id="doc-det-res">${docDetTxt(d, m)}</span></summary><div class="doc-campos">${det.map(f => docCampo(d, f, m)).join('')}</div></details>` : ''}</div></section>
     <div class="doc-prev doc-lado" id="doc-prev">${docFolha(d, m)}</div></div>`;
@@ -3941,6 +4015,230 @@ async function docPdf() {
   ui.onConfirm = () => { docNumGrava(d, m); d.feito = nums.join(' e '); closeLayer(); feito(); };
   modal('O PDF foi salvo?', `<p style="margin:0">Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado e a numeração avança. Se cancelou a impressão, o número continua livre para o próximo documento.</p>`,
     `<button class="btn" data-act="close-layer">Não, cancelei</button><button class="btn primary" data-act="confirm-ok" autofocus>${icon('check')}Sim, foi salvo</button>`);
+}
+
+/* ---------- pastas: a escolhida é pega e o documento sai de dentro dela ---------- */
+const PEGA = 'cubic-bezier(.3, 0, .2, 1)', CUIDADO = 'cubic-bezier(.45, 0, .55, 1)', SOLTA = 'cubic-bezier(.55, 0, .8, .2)';
+const quadro = () => new Promise(r => requestAnimationFrame(r));
+async function pastaAbrir(bt) {
+  const id = bt.dataset.id, pasta = bt.closest('.pasta');
+  if (ui.pastaVoo) return;
+  if (parado() || (ui.doc && docSujo(ui.doc) && ui.doc.id !== id)) return docAbrir(id);
+  ui.pastaVoo = true;
+  const view = $('#view'), palco = document.createElement('div'), voo = pasta.cloneNode(true);
+  const r = pasta.getBoundingClientRect(), W = pasta.offsetWidth, H = pasta.offsetHeight, tilt = getComputedStyle(pasta).getPropertyValue('--tilt').trim() || '0deg';
+  palco.className = 'pasta-palco'; palco.setAttribute('aria-hidden', 'true');
+  voo.classList.add('voando'); voo.inert = true; $('.pasta-bt', voo).removeAttribute('data-act');
+  Object.assign(voo.style, { left: `${r.left + (r.width - W) / 2}px`, top: `${r.top + (r.height - H) / 2}px`, width: `${W}px`, height: `${H}px` });
+  voo.style.setProperty('--tilt', tilt);
+  palco.append(voo); document.body.append(palco);
+  pasta.style.visibility = 'hidden';
+  let alvo = null;
+  try {
+    // as outras saem para a direita (a mais à direita primeiro) e o resto da página esmaece
+    $$('.pasta', view).filter(p => p !== pasta).sort((a, b) => b.getBoundingClientRect().left - a.getBoundingClientRect().left)
+      .forEach((p, i) => p.animate([{ translate: '0 0', opacity: 1 }, { translate: '170px -8px', rotate: '5deg', opacity: 0 }], { duration: 380, delay: Math.min(i * 26, 240), easing: SOLTA, fill: 'forwards' }));
+    $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 1 }, { opacity: 0, translate: '24px 0' }], { duration: 300, easing: SOLTA, fill: 'forwards' }));
+    // a escolhida é pega: cede um pouco (antecipação), sobe num arco e chega perto
+    const main = view.getBoundingClientRect(), vh = innerHeight, docH = W * .86 * 297 / 210;
+    const k = Math.max(.9, Math.min(1.25, (vh - 60) / (H + docH * .78), main.width * .8 / W));
+    const dx = main.left + main.width / 2 - (r.left + r.width / 2), dy = Math.min(vh * .7, vh - 24 - H * k / 2) - (r.top + r.height / 2);
+    somPronto().then(() => som(...SOM.pasta));
+    await voo.animate([
+      { transform: `rotate(${tilt})`, filter: 'drop-shadow(0 3px 4px rgba(0, 0, 0, .5))' },
+      { transform: `translate(0, 3px) scale(.97) rotate(${tilt})`, offset: .14 },
+      { transform: `translate(${dx * .55}px, ${dy * .55 - 34}px) scale(${(1 + k) / 2 + .03}) rotate(-2.5deg)`, offset: .62 },
+      { transform: `translate(${dx}px, ${dy}px) scale(${k}) rotate(-1deg)`, filter: 'drop-shadow(0 34px 30px rgba(0, 0, 0, .55))' },
+    ], { duration: 640, delay: 80, easing: PEGA, fill: 'forwards' }).finished;
+    // o modelo abre por baixo, invisível, para a folha que sai da pasta ser a de verdade
+    view.style.opacity = 0;
+    docAbrir(id);
+    for (let i = 0; i < 40 && !$('#doc-prev .doc-folha', view); i++) await quadro();
+    alvo = $('#doc-prev .doc-folha', view);
+    const visivel = !!alvo?.getClientRects().length, folha = document.createElement('div');
+    folha.className = 'pasta-doc';
+    folha.innerHTML = alvo ? alvo.outerHTML : '';
+    if (visivel) alvo.style.visibility = 'hidden';
+    const pecas = [$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean), chega = 1060;
+    pecas.forEach((e, i) => e.animate(e.classList.contains('doc-form') ? [{ opacity: 0, translate: '-30px 16px', rotate: '-1.4deg' }, { opacity: 1, translate: '0 0', rotate: '0deg' }] : [{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }],
+      { duration: 480, delay: chega + i * 70, easing: OUT, fill: 'backwards' }));
+    view.style.opacity = '';
+    // a folha sai com cuidado (a frente da pasta cede) e fica presa só pelo pé
+    $('.pasta-bolso', voo).append(folha);
+    const sobe = folha.offsetHeight * .78 + 30;
+    somPronto().then(() => som(...SOM.tirar));
+    $('.pasta-frente', voo).animate([{ transform: 'perspective(700px) rotateX(-9deg)' }, { transform: 'perspective(700px) rotateX(-17deg)', offset: .35 }, { transform: 'perspective(700px) rotateX(-6deg)' }], { duration: 820, easing: CUIDADO, fill: 'forwards' });
+    await folha.animate([
+      { transform: 'translateY(0)' },
+      { transform: `translateY(${-sobe * .1}px) rotate(-.9deg)`, offset: .28 },
+      { transform: `translateY(${-sobe * .72}px) rotate(.5deg)`, offset: .78 },
+      { transform: `translateY(${-sobe}px)` },
+    ], { duration: 820, delay: 60, easing: CUIDADO, fill: 'forwards' }).finished;
+    // a pasta é posta de lado e a folha flutua até o lugar da prévia e pousa leve
+    voo.animate([{ translate: '0 0', opacity: 1 }, { translate: '-30px 190px', rotate: '-7deg', opacity: 0 }], { duration: 460, delay: 60, easing: SOLTA, fill: 'forwards' });
+    if (visivel) {
+      const fr = folha.getBoundingClientRect(), tr = alvo.getBoundingClientRect(), s = fr.width / tr.width, x = fr.left - tr.left, y = fr.top - tr.top;
+      folha.getAnimations().forEach(a => a.cancel());
+      Object.assign(folha.style, { left: `${tr.left}px`, top: `${tr.top}px`, width: `${tr.width}px` });
+      palco.append(folha);
+      setTimeout(() => som(...SOM.pousa), 660);
+      await folha.animate([
+        { transform: `translate(${x}px, ${y}px) scale(${s})`, boxShadow: '0 40px 60px -20px rgba(0, 0, 0, .6)' },
+        { transform: `translate(${x * .3}px, ${y * .3 - 26}px) scale(${s + (1 - s) * .75}) rotate(1.6deg)`, offset: .55 },
+        { transform: 'translate(0, -5px) rotate(-.4deg)', offset: .84 },
+        { transform: 'none', boxShadow: '0 22px 56px rgba(0, 0, 0, .6), 0 3px 10px rgba(0, 0, 0, .45)' },
+      ], { duration: 860, easing: 'cubic-bezier(.25, .7, .3, 1)', fill: 'forwards' }).finished;
+    } else await folha.animate([{ opacity: 1 }, { opacity: 0, translate: '0 -40px' }], { duration: 420, easing: SOLTA, fill: 'forwards' }).finished;
+  } catch (e) {
+    console.error(e); render();
+  } finally {
+    if (alvo) alvo.style.visibility = '';
+    pasta.style.visibility = ''; view.style.opacity = '';
+    palco.remove(); ui.pastaVoo = false;
+  }
+}
+
+/* ---------- bloco de notas: o lápis passa a limpo o que foi escolhido ou escrito ---------- */
+const LAPIS_SVG = '<svg viewBox="0 0 112 16"><path class="lp-madeira" d="M0 8 19 1.5Q17 4.75 19 8 17 11.25 19 14.5Z"/><path class="lp-grafite" d="M0 8 6.5 5.8V10.2Z"/><rect class="lp-corpo" x="19" y="1.5" width="70" height="13"/><rect class="lp-faceta" x="19" y="1.5" width="70" height="4"/><rect class="lp-anel" x="89" y="1" width="10" height="14"/><path class="lp-sulco" d="M92 1v14M95 1v14"/><rect class="lp-borracha" x="99" y="1.5" width="12" height="13" rx="2.5"/></svg>';
+const LAPIS = { fila: [], vivo: null, espera: new Set(), pend: null, t: 0 };
+const lapisCampo = el => /^(INPUT|SELECT|TEXTAREA)$/.test(el.tagName);
+const lapisTexto = el => !lapisCampo(el) ? el.textContent : el.tagName === 'SELECT' ? (el.value && el.selectedOptions[0]?.text) || '' : el.type === 'date' ? (el.value ? fmtD(el.value) : '') : el.value;
+// Escolha (select) passa na hora; digitar deixa o texto claro (rascunho) e o lápis passa depois de uma pausa ou ao sair do campo.
+function rabisca(e) {
+  const el = e.target;
+  if (!el.closest || !el.closest('.bloco') || !el.classList.contains('input') || el.type === 'search') return;
+  if (el.tagName === 'SELECT') { if (e.type === 'change') lapis(el); return; }
+  const data = el.type === 'date';
+  if (e.type === 'input' || data) {
+    lapisCancela(el); el.classList.add('rascunho');
+    LAPIS.pend = el; clearTimeout(LAPIS.t);
+    LAPIS.t = setTimeout(() => lapis(el), data ? 450 : 1000);
+  } else if (LAPIS.pend === el) lapis(el);
+}
+// Campo que muda por consequência (ex.: Para, vindo da unidade) espera o lápis terminar o campo que está sendo digitado.
+function lapisDepois(el) {
+  if (!el.closest('.bloco')) return;
+  if (LAPIS.pend?.isConnected && LAPIS.pend !== el) { lapisCancela(el); el.classList.add('rascunho'); LAPIS.espera.add(el); }
+  else lapis(el);
+}
+function lapis(el) {
+  if (LAPIS.pend === el) { LAPIS.pend = null; clearTimeout(LAPIS.t); }
+  const todos = [el, ...LAPIS.espera]; LAPIS.espera.clear();
+  todos.forEach(x => {
+    if (!x?.isConnected) return;
+    lapisCancela(x);
+    const tem = !!lapisTexto(x).trim();
+    if (parado() || !tem) { x.classList.remove('rascunho'); if (tem) somLapis(260); return; }
+    x.classList.add('rascunho'); LAPIS.fila.push(x);
+  });
+  if (!LAPIS.vivo) lapisProximo();
+}
+function lapisCancela(el) {
+  LAPIS.fila = LAPIS.fila.filter(x => x !== el);
+  if (LAPIS.vivo?.el === el) LAPIS.vivo.parar = true;
+}
+async function lapisProximo() {
+  let el; do el = LAPIS.fila.shift(); while (el && !el.isConnected);
+  if (!el) { LAPIS.vivo = null; return lapisSai(); }
+  const job = LAPIS.vivo = { el, parar: false };
+  try { await lapisEscreve(job); } catch (e) { console.error(e); }
+  if (!job.parar) el.classList.remove('rascunho');
+  LAPIS.vivo = null;
+  lapisProximo();
+}
+function lapisEl(bloco) {
+  let lp = $('.lapis', bloco);
+  if (!lp) { lp = document.createElement('span'); lp.className = 'lapis'; lp.setAttribute('aria-hidden', 'true'); lp.innerHTML = LAPIS_SVG; bloco.append(lp); }
+  return lp;
+}
+// Campo de formulário: uma cópia do texto por cima, revelada pelo lápis. Texto comum (bem escolhido): revela o próprio elemento.
+async function lapisEscreve(job) {
+  const el = job.el, bloco = el.closest('.bloco');
+  if (!lapisCampo(el)) return lapisTraca(job, el, el, bloco);
+  const cx = el.closest('.doc-f') || el.parentElement, cs = getComputedStyle(el), er = el.getBoundingClientRect(), pr = cx.getBoundingClientRect();
+  const ov = document.createElement('div'), sp = document.createElement('span');
+  ov.className = 'lapis-escrita' + (el.tagName === 'TEXTAREA' ? ' multi' : ''); ov.setAttribute('aria-hidden', 'true');
+  Object.assign(ov.style, { left: `${er.left - pr.left + el.clientLeft}px`, top: `${er.top - pr.top + el.clientTop}px`, width: `${el.clientWidth}px`, height: `${el.clientHeight}px`,
+    padding: `${cs.paddingTop} ${cs.paddingRight} ${cs.paddingBottom} ${cs.paddingLeft}`, font: cs.font, letterSpacing: cs.letterSpacing });
+  sp.textContent = lapisTexto(el); ov.append(sp); cx.append(ov);
+  ov.scrollTop = el.scrollTop; ov.scrollLeft = el.scrollLeft;
+  try { await lapisTraca(job, ov, sp, bloco); } finally { ov.remove(); }
+}
+function lapisLinhas(fonte, base) {
+  const b = base.getBoundingClientRect(), ls = [], w = base.clientWidth || b.width;
+  const rects = [], it = document.createTreeWalker(fonte, NodeFilter.SHOW_TEXT), r = document.createRange();
+  for (let t; (t = it.nextNode());) { r.selectNodeContents(t); rects.push(...r.getClientRects()); }
+  rects.forEach(q => {
+    if (q.width < 1) return;
+    const top = q.top - b.top, l = ls.find(x => Math.abs(x.top - top) < 4);
+    const x0 = Math.max(0, q.left - b.left), x1 = Math.min(w, q.right - b.left);
+    if (x1 <= x0) return;
+    if (l) { l.x0 = Math.min(l.x0, x0); l.x1 = Math.max(l.x1, x1); l.h = Math.max(l.h, q.height); } else ls.push({ top, h: q.height, x0, x1 });
+  });
+  return ls.sort((a, c) => a.top - c.top);
+}
+async function lapisTraca(job, alvo, fonte, bloco) {
+  const ls = lapisLinhas(fonte, alvo); if (!ls.length) return;
+  const W = alvo.offsetWidth, total = ls.reduce((s, l) => s + l.x1 - l.x0, 0), n = lapisTexto(fonte).length;
+  const dur = Math.max(320, Math.min(1500, n * 34 + 120)), br = bloco.getBoundingClientRect(), ar = alvo.getBoundingClientRect();
+  const ponto = (l, x) => [ar.left - br.left + x, ar.top - br.top + l.top + l.h * .8];
+  const lp = lapisEl(bloco);
+  alvo.style.clipPath = 'inset(0 100% 0 0)';
+  try {
+    await lapisVai(lp, ...ponto(ls[0], ls[0].x0));
+    if (job.parar || !alvo.isConnected) return;
+    const cala = somLapis(dur), t0 = performance.now();
+    await new Promise(fim => {
+      const passo = agora => {
+        if (job.parar || !alvo.isConnected) { cala(); return fim(); }
+        const p = Math.min(1, (agora - t0) / dur);
+        let d = -(Math.cos(Math.PI * p) - 1) / 2 * total, i = 0;
+        while (i < ls.length - 1 && d > ls[i].x1 - ls[i].x0) { d -= ls[i].x1 - ls[i].x0; i++; }
+        const l = ls[i], x = Math.min(l.x1, l.x0 + d), yb = l.top + l.h, [px, py] = ponto(l, x);
+        alvo.style.clipPath = `polygon(0 0, ${W}px 0, ${W}px ${l.top}px, ${x}px ${l.top}px, ${x}px ${yb}px, 0 ${yb}px)`;
+        lp.style.translate = `${px}px ${py - 7 + Math.sin(agora / 38) * 1.6 + Math.sin(agora / 91) * .8}px`;
+        lp.style.rotate = `${-38 + Math.sin(agora / 70) * 3}deg`;
+        if (p < 1) requestAnimationFrame(passo); else fim();
+      };
+      requestAnimationFrame(passo);
+    });
+  } finally { alvo.style.clipPath = ''; }
+}
+function lapisVai(lp, x, y) {
+  const novo = lp.style.opacity !== '1', fim = `${x}px ${y - 7}px`, ini = novo ? `${x + 46}px ${y - 46}px` : lp.style.translate || fim;
+  lp.style.opacity = '1'; lp.style.translate = fim; lp.style.rotate = '-38deg';
+  return lp.animate([{ translate: ini, rotate: '-28deg', opacity: novo ? 0 : 1 }, { translate: fim, rotate: '-38deg', opacity: 1 }], { duration: novo ? 240 : 200, easing: OUT }).finished;
+}
+function lapisSai() {
+  $$('.bloco .lapis').forEach(lp => {
+    if (lp.style.opacity !== '1') return;
+    const [x, y] = (lp.style.translate || '0px 0px').split(' ').map(parseFloat);
+    lp.style.opacity = '0';
+    lp.animate([{ translate: `${x}px ${y}px`, rotate: lp.style.rotate, opacity: 1 }, { translate: `${x + 30}px ${y - 34}px`, rotate: '-26deg', opacity: 0 }], { duration: 260, easing: 'cubic-bezier(.5, 0, .75, 0)' });
+  });
+}
+// Raspado de grafite sintetizado (ruído filtrado em traços curtos, um por letra); não há MP3 de lápis.
+let somRuido = null;
+function somLapis(ms) {
+  if (ui.mudo) return () => {};
+  somPronto();
+  const c = somCtx; if (!c) return () => {};
+  if (c.state === 'suspended') c.resume();
+  if (!somRuido) { somRuido = c.createBuffer(1, c.sampleRate, c.sampleRate); const d = somRuido.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+  const src = c.createBufferSource(), hp = c.createBiquadFilter(), bp = c.createBiquadFilter(), g = c.createGain(), t0 = c.currentTime + .01, fim = t0 + ms / 1000;
+  src.buffer = somRuido; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; bp.type = 'bandpass'; bp.Q.value = .8;
+  g.gain.setValueAtTime(0, t0);
+  let t = t0;
+  while (t < fim) {
+    const len = .045 + Math.random() * .06, pico = .28 + Math.random() * .2;
+    bp.frequency.setValueAtTime(2400 + Math.random() * 2200, t);
+    g.gain.linearRampToValueAtTime(pico * .2, t); g.gain.linearRampToValueAtTime(pico, t + len * .3); g.gain.linearRampToValueAtTime(pico * .1, t + len);
+    t += len + Math.random() * .025;
+  }
+  g.gain.linearRampToValueAtTime(0, t + .03);
+  src.connect(hp).connect(bp).connect(g).connect(c.destination);
+  src.start(t0, Math.random() * .8); src.stop(t + .06);
+  return () => { try { g.gain.cancelScheduledValues(c.currentTime); g.gain.setTargetAtTime(0, c.currentTime, .015); src.stop(c.currentTime + .1); } catch {} };
 }
 
 /* ---------- editor de modelos ---------- */
@@ -4231,7 +4529,7 @@ const ACTIONS = {
   'txt-limpar': () => { const de = ui.carro; ui.txt = ''; ui.carro = 0; render(); $('#txt-in').focus(); retorno(de); },
   'txt-registrar': () => { clearTimeout(ui.txtT); txtRegistrar(); },
   print: t => printProto(t.dataset.id),
-  'doc-abrir': t => docAbrir(t.dataset.id),
+  'doc-abrir': t => t.classList.contains('pasta-bt') ? pastaAbrir(t) : docAbrir(t.dataset.id),
   'doc-de': t => docAbrir(t.dataset.id, ui.docSrc?.q),
   'doc-de-proto': t => { const pr = db.protocolos.find(p => p.id === t.dataset.id); if (pr) docEscolher(docFonteProto(pr), 'proto=' + encodeURIComponent(pr.id)); },
   'doc-de-pat': () => { const p = patById(ui.editPat); if (p) docEscolher(docFontePat(p), 'b=' + encodeURIComponent(p.id)); },
@@ -4294,6 +4592,7 @@ const ACTIONS = {
     docSet(ui.doc, c, lista ? [...new Set([...docPatIds(ui.doc.v[c]), t.dataset.id])].join(' ') : t.dataset.id);
     if (lista) $('#doc-f-' + c).value = '';
     docSync(ui.doc); $('#doc-c-' + c).hidden = true; $('#doc-f-' + c).focus();
+    if (lista) { const g = $(`#doc-l-${c} li:last-child .grow`); g && lapis(g); }
   },
   'doc-pat-1': t => { const b = $(`#doc-c-${t.dataset.id}:not([hidden]) button`); b && b.click(); },
   undo: t => undoProto(t.dataset.id),
@@ -4364,8 +4663,8 @@ document.addEventListener('click', e => {
   const fn = ACTIONS[t.dataset.act];
   if (fn) { if (t.tagName !== 'A') e.preventDefault(); fn(t, e); }
 });
-document.addEventListener('input', e => { marcaSujo(e); const t = e.target.closest('[data-in]'); if (t) INPUTS[t.dataset.in](t, e); datilografa(e); });
-document.addEventListener('change', e => { marcaSujo(e); const t = e.target.closest('[data-ch]'); if (t) INPUTS[t.dataset.ch](t, e); datilografa(e); });
+document.addEventListener('input', e => { marcaSujo(e); const t = e.target.closest('[data-in]'); if (t) INPUTS[t.dataset.in](t, e); datilografa(e); rabisca(e); });
+document.addEventListener('change', e => { marcaSujo(e); const t = e.target.closest('[data-ch]'); if (t) INPUTS[t.dataset.ch](t, e); datilografa(e); rabisca(e); });
 document.addEventListener('paste', e => { marcaSujo(e); const t = e.target.closest('[data-paste]'); if (t) INPUTS[t.dataset.paste](t, e); });
 document.addEventListener('dragover', e => {
   if (!temArquivo(e)) return;
