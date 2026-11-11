@@ -666,16 +666,41 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .doc-card .doc-usar:focus-visible { outline: 2px solid var(--focus); outline-offset: -4px; }
 .doc-card footer { display: flex; align-items: center; gap: 2px; padding: 6px 8px 6px 18px; border-top: 1px solid var(--rule); }
 .doc-card .doc-origem { margin-right: auto; color: var(--text-3); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
+.doc-card .doc-preencher { display: flex; align-items: center; margin-top: auto; padding-top: 8px; }
+.doc-card .doc-ir { display: inline-flex; align-items: center; gap: 7px; color: var(--accent); font: 600 12px/1 var(--cond); font-stretch: condensed; letter-spacing: .14em; text-transform: uppercase; }
+.doc-card .doc-ir::after { content: ""; width: 6px; height: 6px; border: solid currentColor; border-width: 1.5px 1.5px 0 0; rotate: 45deg; transition: translate .2s var(--out); }
+.doc-card:hover .doc-ir::after, .doc-card:focus-within .doc-ir::after { translate: 3px 0; }
+.doc-card.ger { --tilt: 0deg; }
+.doc-card.ger .doc-usar { cursor: default; }
+.doc-card footer .doc-rm { margin-left: 12px; }
+.doc-grupo + .doc-grupo { margin-top: 28px; }
+.doc-grupo > .sect-title { margin-bottom: 14px; }
+.doc-dica { display: flex; align-items: center; gap: 8px; margin: -6px 0 22px; color: var(--text-2); font-size: 13px; }
+.doc-dica .i { flex: none; color: var(--sage); }
+.doc-escolhe { display: flex; flex-direction: column; gap: 4px; width: 100%; min-height: 44px; padding: 10px 18px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color .12s, padding .2s var(--out); }
+.doc-escolhe:hover, .doc-escolhe:focus-visible { background: var(--accent-soft); padding-left: 22px; outline: none; }
+.doc-escolhe b { display: flex; align-items: center; gap: 8px; }
+.doc-escolhe b .i { color: var(--accent); }
+.doc-escolhe .badge { margin-left: 4px; }
+.doc-escolha li { padding: 0; }
+.doc-escolhe .sub { color: var(--text-3); font-size: 13px; }
 .ed-form { display: flex; flex-direction: column; gap: 18px; min-width: 0; }
-.ed-campos { display: flex; flex-direction: column; gap: 10px; margin: 0; padding: 16px; list-style: none; }
-.ed-campo { padding: 10px 12px 12px; border: 1px solid var(--border); border-radius: var(--radius); background: var(--well); }
-.ed-campo-top { display: flex; align-items: center; gap: 4px; margin-bottom: 8px; }
-.ed-campo-top code { font: 600 13px/1 var(--mono); color: var(--accent); overflow-wrap: anywhere; }
-.ed-campo-top .ed-tipo { margin: 0 auto 0 8px; color: var(--text-3); font-size: 12px; }
-.ed-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; align-items: end; }
+.ed-campos { display: flex; flex-direction: column; gap: 8px; margin: 0; padding: 16px; list-style: none; }
+.ed-campos-dica { margin-left: auto; color: var(--text-3); font-size: 12px; }
+.ed-campo { border: 1px solid var(--border); border-radius: var(--radius); background: var(--well); }
+.ed-campo:has(details[open]) { border-color: var(--border-strong); }
+.ed-campo-top { display: flex; align-items: center; gap: 4px; min-height: 44px; padding: 4px 6px 4px 10px; cursor: pointer; list-style: none; }
+.ed-campo-top::-webkit-details-marker { display: none; }
+.ed-seta { flex: none; width: 7px; height: 7px; margin-right: 6px; border: solid var(--text-3); border-width: 0 1.5px 1.5px 0; rotate: -45deg; transition: rotate .2s var(--out); }
+details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
+.ed-campo-nome { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; }
+.ed-campo-nome .ed-rot { overflow: hidden; color: var(--text); font-size: 14px; font-weight: 600; text-overflow: ellipsis; white-space: nowrap; }
+.ed-campo-top .ed-tipo { color: var(--text-3); font-size: 12px; }
+.ed-campo-top code { margin-right: 4px; font: 600 12px/1 var(--mono); color: var(--accent); overflow-wrap: anywhere; }
+.ed-grade { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; align-items: end; padding: 4px 12px 12px; }
 .ed-novo { display: flex; flex-wrap: wrap; align-items: end; gap: 10px; padding: 0 16px 16px; }
 .ed-novo label.f:first-child { flex: 1 1 220px; }
-.ed-ins { display: flex; flex-direction: column; gap: 8px; }
+.ed-ins { position: sticky; top: 63px; z-index: 3; display: flex; flex-direction: column; gap: 8px; max-height: 32vh; margin: -16px -16px 0; padding: 12px 16px; overflow-y: auto; background: var(--surface); border-bottom: 1px solid var(--border); box-shadow: 0 8px 16px -12px rgba(0, 0, 0, .7); }
 .ed-grupo { display: flex; flex-wrap: wrap; align-items: center; gap: 5px; }
 .ed-grupo > span { min-width: 58px; color: var(--sage); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; }
 .ed-chip { min-height: 26px; padding: 0 8px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--surface-2); color: var(--text-2); font: 13px/1 var(--font); cursor: pointer; transition: border-color .15s, color .15s, background-color .15s; }
@@ -690,16 +715,41 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .ed-erros:has(.ok) { border-color: var(--accent-line); background: var(--accent-soft); }
 .ed-erros .ok { display: flex; align-items: center; gap: 8px; margin: 0; }
 .doc-ed { display: grid; grid-template-columns: minmax(300px, 2fr) minmax(0, 3fr); gap: 18px; align-items: start; }
-.doc-ed.rev { grid-template-columns: minmax(0, 3fr) minmax(280px, 2fr); }
+.doc-ed.amplo { grid-template-columns: minmax(260px, 1fr) minmax(0, 3fr); }
+.doc-abas { display: none; margin-bottom: 14px; }
 .doc-campos { display: flex; flex-direction: column; gap: 14px; padding: 16px; }
-.doc-ed.rev .doc-campos { gap: 10px; }
 .doc-lado { position: sticky; top: 80px; max-height: calc(100vh - 96px); overflow-y: auto; }
 .doc-f { position: relative; }
+.doc-f[hidden] { display: none; }
 .doc-f .req { color: var(--danger); }
 .doc-f .doc-rest { position: absolute; top: -8px; right: 0; }
 .doc-f .doc-rest[hidden] { display: none; }
+.doc-f .err-msg { display: block; margin-top: 6px; }
+.doc-f .err-msg[hidden] { display: none; }
 .doc-pat { position: relative; }
-.doc-pat .cands { left: 0; right: 0; top: 100%; margin-top: 4px; }
+.doc-pat .cands { left: 0; right: 0; top: auto; margin-top: 4px; }
+.doc-sel { display: flex; flex-direction: column; gap: 6px; margin: 8px 0 0; padding: 0; list-style: none; }
+.doc-sel:empty { display: none; }
+.doc-sel li { display: flex; align-items: center; gap: 10px; padding: 4px 4px 4px 10px; border: 1px solid var(--border); border-radius: var(--radius-sm); background: var(--well); }
+.doc-sel .grow { display: flex; flex: 1; min-width: 0; flex-direction: column; gap: 2px; font-size: 14px; }
+.doc-sel .sub { color: var(--text-3); font-size: 12px; }
+.doc-det { padding-top: 12px; border-top: 1px dashed var(--border-strong); }
+.doc-det > summary { display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 10px; cursor: pointer; list-style: none; }
+.doc-det > summary::-webkit-details-marker { display: none; }
+.doc-det-t { font: 600 12px/1.2 var(--cond); font-stretch: condensed; letter-spacing: .12em; text-transform: uppercase; color: var(--sage); }
+.doc-det-alt { margin-left: auto; color: var(--accent); font-size: 13px; }
+.doc-det-res { flex: 1 1 100%; color: var(--text-2); font-size: 13px; line-height: 1.6; }
+.doc-det-res span + span::before { content: " · "; color: var(--text-3); }
+.doc-det-res b { color: var(--text); font-weight: 600; }
+.doc-det[open] .doc-det-res { display: none; }
+.doc-det-alt .r, .doc-det[open] .doc-det-alt .a { display: none; }
+.doc-det[open] .doc-det-alt .r { display: inline; }
+.doc-det > .doc-campos { padding: 14px 0 0; }
+#doc-num-aviso:not(:empty) { padding: 16px 16px 0; }
+#doc-num-aviso .banner { margin: 0; }
+.doc-num-in { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 10px; }
+.doc-num-in .input { width: 110px; }
+.doc-feito, .doc-andamento { align-items: center; }
 .doc-prev { container-type: inline-size; min-width: 0; }
 .doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; display: flex; flex-direction: column; margin: 0 auto; padding: 2.835em 5.906em 2.362em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
 .doc-folha .doc-timbre { display: flex; align-items: center; gap: 1em; margin-bottom: 1.8em; }
@@ -799,12 +849,19 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 
 @media (max-width: 1100px) {
   .g-kpi, .quick { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .g-2, .lanc, .lanc.txt, .g-half, .doc-ed, .doc-ed.rev { grid-template-columns: minmax(0, 1fr); }
+  .g-2, .lanc, .lanc.txt, .g-half, .doc-ed, .doc-ed.amplo { grid-template-columns: minmax(0, 1fr); }
   .doc-lado { position: relative; top: auto; max-height: none; overflow: visible; }
+  .doc-abas { display: inline-flex; }
+  .doc-amplia { display: none; }
+  .doc-fill:not(.ver-folha) > .doc-prev, .doc-fill.ver-folha > .doc-form { display: none; }
+  .doc-fill.ver-folha > .doc-prev { overflow-x: auto; padding-bottom: 8px; }
+  .doc-fill.ver-folha .doc-folha { font-size: max(10px, min(16px, calc(100cqw * 16 / 794))); max-width: none; }
   .fl-campos { padding-right: 0; }
   .fl-itens { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 1px dashed var(--border-strong); }
 }
 @media (max-width: 860px) {
+  .doc-fill .btn.sm, .doc-card .btn.sm, .doc-sel .btn, .doc-abas button, .doc-num-in .btn { min-height: 44px; }
+  .doc-fill .btn.icon.sm, .doc-sel .btn.icon { width: 44px; }
   .app { grid-template-columns: 1fr; }
   .sidebar { position: fixed; z-index: 45; left: 0; width: 268px; transform: translateX(-100%); transition: transform .28s var(--out); }
   .app.nav-open .sidebar { transform: none; box-shadow: 0 0 0 100vmax var(--overlay); }
@@ -987,7 +1044,7 @@ const DOC_NOMES = {
   estabilizador: ['estabilizador', 'estabilizadores', 'm'], roteador: ['roteador', 'roteadores', 'm'],
 };
 // Modelos de documento são dados (db.modelosDoc); formato e marcação do corpo em docs/context/ROUTES.md, seção "Documentos".
-const DOC_TIPOS = { texto: 'Texto curto', area: 'Texto longo', data: 'Data', unidade: 'Unidade', setor: 'Setor', pat: 'Patrimônio', escolha: 'Escolha', bens: 'Outros bens (lista)' };
+const DOC_TIPOS = { texto: 'Texto curto', area: 'Texto longo', data: 'Data', unidade: 'Unidade', setor: 'Setor', pat: 'Patrimônio', pats: 'Patrimônios (vários)', escolha: 'Escolha', bens: 'Outros bens (lista)' };
 const DOC_RESERVADOS = ['bens', 'orgao'];
 const DOC_ORGAO_CHAVES = ['cidade', 'sigla', 'de', 'assinante', 'cargo', 'titular', 'titularCargo'];
 // Fonte automática de um campo: chave gravada no modelo → valor calculado aqui.
@@ -1019,7 +1076,7 @@ const DOC_C = {
   data: { id: 'data', rotulo: 'Data', tipo: 'data', obrigatorio: true, auto: 'hoje' },
   numero: { id: 'numero', rotulo: 'Nº da C.I', tipo: 'texto', obrigatorio: true, auto: 'num-ci', dica: 'Sugerido pela numeração; ao gerar o PDF, o próximo avança' },
   resposta: { id: 'resposta', rotulo: 'Em resposta à', tipo: 'texto', dica: 'Opcional, ex.: C.I Nº 18/CREAS-SEMASC/2026' },
-  bens: [1, 2, 3].map(i => ({ id: `bem${i}`, rotulo: `Patrimônio ${i}`, tipo: 'pat', ...(i === 1 ? { dica: 'Busque pelo nº, marca, modelo ou unidade' } : {}) })),
+  pats: { id: 'pats', rotulo: 'Patrimônios', tipo: 'pats', dica: 'Busque pelo nº, marca, modelo ou unidade e tecle Enter; adicione quantos precisar' },
   outros: { id: 'outros', rotulo: 'Outros equipamentos', tipo: 'bens', dica: 'Um por linha, ex.: CPU 2: SEM PATRIMÔNIO' },
   un: { id: 'un', rotulo: 'Unidade', tipo: 'unidade', auto: 'unidade-pat' },
   setor: { id: 'setor', rotulo: 'Setor', tipo: 'setor', depende: 'un', auto: 'setor-pat' },
@@ -1032,10 +1089,10 @@ const DOC_FECHO = '> Na oportunidade, apresentamos manifestação de elevada est
 const DOC_ASSIN = '[assinatura: {{assin}} | {{orgao.cargo}}]\n[assinatura: {{?titular=Sim:{{orgao.titular}}}} | {{orgao.titularCargo}}]';
 const DOC_PADRAO = [
   {
-    id: 'ci-envio', origem: 'padrao',
+    id: 'ci-envio', origem: 'padrao', grupo: 'Enviar e devolver equipamento',
     titulo: 'C.I · Envio de equipamento',
     descricao: 'Avisa o envio de computador, impressora ou outro bem para uma unidade, com os números de patrimônio.',
-    campos: [DOC_C.data, DOC_C.numero, DOC_C.resposta, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
+    campos: [DOC_C.data, DOC_C.numero, DOC_C.resposta, DOC_C.pats, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
       { id: 'objetivo', rotulo: 'Objetivo', tipo: 'texto', dica: 'Opcional; completa "com o objetivo de…"' }, DOC_C.assin, DOC_C.titular('Sim')],
     corpo: `[local e data]
 [referência: C.I Nº {{numero.oficial}} | {{?resposta:Em resposta à }}]
@@ -1052,10 +1109,10 @@ ${DOC_FECHO}
 ${DOC_ASSIN}`,
   },
   {
-    id: 'ci-devolucao', origem: 'padrao',
+    id: 'ci-devolucao', origem: 'padrao', grupo: 'Enviar e devolver equipamento',
     titulo: 'C.I · Devolução após manutenção',
     descricao: 'Registra a volta de um equipamento consertado para o setor de origem.',
-    campos: [DOC_C.data, DOC_C.numero, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para, DOC_C.assin, DOC_C.titular('Não')],
+    campos: [DOC_C.data, DOC_C.numero, DOC_C.pats, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para, DOC_C.assin, DOC_C.titular('Não')],
     corpo: `${DOC_TOPO_CI}
 
 > Informo por meio deste que {{bens.objeto}}, encaminhad{{bens.o}} para manutenção, {{bens.n:está|estão}} sendo devolvid{{bens.o}} ao setor de origem após a realização dos procedimentos necessários.
@@ -1071,7 +1128,7 @@ ${DOC_FECHO}
 ${DOC_ASSIN}`,
   },
   {
-    id: 'ci-comunicado', origem: 'padrao',
+    id: 'ci-comunicado', origem: 'padrao', grupo: 'Comunicar',
     titulo: 'C.I · Comunicado ou relatório',
     descricao: 'Texto livre ao Gabinete ou a outro setor: relatório de visita, defeito, pedido de peça.',
     campos: [DOC_C.data, DOC_C.numero, { ...DOC_C.para, auto: undefined, dica: 'Ex.: Gabinete SEMASC', padrao: `Gabinete ${DOC_ORGAO.sigla}` },
@@ -1089,7 +1146,7 @@ ${DOC_FECHO}
 ${DOC_ASSIN}`,
   },
   {
-    id: 'requisicao', origem: 'padrao',
+    id: 'requisicao', origem: 'padrao', grupo: 'Pedir material',
     titulo: 'Requisição de material',
     descricao: 'Pede itens ao Almoxarifado ou a Compras, com a tabela de quantidades solicitadas.',
     campos: [DOC_C.data, DOC_C.numero, { ...DOC_C.para, auto: undefined, dica: 'Ex.: Almoxarifado ou Compras', padrao: 'Almoxarifado' },
@@ -1109,7 +1166,7 @@ ${DOC_ASSIN}`,
 [tabela de itens: itens]`,
   },
   {
-    id: 'protocolo-entrega', origem: 'padrao',
+    id: 'protocolo-entrega', origem: 'padrao', grupo: 'Entregar e emprestar',
     titulo: 'Protocolo de entrega de material',
     descricao: 'Acompanha a entrega de periféricos e materiais; a unidade assina o recebimento.',
     campos: [DOC_C.data, DOC_C.un, DOC_C.setor, DOC_C.para, { ...DOC_C.resposta, rotulo: 'Pedido da unidade', dica: 'Opcional, ex.: C.I nº 073/SASC/CRASI/2024' },
@@ -1129,10 +1186,10 @@ Favor conferir o material entregue e assinar o seu recebimento neste protocolo d
 [recebimento: Data: __/__/____]`,
   },
   {
-    id: 'termo-responsabilidade', origem: 'padrao',
+    id: 'termo-responsabilidade', origem: 'padrao', grupo: 'Entregar e emprestar',
     titulo: 'Termo de responsabilidade de equipamento',
     descricao: 'Empréstimo de notebook, projetor ou outro bem a um servidor, com assinatura de devolução.',
-    campos: [DOC_C.data, ...DOC_C.bens, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
+    campos: [DOC_C.data, DOC_C.pats, DOC_C.outros, DOC_C.un, DOC_C.setor, DOC_C.para,
       { id: 'nome', rotulo: 'Nome do responsável', tipo: 'texto', dica: 'Em branco, fica a linha para preencher à mão' },
       { id: 'matricula', rotulo: 'Matrícula', tipo: 'texto' }, { id: 'cargo', rotulo: 'Cargo', tipo: 'texto' }],
     corpo: `[local e data]
@@ -1151,12 +1208,12 @@ Lotado(a) nesta {{orgao.titularCargo}}, assumo responsabilidade plena e integral
 [recebimento: Assinatura de devolução: ___ Data __/__/____]`,
   },
   {
-    id: 'memorando', origem: 'padrao',
+    id: 'memorando', origem: 'padrao', grupo: 'Enviar e devolver equipamento',
     titulo: 'Memorando a outra secretaria',
     descricao: 'Encaminha equipamento a outra secretaria e pede o registro da transferência.',
     campos: [DOC_C.data, { ...DOC_C.numero, rotulo: 'Nº do memorando', auto: 'num-memorando' },
       { id: 'dest', rotulo: 'Destinatário', tipo: 'texto', obrigatorio: true, dica: 'Ex.: Secretaria de Segurança Pública e Controle Urbano' },
-      ...DOC_C.bens, DOC_C.outros, DOC_C.assin],
+      DOC_C.pats, DOC_C.outros, DOC_C.assin],
     corpo: `[local e data]
 [referência: Memorando nº {{numero.oficial}}]
 
@@ -1209,6 +1266,7 @@ const ICONS = {
   keyboard: '<rect x="2" y="5" width="20" height="14" rx="2"/><path d="M6 9h.01M10 9h.01M14 9h.01M18 9h.01M6 13h.01M18 13h.01M8 16h8"/>',
   doc: '<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/>',
   copy: '<rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"/>',
+  zoom: '<circle cx="11" cy="11" r="7"/><path d="m21 21-4.35-4.35M11 8v6M8 11h6"/>',
   up: '<path d="m18 15-6-6-6 6"/>',
   down: '<path d="m6 9 6 6 6-6"/>',
 };
@@ -1654,6 +1712,7 @@ function route() {
   render();
   ui.query = new URLSearchParams();
   if (prev !== ui.route) { window.scrollTo(0, 0); $('#view').focus({ preventScroll: true }); entrar(); }
+  else if (ui.route === 'documentos') window.scrollTo(0, 0);
 }
 function entrar() {
   const v = $('#view');
@@ -1985,7 +2044,8 @@ function patDrawer(id) {
       </dl>
       ${ativo ? `<div style="display:flex;gap:8px;flex-wrap:wrap">
         ${p.un === ESTOQUE ? `<button class="btn sm" data-act="pat-ir" data-tipo="saida">${icon('out')}Saída</button>` : `<button class="btn sm" data-act="pat-ir" data-tipo="entrada">${icon('in')}Devolver ao estoque</button><button class="btn sm" data-act="pat-ir" data-tipo="transferencia">${icon('transfer')}Transferir</button>`}
-        <button class="btn sm danger" data-act="pat-ir" data-tipo="descarte">${icon('trash')}Descartar</button></div>` : ''}
+        <button class="btn sm" data-act="doc-de-pat">${icon('doc')}Gerar documento</button>
+        <button class="btn sm danger" data-act="pat-ir" data-tipo="descarte">${icon('trash')}Descartar</button></div>` : `<div><button class="btn sm" data-act="doc-de-pat">${icon('doc')}Gerar documento</button></div>`}
       <div><p class="sect-title">Fotos</p><div class="fotos" id="pt-fotos">${fotosHtml(p)}</div>
         <input type="file" id="pt-foto-in" accept="image/*" multiple hidden data-ch="pat-foto"></div>
       <div><p class="sect-title">Editar cadastro</p><div class="form-stack">${patForm(p)}
@@ -2452,9 +2512,9 @@ function modalRegistrados(prs, { envelope } = {}) {
   if (prs.length === 1) {
     const pr = prs[0];
     return modal(`Protocolo Nº ${pr.num} registrado`, `<div class="reg-resumo"><p>${tipoBadge(pr.tipo)} ${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</p><p style="color:var(--text-2)">Estoque e locais já foram atualizados.</p></div>${listaRegistrados(pr)}`,
-      `<a class="btn" href="#/movimentacoes?p=${pr.num}">Ver protocolo</a><button class="btn" data-act="close-layer">Novo lançamento</button><button class="btn primary" data-act="print" data-id="${pr.id}" autofocus>${icon('print')}Imprimir comprovante</button>`, op);
+      `<a class="btn" href="#/movimentacoes?p=${pr.num}">Ver protocolo</a><button class="btn" data-act="close-layer">Novo lançamento</button><button class="btn" data-act="doc-de-proto" data-id="${pr.id}">${icon('doc')}Gerar documento</button><button class="btn primary" data-act="print" data-id="${pr.id}" autofocus>${icon('print')}Imprimir comprovante</button>`, op);
   }
-  modal(`${prs.length} protocolos registrados`, `<div class="reg-resumo"><p style="color:var(--text-2)">Estoque e locais já foram atualizados.</p></div><ul class="list" style="margin:0 -18px">${prs.map(pr => `<li><span class="grow">${tipoBadge(pr.tipo)} <b>Nº ${pr.num}</b><span class="sub">${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</span></span><button class="btn sm" data-act="print" data-id="${pr.id}">${icon('print')}Imprimir</button></li>`).join('')}</ul>`,
+  modal(`${prs.length} protocolos registrados`, `<div class="reg-resumo"><p style="color:var(--text-2)">Estoque e locais já foram atualizados.</p></div><ul class="list" style="margin:0 -18px">${prs.map(pr => `<li><span class="grow">${tipoBadge(pr.tipo)} <b>Nº ${pr.num}</b><span class="sub">${plural(pr.itens.length, 'item', 'itens')} · ${esc(protoDest(pr))}</span></span><button class="btn sm" data-act="doc-de-proto" data-id="${pr.id}">${icon('doc')}Documento</button><button class="btn sm" data-act="print" data-id="${pr.id}">${icon('print')}Imprimir</button></li>`).join('')}</ul>`,
     `<a class="btn" href="#/movimentacoes">Ver movimentações</a><button class="btn primary" data-act="close-layer" autofocus>Novo lançamento</button>`, op);
 }
 function listaRegistrados(pr) {
@@ -3175,7 +3235,7 @@ function movTable() {
       const open = ui.open[pr.num];
       return `<tr class="click" data-act="mov-toggle" data-num="${pr.num}" aria-expanded="${!!open}"><td class="n"><b>${pr.num}</b></td><td>${fmtD(pr.data)}</td><td>${tipoBadge(pr.tipo)}</td><td>${esc(protoDest(pr))}</td><td>${esc(pr.pessoa) || '<span style="color:var(--text-3)">—</span>'}</td>
         <td class="muted">${esc(pr.itens.slice(0, 2).map(i => (i.k === 'p' ? i.qtd + '× ' : (i.ident || '') + ' ') + i.label).join('; '))}${pr.itens.length > 2 ? ` +${pr.itens.length - 2}` : ''}</td>
-        <td class="n" style="white-space:nowrap"><button class="btn sm ghost" data-act="print" data-id="${pr.id}" aria-label="Imprimir protocolo ${pr.num}">${icon('print')}</button>${latest && latest.id === pr.id ? `<button class="btn sm ghost" data-act="undo" data-id="${pr.id}" aria-label="Desfazer protocolo ${pr.num}" title="Desfazer (só o último protocolo)">${icon('undo')}</button>` : ''}</td></tr>
+        <td class="n" style="white-space:nowrap"><button class="btn sm ghost" data-act="doc-de-proto" data-id="${pr.id}" aria-label="Gerar documento do protocolo ${pr.num}" title="Gerar documento">${icon('doc')}</button><button class="btn sm ghost" data-act="print" data-id="${pr.id}" aria-label="Imprimir protocolo ${pr.num}" title="Imprimir comprovante">${icon('print')}</button>${latest && latest.id === pr.id ? `<button class="btn sm ghost" data-act="undo" data-id="${pr.id}" aria-label="Desfazer protocolo ${pr.num}" title="Desfazer (só o último protocolo)">${icon('undo')}</button>` : ''}</td></tr>
         ${open ? `<tr><td colspan="7" style="background:var(--surface-2)"><div style="display:grid;gap:8px;padding:4px 0">
           ${pr.obs ? `<div><b>${pr.tipo === 'descarte' ? 'Motivo' : 'Observação'}:</b> ${esc(pr.obs)}</div>` : ''}
           <table class="t" style="background:var(--surface);border:1px solid var(--border);border-radius:6px"><thead><tr><th class="n">Qtd</th><th>Item</th><th>Patrimônio</th><th>Local anterior</th></tr></thead><tbody>
@@ -3305,7 +3365,18 @@ const DOC_GAP = '<span class="doc-branco"></span>';
 const docCopia = x => JSON.parse(JSON.stringify(x));
 function docModelosGarantir(base) {
   if (base && !Array.isArray(base.modelosDoc)) base.modelosDoc = docCopia(DOC_PADRAO);
+  base?.modelosDoc.forEach(docMigra);
   return base;
+}
+// Modelos antigos: os campos fixos bem1..bem3 viram um campo "pats" (se o texto não os usa um a um); padrão sem grupo recebe o do app.
+function docMigra(m) {
+  const ids = ['bem1', 'bem2', 'bem3'], i = m.campos.findIndex(f => f.id === 'bem1');
+  if (i >= 0 && ids.every(id => m.campos.some(f => f.id === id && f.tipo === 'pat')) && !m.campos.some(f => f.id === 'pats') && !ids.some(id => docUsa(m, id))) {
+    const campos = m.campos.filter(f => !ids.includes(f.id));
+    campos.splice(i, 0, docCopia(DOC_C.pats));
+    m.campos = campos;
+  }
+  if (!m.grupo && m.origem === 'padrao') { const p = DOC_PADRAO.find(x => x.id === m.id); if (p?.grupo) m.grupo = p.grupo; }
 }
 const docModelos = () => db.modelosDoc || [];
 const docModelo = d => d && docModelos().find(m => m.id === d.id);
@@ -3327,10 +3398,12 @@ function docNumGrava(d, m) {
   m.campos.forEach(f => {
     const serie = DOC_AUTO[f.auto]?.serie; if (!serie) return;
     const n = String(d.v[f.id] ?? '').trim(), ano = docAnoM(m, d.v);
+    if (n) d.manual[f.id] = true;
     if (!/^\d+$/.test(n) || docNumProx(serie, ano) > +n) return;
     (db.config.docNum ||= {})[`${serie}-${ano}`] = +n + 1; mudou = true;
   });
   if (mudou) commit();
+  docGuarda();
 }
 const docLinhas = s => String(s ?? '').split('\n').map(l => l.trim()).filter(Boolean);
 const docDataVazia = () => '<span><span class="doc-vazio p"></span>/<span class="doc-vazio p"></span>/<span class="doc-vazio"></span></span>';
@@ -3342,7 +3415,8 @@ function docItensReq(s) {
     return m ? [m[1], m[2]] : [l, ''];
   });
 }
-const docPats = (base, v, m) => [...new Set(m.campos.filter(c => c.tipo === 'pat').map(c => v[c.id]).filter(Boolean))].map(id => docPat(base, id)).filter(Boolean);
+const docPatIds = s => String(s ?? '').split(/\s+/).filter(Boolean);
+const docPats = (base, v, m) => [...new Set(m.campos.flatMap(c => c.tipo === 'pat' ? [v[c.id]] : c.tipo === 'pats' ? docPatIds(v[c.id]) : []).filter(Boolean))].map(id => docPat(base, id)).filter(Boolean);
 const docBemFora = (base, v, m) => docPats(base, v, m).find(p => p.un !== ESTOQUE);
 const docApelido = un => DOC_ORGAO.apelidos[un] || un || '';
 function docPara(un, setor) {
@@ -3376,7 +3450,7 @@ function docLista(lin, termo = false) {
 }
 
 /* ---------- marcação do corpo (tudo escapado antes de virar HTML) ---------- */
-const DOC_SUB = { data: ['ano', 'curta'], texto: ['oficial'], pat: ['marca', 'modelo', 'num', 'setor', 'unidade', 'categoria'], area: ['n'], bens: ['n'] };
+const DOC_SUB = { data: ['ano', 'curta'], texto: ['oficial'], pat: ['marca', 'modelo', 'num', 'setor', 'unidade', 'categoria'], pats: ['n'], area: ['n'], bens: ['n'] };
 const DOC_SUB_BENS = ['o', 'nome', 'de', 'objeto', 'n'];
 const DOC_PH = /\{\{([^{}]*)\}\}/g;
 const docNegrito = h => h.replace(/\*\*(.+?)\*\*/g, '<b>$1</b>');
@@ -3418,13 +3492,15 @@ function docPlural(n, txt) {
   const i = txt.indexOf('|');
   return i < 0 ? txt : n > 1 ? txt.slice(i + 1) : txt.slice(0, i);
 }
+const docPatTexto = p => [p.cat, p.marca, p.modelo].filter(Boolean).join(' ') + (p.num ? `, patrimônio nº ${p.num}` : p.locadora ? `, locadora nº ${p.locadora}` : ', sem patrimônio');
 function docValor(ctx, f, sub) {
   const val = ctx.v[f.id] ?? '', s = String(val).trim();
   if (f.tipo === 'pat') {
     const p = docPat(db, val); if (!p) return '';
     const x = { marca: p.marca, modelo: p.modelo, num: patIdent(p), setor: p.setor, unidade: docApelido(p.un), categoria: p.cat };
-    return esc(sub ? x[sub] : [p.cat, p.marca, p.modelo].filter(Boolean).join(' ') + (p.num ? `, patrimônio nº ${p.num}` : p.locadora ? `, locadora nº ${p.locadora}` : ', sem patrimônio'));
+    return esc(sub ? x[sub] : docPatTexto(p));
   }
+  if (f.tipo === 'pats') return docPatIds(val).map(id => docPat(db, id)).filter(Boolean).map(p => esc(docPatTexto(p))).join('; ');
   if (sub === 'oficial') return `${s ? esc(/^\d$/.test(s) ? '0' + s : s) : DOC_GAP}/${esc(DOC_ORGAO.sigla)}/TI/${docAnoM(ctx.m, ctx.v)}`;
   if (!s) return '';
   if (f.tipo === 'data') return sub === 'ano' ? esc(s.slice(0, 4)) : sub === 'curta' ? esc(fmtD(s)) : docData(s);
@@ -3440,7 +3516,7 @@ function docPh(inner, ctx, plain = false) {
     return p.sub === 'n' ? docPlural(lin.length, p.txt) : p.sub === 'objeto' ? docObjeto(lin, g) : esc(p.sub ? g[p.sub] : `${g.o} ${g.nome}`);
   }
   const f = ctx.campo[p.id];
-  if (p.sub === 'n') return docPlural(docLinhas(ctx.v[f.id]).length, p.txt);
+  if (p.sub === 'n') return docPlural((f.tipo === 'pats' ? docPatIds : docLinhas)(ctx.v[f.id]).length, p.txt);
   const h = docValor(ctx, f, p.sub);
   if (p.cond) return p.eq !== undefined ? (esc(String(ctx.v[f.id] ?? '').trim()) === p.eq.trim() ? p.txt ?? '' : '') : h ? (p.txt ?? '') + h : '';
   return h || (plain ? '' : DOC_GAP);
@@ -3569,11 +3645,12 @@ function docAuto(f, v, m) {
   if (f.tipo === 'setor' && x && !setoresDe(v[f.depende]).includes(x)) x = '';
   return x;
 }
-function docNovo(id) {
+function docNovo(id, src) {
   const m = docModelos().find(x => x.id === id); if (!m) return null;
-  const d = { id, etapa: 'form', v: {}, manual: {} };
+  const d = { id, v: {}, manual: {} };
   m.campos.forEach(f => { d.v[f.id] = f.padrao ?? ''; });
   for (let i = 0; i < 2; i++) m.campos.forEach(f => { if (f.auto) d.v[f.id] = docAuto(f, d.v, m); });
+  if (src) docPreenche(d, m, src);
   return d;
 }
 function docRevalida(d, m) {
@@ -3594,37 +3671,71 @@ function docSet(d, id, valor) {
     if (!d.manual[c.id]) d.v[c.id] = novo;
   });
 }
-const docSujo = d => docModelo(d).campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== String(f.padrao ?? ''));
-const docFalta = d => docModelo(d).campos.filter(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
+const docSujo = d => { const m = docModelo(d); return !!m && !d.feito && m.campos.some(f => f.auto ? d.manual[f.id] : String(d.v[f.id] ?? '') !== String(f.padrao ?? '')); };
+
+/* ---------- ordem dos campos na tela (o modelo guarda a ordem dele; a tela agrupa) ---------- */
+// "Detalhes": campos que já vêm prontos (data, nº, quem assina, escolhas com padrão), recolhidos num resumo.
+const docNoDet = f => (!!f.auto && !['unidade-pat', 'setor-pat', 'destino'].includes(f.auto)) || (f.tipo === 'escolha' && String(f.padrao ?? '') !== '');
+const docRank = f => ['pat', 'pats', 'bens'].includes(f.tipo) ? 0 : ['unidade', 'setor'].includes(f.tipo) || f.auto === 'destino' ? 1 : f.obrigatorio ? 2 : 3;
+function docOrdem(m) {
+  const main = m.campos.filter(f => !docNoDet(f)).map((f, i) => [f, i]).sort((a, b) => docRank(a[0]) - docRank(b[0]) || a[1] - b[1]).map(x => x[0]);
+  return { main, det: m.campos.filter(docNoDet) };
+}
+function docOculto(m, v, f) {
+  if (f.tipo !== 'pat') return false;
+  const ps = m.campos.filter(c => c.tipo === 'pat'), i = ps.indexOf(f);
+  return i > 0 && !v[ps[i - 1].id] && !v[f.id];
+}
+
+/* ---------- validação e erros por campo ---------- */
+const docFalta = d => { const o = docOrdem(docModelo(d)); return [...o.main, ...o.det].filter(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim()); };
+const docMsgFalta = f => f.auto === 'destino' ? 'Escolha a unidade de destino acima ou escreva o destinatário.'
+  : f.tipo === 'pat' || f.tipo === 'pats' ? 'Escolha pelo menos um patrimônio.'
+  : ['unidade', 'setor', 'escolha'].includes(f.tipo) ? 'Escolha uma opção.' : 'Preencha este campo.';
+function docErro(id, msg) {
+  const el = $('#doc-f-' + id), e = $('#doc-e-' + id); if (!el) return;
+  el.classList.toggle('err', !!msg);
+  if (msg) el.setAttribute('aria-invalid', 'true'); else el.removeAttribute('aria-invalid');
+  if (e) { e.textContent = msg; e.hidden = !msg; }
+}
 function docValida(d) {
-  const falta = docFalta(d);
+  const falta = docFalta(d), m = docModelo(d);
+  falta.forEach(f => docErro(f.id, docMsgFalta(f)));
   if (!falta.length) return true;
-  falta.forEach(f => { const el = $('#doc-f-' + f.id); el && el.classList.add('err'); });
-  toast(`Preencha: ${falta.map(f => f.rotulo).join(', ')}.`, true);
-  const el = $('#doc-f-' + falta[0].id); el && el.focus();
+  if (falta.some(docNoDet) && $('#doc-det')) $('#doc-det').open = true;
+  if (ui.docAba === 'folha') docAba('campos');
+  toast(falta.length === 1 ? `${falta[0].rotulo}: ${docMsgFalta(falta[0])}` : `Faltam ${falta.length} campos: ${falta.map(f => f.rotulo).join(', ')}.`, true);
+  const f0 = falta[0], alvo = f0.auto === 'destino' ? m.campos.find(c => c.tipo === 'unidade' && !d.v[c.id]) || f0 : f0;
+  const el = $('#doc-f-' + alvo.id);
+  if (el) { el.focus({ preventScroll: true }); el.scrollIntoView({ block: 'center', behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' }); }
   return false;
 }
+
+/* ---------- campos ---------- */
 function docOpts(d, f) {
   const v = d.v[f.id] ?? '';
   let ops = f.tipo === 'unidade' ? unitNames() : f.tipo === 'setor' ? setoresDe(d.v[f.depende]) : (f.opcoes || []);
   if (v && !ops.includes(v)) ops = [v, ...ops];
   return `<option value="">—</option>` + ops.map(o => `<option ${o === v ? 'selected' : ''}>${esc(o)}</option>`).join('');
 }
-function docCampo(d, f, rev = false) {
-  const v = d.v[f.id] ?? '', a = `id="doc-f-${esc(f.id)}" data-id="${esc(f.id)}"`;
-  const rot = `<span>${esc(f.rotulo)}${f.obrigatorio ? '<span class="req" aria-hidden="true"> *</span>' : ''}</span>${!rev && f.dica ? ` <span class="hint">${esc(f.dica)}</span>` : ''}`;
+const docSelHtml = (f, v) => docPatIds(v).map(id => docPat(db, id)).filter(Boolean).map(p => `<li>${patIdentHtml(p)}<span class="grow">${esc(patDesc(p))}<span class="sub">${esc(loc(p.un, p.setor))}${p.status === 'descartado' ? ' · descartado' : ''}</span></span><button class="btn icon sm ghost" data-act="doc-pats-rm" data-campo="${esc(f.id)}" data-id="${esc(p.id)}" aria-label="Tirar ${esc(patIdent(p))} da lista">${icon('x')}</button></li>`).join('');
+function docCampo(d, f, m) {
+  const v = d.v[f.id] ?? '', fid = esc(f.id), a = `id="doc-f-${fid}" data-id="${fid}" aria-describedby="doc-e-${fid}"`;
+  const rot = `<span>${esc(f.rotulo)}${f.obrigatorio ? '<span class="req" aria-hidden="true"> *</span>' : ''}</span>${f.dica ? ` <span class="hint">${esc(f.dica)}</span>` : ''}`;
+  const erro = `<span class="err-msg" id="doc-e-${fid}" hidden></span>`, w = `id="doc-w-${fid}"${docOculto(m, d.v, f) ? ' hidden' : ''}`;
   const txt = `class="input" spellcheck="true" lang="pt-BR" data-in="doc" ${a}`;
-  if (f.tipo === 'pat') {
-    const p = docPat(db, v);
-    return `<div class="doc-f doc-pat"><label class="f">${rot}<span class="hint" id="doc-s-${esc(f.id)}">${esc(docPatSel(p))}</span><input class="input" type="search" ${a} data-in="doc-pat" data-enter="doc-pat-1" autocomplete="off" placeholder="Nº, marca, modelo ou unidade" value="${esc(p ? docPatRot(p) : '')}"></label><div class="cands" id="doc-c-${esc(f.id)}" hidden></div></div>`;
+  if (f.tipo === 'pat' || f.tipo === 'pats') {
+    const p = f.tipo === 'pat' && docPat(db, v), lista = f.tipo === 'pats';
+    return `<div class="doc-f doc-pat" ${w}><label class="f">${rot}${lista ? '' : `<span class="hint" id="doc-s-${fid}">${esc(docPatSel(p))}</span>`}<input class="input" type="search" ${a} data-in="doc-pat" data-enter="doc-pat-1" autocomplete="off" placeholder="${lista ? 'Nº, marca, modelo ou unidade · Enter adiciona' : 'Nº, marca, modelo ou unidade'}" value="${esc(p ? docPatRot(p) : '')}"></label><div class="cands" id="doc-c-${fid}" hidden></div>${lista ? `<ul class="doc-sel" id="doc-l-${fid}" aria-label="${esc(f.rotulo)} escolhidos">${docSelHtml(f, v)}</ul>` : ''}${erro}</div>`;
   }
-  const ctl = f.tipo === 'area' || f.tipo === 'bens' ? `<textarea ${txt} rows="${rev ? 2 : 3}">${esc(v)}</textarea>`
+  const ctl = f.tipo === 'area' || f.tipo === 'bens' ? `<textarea ${txt} rows="3">${esc(v)}</textarea>`
     : f.tipo === 'data' ? `<input class="input" type="date" data-in="doc" ${a} value="${esc(v)}">`
     : ['unidade', 'setor', 'escolha'].includes(f.tipo) ? `<select class="input" data-ch="doc" ${a}>${docOpts(d, f)}</select>`
     : `<input ${txt} value="${esc(v)}">`;
-  const rest = f.auto ? `<button class="btn icon sm ghost doc-rest" data-act="doc-restaurar" data-id="${esc(f.id)}" title="Restaurar valor automático" aria-label="Restaurar valor automático de ${esc(f.rotulo)}"${d.manual[f.id] ? '' : ' hidden'}>${icon('undo')}</button>` : '';
-  return `<div class="doc-f"><label class="f">${rot}${ctl}</label>${rest}</div>`;
+  const rest = f.auto ? `<button class="btn icon sm ghost doc-rest" data-act="doc-restaurar" data-id="${fid}" title="Restaurar valor automático" aria-label="Restaurar valor automático de ${esc(f.rotulo)}"${d.manual[f.id] && docAuto(f, d.v, m) ? '' : ' hidden'}>${icon('undo')}</button>` : '';
+  return `<div class="doc-f" ${w}><label class="f">${rot}${ctl}</label>${rest}${erro}</div>`;
 }
+const docDetTxt = (d, m) => docOrdem(m).det.map(f => { const v = String(d.v[f.id] ?? '').trim(); return `<span>${esc(f.rotulo)}: <b>${v ? esc(f.tipo === 'data' ? fmtD(v) : v) : '—'}</b></span>`; }).join('');
 function docCorpo(d, m) {
   try { return docMarcar(m, d.v || {}); } catch (e) { return `<p class="doc-erro">Erro no modelo: ${esc(e.message)}</p>`; }
 }
@@ -3637,59 +3748,185 @@ function docSync(d, exceto) {
   const m = docModelo(d);
   m.campos.forEach(f => {
     const el = $('#doc-f-' + f.id), v = d.v[f.id] ?? ''; if (!el) return;
-    if (f.tipo === 'pat') { const p = docPat(db, v); $('#doc-s-' + f.id).textContent = docPatSel(p); if (f.id !== exceto) el.value = p ? docPatRot(p) : ''; }
+    if (f.tipo === 'pats') $('#doc-l-' + f.id).innerHTML = docSelHtml(f, v);
+    else if (f.tipo === 'pat') { const p = docPat(db, v); $('#doc-s-' + f.id).textContent = docPatSel(p); if (f.id !== exceto) el.value = p ? docPatRot(p) : ''; }
     else if (f.id !== exceto && el.tagName === 'SELECT') { el.innerHTML = docOpts(d, f); el.value = v; }
     else if (f.id !== exceto && el.value !== v) el.value = v;
-    const r = $(`.doc-rest[data-id="${f.id}"]`); if (r) r.hidden = !d.manual[f.id];
-    if (String(v).trim()) el.classList.remove('err');
+    const w = $('#doc-w-' + f.id); if (w) w.hidden = docOculto(m, d.v, f);
+    const r = $(`.doc-rest[data-id="${f.id}"]`); if (r) r.hidden = !d.manual[f.id] || !docAuto(f, d.v, m);
+    if (String(v).trim()) docErro(f.id, '');
   });
+  const res = $('#doc-det-res'); if (res) res.innerHTML = docDetTxt(d, m);
+  const av = $('#doc-num-aviso'); if (av && !av.contains(document.activeElement)) av.innerHTML = docNumAvisoHtml(d, m);
   const corpo = $('#doc-prev .doc-corpo');
   if (corpo) corpo.innerHTML = docCorpo(d, m); else $('#doc-prev').innerHTML = docFolha(d, m);
+  docGuarda();
 }
-function docPatBusca(q) {
+function docPatBusca(q, fora = []) {
   const nq = norm(q), n = q.trim();
   if (!nq) return [];
-  return db.pats.filter(p => hit(norm([p.num, p.locadora, p.cat, p.marca, p.modelo, p.un, p.setor].join(' ')), nq))
+  return db.pats.filter(p => !fora.includes(p.id) && hit(norm([p.num, p.locadora, p.cat, p.marca, p.modelo, p.un, p.setor].join(' ')), nq))
     .sort((a, b) => (b.num === n) - (a.num === n) || (a.status !== 'ativo') - (b.status !== 'ativo')).slice(0, 8);
 }
 function docPatCands(t) {
-  const id = t.dataset.id, box = $('#doc-c-' + id);
-  if (!t.value.trim()) { box.hidden = true; if (ui.doc.v[id]) { docSet(ui.doc, id, ''); docSync(ui.doc, id); } return; }
-  const lista = docPatBusca(t.value);
+  const id = t.dataset.id, box = $('#doc-c-' + id), f = docModelo(ui.doc).campos.find(c => c.id === id);
+  if (!t.value.trim()) { box.hidden = true; if (f.tipo === 'pat' && ui.doc.v[id]) { docSet(ui.doc, id, ''); docSync(ui.doc, id); } return; }
+  const lista = docPatBusca(t.value, f.tipo === 'pats' ? docPatIds(ui.doc.v[id]) : []);
   box.hidden = false;
   box.innerHTML = lista.length ? lista.map(p => `<button data-act="doc-pat" data-campo="${esc(id)}" data-id="${esc(p.id)}">${patIdentHtml(p)}<span>${esc(patDesc(p))}</span><span class="sub">${p.status === 'descartado' ? 'Descartado · ' : ''}${esc(loc(p.un, p.setor))}</span></button>`).join('')
     : `<div class="empty" style="padding:12px">Nenhum patrimônio encontrado.</div>`;
 }
-function docCard(m) {
-  const id = esc(m.id), t = esc(m.titulo);
-  return `<article class="card doc-card"><button class="doc-usar" data-act="doc-novo" data-id="${id}"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small></button>
-    <footer><span class="doc-origem">${m.origem === 'padrao' ? 'Padrão' : 'Meu modelo'}</span><button class="btn sm ghost" data-act="doc-ed" data-id="${id}" aria-label="Editar ${t}">${icon('edit')}Editar</button><button class="btn sm ghost" data-act="doc-dup" data-id="${id}" aria-label="Duplicar ${t}">${icon('copy')}Duplicar</button><button class="btn icon sm ghost danger" data-act="doc-rm" data-id="${id}" title="Remover" aria-label="Remover ${t}">${icon('trash')}</button></footer></article>`;
+
+/* ---------- rascunho (sessionStorage: sobrevive a recarregar a página, some ao fechar a aba) ---------- */
+function docGuarda() {
+  try { if (ui.doc) sessionStorage.setItem('almox-doc', JSON.stringify(ui.doc)); else sessionStorage.removeItem('almox-doc'); } catch {}
+}
+function docRecupera() {
+  try {
+    const d = JSON.parse(sessionStorage.getItem('almox-doc') || 'null');
+    if (d && d.id && d.v && docModelo(d)) { d.manual ||= {}; ui.doc = d; }
+  } catch {}
+}
+
+/* ---------- vindo de um protocolo ou de um patrimônio ---------- */
+function docFonteProto(pr) {
+  return { pats: pr.itens.filter(i => i.k === 'b').map(i => i.id), itens: pr.itens.filter(i => i.k === 'p').map(i => `${i.qtd} x ${i.label}`),
+    un: pr.un, setor: pr.setor, pessoa: pr.pessoa, tipo: pr.tipo, rotulo: `Protocolo Nº ${pr.num}` };
+}
+const docFontePat = p => ({ pats: [p.id], itens: [], un: p.un, setor: p.setor, pessoa: '', tipo: '', rotulo: `Patrimônio ${patIdent(p)}` });
+// Preenche por tipo de campo, sem lógica no modelo: bens nos campos de patrimônio (sobra vai para "outros bens"),
+// unidade/setor do registro, itens do protocolo no campo de texto longo "itens" e a pessoa no campo "nome".
+function docPreenche(d, m, src) {
+  const pats = [...src.pats], set = (f, v) => { if (f && v) docSet(d, f.id, v); };
+  set(m.campos.find(f => f.tipo === 'pats'), pats.splice(0).join(' '));
+  m.campos.filter(f => f.tipo === 'pat').forEach(f => set(f, pats.shift()));
+  set(m.campos.find(f => f.tipo === 'bens'), pats.map(patById).filter(Boolean).map(p => `${p.cat.toUpperCase()}: ${p.num || patIdent(p)}`).join('\n'));
+  const un = m.campos.find(f => f.tipo === 'unidade');
+  if (un && src.un && src.un !== ESTOQUE && unitNames().includes(src.un)) {
+    set(un, src.un);
+    if (setoresDe(src.un).includes(src.setor)) set(m.campos.find(f => f.tipo === 'setor' && f.depende === un.id), src.setor);
+  }
+  set(m.campos.find(f => f.id === 'itens' && f.tipo === 'area'), src.itens.join('\n'));
+  set(m.campos.find(f => f.id === 'nome' && f.tipo === 'texto'), src.pessoa);
+}
+const DOC_SUGERE = { saida: ['ci-envio', 'ci-devolucao', 'termo-responsabilidade', 'protocolo-entrega'], transferencia: ['ci-envio', 'memorando'] };
+function docServe(m, src) {
+  const bem = m.campos.some(f => ['pat', 'pats', 'bens'].includes(f.tipo)), itens = m.campos.some(f => f.id === 'itens' && f.tipo === 'area');
+  const i = (DOC_SUGERE[src.tipo] || []).indexOf(m.id);
+  return (src.pats.length && bem ? 4 : 0) + (src.itens.length && itens ? 4 : 0) + (i >= 0 ? 3 - Math.min(i, 2) : 0);
+}
+function docEscolher(src, q) {
+  const ms = docModelos().map((m, i) => ({ m, s: docServe(m, src), i })).sort((a, b) => b.s - a.s || a.i - b.i);
+  if (!ms.length) return toast('Nenhum modelo de documento. Crie um na aba Documentos.', true);
+  ui.docSrc = { q };
+  const vem = [src.pats.length && plural(src.pats.length, 'patrimônio', 'patrimônios'), src.itens.length && plural(src.itens.length, 'item', 'itens'), src.un && src.un !== ESTOQUE && 'unidade e setor', src.pessoa && 'pessoa'].filter(Boolean);
+  modal(`Gerar documento · ${src.rotulo}`, `<p style="margin:0 0 12px;color:var(--text-2)">Escolha o modelo.${vem.length ? ` Já entram preenchidos: ${esc(vem.join(', '))}.` : ''}</p>
+    <ul class="list doc-escolha" style="margin:0 -18px">${ms.map(({ m, s }, k) => `<li><button class="doc-escolhe" data-act="doc-de" data-id="${esc(m.id)}"${k ? '' : ' autofocus'}><b>${icon('doc')}${esc(m.titulo)}${!k && s > 0 ? '<span class="badge b-ok">Sugerido</span>' : ''}</b><span class="sub">${esc(m.descricao || '')}</span></button></li>`).join('')}</ul>`,
+    `<button class="btn" data-act="close-layer">Cancelar</button>`);
+}
+function docIr(hash) { if (location.hash === hash) route(); else location.hash = hash; }
+function docAbrir(id, extra = '') {
+  const ir = () => {
+    if (extra || ui.doc?.id !== id) { ui.doc = null; docGuarda(); }
+    docIr(`#/documentos?m=${encodeURIComponent(id)}${extra ? '&' + extra : ''}`);
+  };
+  if (ui.doc && docSujo(ui.doc) && (extra || ui.doc.id !== id))
+    return confirmDialog('Descartar o documento em andamento?', `O preenchimento de "${esc(docModelo(ui.doc).titulo)}" será descartado.`, 'Descartar e abrir', ir, true);
+  ir();
+}
+
+/* ---------- numeração ---------- */
+function docNumPend(d, m) {
+  for (const f of m.campos) {
+    const s = DOC_AUTO[f.auto]?.serie; if (!s) continue;
+    const ano = docAnoM(m, d.v);
+    if (db.config.docNum?.[`${s}-${ano}`] == null) return { s, ano };
+  }
+  return null;
+}
+function docNumAvisoHtml(d, m) {
+  const p = docNumPend(d, m); if (!p) return '';
+  const nome = DOC_SERIES[p.s], a = `data-serie="${p.s}" data-ano="${p.ano}"`;
+  return `<div class="banner doc-num">${icon('alert')}<div><b>Numeração de ${nome} de ${p.ano} ainda não confirmada.</b> Qual foi o último nº de ${nome} usado este ano?
+    <div class="doc-num-in"><label class="sr" for="doc-ult">Último nº de ${nome} usado</label><input class="input" type="number" min="0" inputmode="numeric" id="doc-ult" placeholder="Ex.: 7" data-enter="doc-num-ini" ${a}><button class="btn sm primary" data-act="doc-num-ini" ${a}>Usar</button><button class="btn sm" data-act="doc-num-zero" ${a}>Nenhum ainda</button></div></div></div>`;
+}
+function docNumIni(serie, ano, ult) {
+  (db.config.docNum ||= {})[`${serie}-${ano}`] = ult + 1; commit();
+  const d = ui.doc, m = docModelo(d);
+  m.campos.forEach(f => { if (DOC_AUTO[f.auto]?.serie === serie && !d.manual[f.id]) d.v[f.id] = docAuto(f, d.v, m); });
+  $('#doc-num-aviso').innerHTML = '';
+  docSync(d);
+  toast(`Próximo nº de ${DOC_SERIES[serie]}: ${String(ult + 1).padStart(2, '0')}.`);
+}
+function docNumeros(d, m) {
+  return m.campos.filter(f => DOC_AUTO[f.auto]?.serie && String(d.v[f.id] ?? '').trim()).map(f => {
+    const n = String(d.v[f.id]).trim();
+    return `${DOC_AUTO[f.auto].serie === 'ci' ? 'C.I Nº' : 'Memorando nº'} ${/^\d$/.test(n) ? '0' + n : n}/${DOC_ORGAO.sigla}/TI/${docAnoM(m, d.v)}`;
+  });
+}
+
+/* ---------- tela ---------- */
+const DOC_GRUPOS = ['Enviar e devolver equipamento', 'Entregar e emprestar', 'Pedir material', 'Comunicar'];
+const docHash = () => new URLSearchParams(location.hash.split('?')[1] || '');
+function docCard(m, ger) {
+  const id = esc(m.id), t = esc(m.titulo), origem = `<span class="doc-origem">${m.origem === 'padrao' ? 'Padrão' : 'Meu modelo'}</span>`;
+  if (!ger) return `<article class="card doc-card"><button class="doc-usar" data-act="doc-abrir" data-id="${id}"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small><span class="doc-preencher">${origem}<span class="doc-ir">Preencher</span></span></button></article>`;
+  return `<article class="card doc-card ger"><div class="doc-usar"><b>${icon('doc')}${t}</b><small>${esc(m.descricao)}</small></div>
+    <footer>${origem}<button class="btn sm ghost" data-act="doc-ed" data-id="${id}" aria-label="Editar ${t}">${icon('edit')}Editar</button><button class="btn sm ghost" data-act="doc-dup" data-id="${id}" aria-label="Duplicar ${t}">${icon('copy')}Duplicar</button><button class="btn sm ghost danger doc-rm" data-act="doc-rm" data-id="${id}" aria-label="Remover ${t}">${icon('trash')}Remover</button></footer></article>`;
+}
+function docCatalogo() {
+  const ger = ui.docGer, lista = docModelos(), em = ui.doc && docSujo(ui.doc) && docModelo(ui.doc);
+  const head = pageHead(ger ? 'Gerenciar modelos' : 'Documentos', ger ? 'Crie, edite, duplique ou remova modelos. Cabeçalho e rodapé são fixos.' : 'Escolha um modelo, preencha e gere o PDF.',
+    ger ? `<button class="btn" data-act="doc-padroes">${icon('undo')}Restaurar padrões</button><button class="btn" data-act="doc-ed-novo">${icon('plus')}Novo modelo</button><button class="btn primary" data-act="doc-ger">${icon('check')}Concluir</button>`
+      : `<button class="btn" data-act="doc-ger">${icon('settings')}Gerenciar modelos</button>`);
+  if (!lista.length) return head + `<div class="card empty"><b>Nenhum modelo</b>${ger ? 'Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".' : 'Use "Gerenciar modelos" para criar um ou restaurar os padrão.'}</div>`;
+  const grupos = {};
+  lista.forEach(m => (grupos[String(m.grupo || '').trim() || 'Outros modelos'] ||= []).push(m));
+  const pos = g => { const i = DOC_GRUPOS.indexOf(g); return i >= 0 ? i : g === 'Outros modelos' ? 999 : 100; };
+  return head +
+    (em && !ger ? `<div class="banner info doc-andamento">${icon('doc')}<div><b>Documento em andamento:</b> ${esc(em.titulo)}</div><div class="actions"><button class="btn sm" data-act="doc-descartar">Descartar</button><button class="btn sm primary" data-act="doc-abrir" data-id="${esc(em.id)}">Continuar</button></div></div>` : '') +
+    (ger ? '' : `<p class="doc-dica">${icon('history')}<span>Para já vir preenchido, use <b>Gerar documento</b> num protocolo (Movimentações ou ao registrar) ou na ficha do patrimônio.</span></p>`) +
+    Object.keys(grupos).sort((a, b) => pos(a) - pos(b)).map(g => `<section class="doc-grupo"><h2 class="sect-title">${esc(g)}</h2><div class="doc-cat">${grupos[g].map(m => docCard(m, ger)).join('')}</div></section>`).join('');
 }
 function viewDocumentos() {
   if (ui.docEd) return docEditor(ui.docEd);
-  let d = ui.doc, m = docModelo(d);
-  if (d && !m) { ui.doc = d = null; toast('O modelo que estava em uso foi removido.', true); }
-  if (!m) return pageHead('Documentos', 'Etapa 1 de 3 · Escolha um modelo. Depois preencha, revise e gere o PDF.', `<button class="btn" data-act="doc-padroes">${icon('undo')}Restaurar padrões</button><button class="btn primary" data-act="doc-ed-novo">${icon('plus')}Novo modelo</button>`) +
-    (docModelos().length ? `<div class="doc-cat">${docModelos().map(docCard).join('')}</div>`
-      : `<div class="card empty"><b>Nenhum modelo</b>Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".</div>`);
-  docRevalida(d, m);
-  return d.etapa === 'rev' ? docRevisao(d, m) : docForm(d, m);
+  const q = docHash(), id = q.get('m');
+  if (ui.doc && !docModelo(ui.doc)) { ui.doc = null; docGuarda(); toast('O modelo que estava em uso foi removido.', true); }
+  const m = id && docModelos().find(x => x.id === id);
+  if (id && !m) { history.replaceState(null, '', '#/documentos'); toast('Modelo não encontrado.', true); }
+  if (!m) return docCatalogo();
+  const pr = q.has('proto') && db.protocolos.find(p => p.id === q.get('proto')), pat = q.has('b') && patById(q.get('b'));
+  const src = pr ? docFonteProto(pr) : pat ? docFontePat(pat) : null;
+  // Voltar/avançar do navegador para outro modelo não descarta um preenchimento em andamento: mostra o catálogo com "Continuar".
+  if (!src && ui.doc && ui.doc.id !== id && docSujo(ui.doc)) { history.replaceState(null, '', '#/documentos'); return docCatalogo(); }
+  if (src || ui.doc?.id !== id) {
+    ui.doc = docNovo(id, src); docGuarda();
+    setTimeout(() => { const el = $('#view .doc-campos .input'); el && el.focus({ preventScroll: true }); });
+  }
+  if (q.has('proto') || q.has('b')) history.replaceState(null, '', `#/documentos?m=${encodeURIComponent(id)}`);
+  docRevalida(ui.doc, m);
+  return docForm(ui.doc, m);
 }
+const docFeitoHtml = d => d.feito ? `<div class="banner info doc-feito" role="status">${icon('check')}<div><b>Documento gerado:</b> ${esc(d.feito)}. Se precisar corrigir, altere e gere de novo; o número não muda.</div><div class="actions"><a class="btn sm" href="#/documentos">Outro modelo</a><button class="btn sm primary" data-act="doc-outro">Novo deste modelo</button></div></div>` : '';
 function docForm(d, m) {
-  return pageHead(m.titulo, 'Etapa 2 de 3 · Preencha os campos. Os automáticos podem ser alterados.', `<button class="btn" data-act="doc-modelos">${icon('undo')}Modelos</button><button class="btn primary" data-act="doc-revisar">${icon('check')}Revisar</button>`) +
-    `<div class="doc-ed"><section class="card"><header><h2>Campos</h2></header><div class="doc-campos">${m.campos.map(f => docCampo(d, f)).join('')}</div></section>
+  const { main, det } = docOrdem(m), abre = det.some(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
+  const aba = ui.docAba || 'campos';
+  return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
+    `<div id="doc-feito">${docFeitoHtml(d)}</div>
+    <div class="seg doc-abas" role="group" aria-label="Mostrar">${[['campos', 'Campos', 'form'], ['folha', 'Folha', 'doc']].map(([k, l, ic]) => `<button data-act="doc-aba" data-aba="${k}" aria-pressed="${aba === k}">${icon(ic)}${l}</button>`).join('')}</div>
+    <div class="doc-ed doc-fill${ui.docAmplo ? ' amplo' : ''}${aba === 'folha' ? ' ver-folha' : ''}" id="doc-ed"><section class="card doc-form"><header><h2>Campos</h2></header><div id="doc-num-aviso">${docNumAvisoHtml(d, m)}</div>
+      <div class="doc-campos">${main.map(f => docCampo(d, f, m)).join('')}
+      ${det.length ? `<details class="doc-det" id="doc-det"${abre ? ' open' : ''}><summary><span class="doc-det-t">Detalhes</span><span class="doc-det-alt"><span class="a">Alterar</span><span class="r">Recolher</span></span><span class="doc-det-res" id="doc-det-res">${docDetTxt(d, m)}</span></summary><div class="doc-campos">${det.map(f => docCampo(d, f, m)).join('')}</div></details>` : ''}</div></section>
     <div class="doc-prev doc-lado" id="doc-prev">${docFolha(d, m)}</div></div>`;
 }
-function docRevisao(d, m) {
-  return pageHead(m.titulo, 'Etapa 3 de 3 · Confira a folha e corrija os valores. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<button class="btn" data-act="doc-voltar">${icon('edit')}Voltar ao preenchimento</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
-    `<div class="doc-ed rev"><div class="doc-prev" id="doc-prev">${docFolha(d, m)}</div>
-    <section class="card doc-lado"><header><h2>Valores</h2></header><div class="doc-campos">${m.campos.map(f => docCampo(d, f, true)).join('')}</div></section></div>`;
+function docAba(aba) {
+  ui.docAba = aba;
+  $('#doc-ed')?.classList.toggle('ver-folha', aba === 'folha');
+  $$('.doc-abas button').forEach(b => b.setAttribute('aria-pressed', b.dataset.aba === aba));
 }
-function docEtapa(etapa) { ui.doc.etapa = etapa; render(); window.scrollTo(0, 0); }
 async function docPdf() {
   const d = ui.doc, m = docModelo(d);
   if (!docValida(d)) return;
-  docNumGrava(d, m);
   $('#print').innerHTML = `<table class="doc-pags"><tbody><tr><td>${docFolha(d, m)}</td></tr></tbody><tfoot><tr><td class="doc-pe"></td></tr></tfoot></table>`;
   const img = $('#print .doc-timbre img');
   if (img) await Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 800))]);
@@ -3699,6 +3936,11 @@ async function docPdf() {
   window.print();
   document.documentElement.classList.remove('doc-imprimindo');
   document.title = t;
+  const nums = docNumeros(d, m), feito = () => { $('#doc-feito').innerHTML = docFeitoHtml(d); docSync(d); };
+  if (d.feito || !nums.length) { d.feito ||= m.titulo; return feito(); }
+  ui.onConfirm = () => { docNumGrava(d, m); d.feito = nums.join(' e '); closeLayer(); feito(); };
+  modal('O PDF foi salvo?', `<p style="margin:0">Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado e a numeração avança. Se cancelou a impressão, o número continua livre para o próximo documento.</p>`,
+    `<button class="btn" data-act="close-layer">Não, cancelei</button><button class="btn primary" data-act="confirm-ok" autofocus>${icon('check')}Sim, foi salvo</button>`);
 }
 
 /* ---------- editor de modelos ---------- */
@@ -3723,7 +3965,7 @@ function docExemplo(m) {
   const un = db.unidades.find(u => u.nome !== ESTOQUE && u.setores.length) || db.unidades[0];
   let ip = 0;
   m.campos.forEach(f => {
-    v[f.id] = f.tipo === 'pat' ? pats[ip++]?.id || '' : f.tipo === 'unidade' ? un?.nome || '' : f.tipo === 'data' ? today()
+    v[f.id] = f.tipo === 'pat' ? pats[ip++]?.id || '' : f.tipo === 'pats' ? pats.slice(ip, ip += 2).map(p => p.id).join(' ') : f.tipo === 'unidade' ? un?.nome || '' : f.tipo === 'data' ? today()
       : f.tipo === 'escolha' ? f.padrao || f.opcoes?.[0] || '' : f.padrao || '';
   });
   m.campos.forEach(f => { if (f.auto) { const x = docAuto(f, v, m); if (x) v[f.id] = x; } });
@@ -3750,23 +3992,24 @@ function docEdBotoes(m) {
     const r = f.rotulo || f.id;
     const subs = f.tipo === 'pat' ? [['num', 'nº'], ['marca', 'marca'], ['modelo', 'modelo'], ['setor', 'setor'], ['unidade', 'unidade']]
       : f.tipo === 'data' ? [['curta', 'dd/mm/aaaa'], ['ano', 'ano']] : DOC_AUTO[f.auto]?.serie ? [['oficial', 'oficial']]
-      : f.tipo === 'area' || f.tipo === 'bens' ? [['n:um|vários', 'singular|plural']] : [];
+      : ['area', 'bens', 'pats'].includes(f.tipo) ? [['n:um|vários', 'singular|plural']] : [];
     return b(`{{${f.id}}}`, r) + subs.map(([s, n]) => b(`{{${f.id}.${s}}}`, `${r} · ${n}`)).join('');
   }).join('');
-  const temBens = m.campos.some(f => f.tipo === 'pat' || f.tipo === 'bens');
+  const temBens = m.campos.some(f => ['pat', 'pats', 'bens'].includes(f.tipo));
   const lista = m.campos.find(f => f.tipo === 'area')?.id || 'campo';
   return grupo('Campos', campos) +
     grupo('Bens', temBens ? [['{{bens}}', 'o computador'], ['{{bens.de}}', 'do computador'], ['{{bens.o}}', 'o/a/os/as'], ['{{bens.nome}}', 'computador(es)'], ['{{bens.objeto}}', 'o computador de patrimônio nº'], ['{{bens.n:um|vários}}', 'singular|plural']].map(([t, r]) => b(t, r)).join('') : '') +
     grupo('Órgão', DOC_ORGAO_CHAVES.map(k => b(`{{orgao.${k}}}`, DOC_ORGAO[k])).join('')) +
     grupo('Peças', Object.entries(DOC_PECAS).map(([k, p]) => b(p.campo ? p.ins.replace('campo', lista) : p.ins, p.ins.match(/^\[([^\]:]+)/)[1], true)).join(''));
 }
+const docEdTipo = f => [DOC_TIPOS[f.tipo] || f.tipo, f.auto && 'automático', f.obrigatorio && 'obrigatório'].filter(Boolean).join(' · ');
 function docEdCampo(m, f, i) {
-  const a = `data-i="${i}"`, n = m.campos.length, rot = esc(f.rotulo || f.id);
+  const a = `data-i="${i}"`, n = m.campos.length, rot = esc(f.rotulo || f.id), aberto = ui.docEd?.ab?.has(f.id);
   const tipos = Object.entries(DOC_TIPOS).map(([k, r]) => `<option value="${k}" ${k === f.tipo ? 'selected' : ''}>${esc(r)}</option>`).join('');
   const autos = Object.entries(DOC_AUTO).filter(([, x]) => x.tipos.includes(f.tipo)).map(([k, x]) => `<option value="${k}" ${k === f.auto ? 'selected' : ''}>${esc(x.rotulo)}</option>`).join('');
   const uns = m.campos.filter(c => c.tipo === 'unidade').map(c => `<option value="${esc(c.id)}" ${c.id === f.depende ? 'selected' : ''}>${esc(c.rotulo || c.id)}</option>`).join('');
-  return `<li class="ed-campo"><div class="ed-campo-top"><code>{{${esc(f.id)}}}</code><span class="ed-tipo">${esc(DOC_TIPOS[f.tipo] || f.tipo)}</span>
-      <button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="-1" aria-label="Subir ${rot}" ${i ? '' : 'disabled'}>${icon('up')}</button><button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="1" aria-label="Descer ${rot}" ${i < n - 1 ? '' : 'disabled'}>${icon('down')}</button><button class="btn icon sm ghost danger" data-act="ed-campo-rm" ${a} aria-label="Remover ${rot}">${icon('trash')}</button></div>
+  return `<li class="ed-campo"><details data-id="${esc(f.id)}"${aberto ? ' open' : ''}><summary class="ed-campo-top"><span class="ed-seta" aria-hidden="true"></span><span class="ed-campo-nome"><b class="ed-rot">${rot}</b><span class="ed-tipo">${esc(docEdTipo(f))}</span></span><code>{{${esc(f.id)}}}</code>
+      <button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="-1" aria-label="Subir ${rot}" ${i ? '' : 'disabled'}>${icon('up')}</button><button class="btn icon sm ghost" data-act="ed-campo-mover" ${a} data-d="1" aria-label="Descer ${rot}" ${i < n - 1 ? '' : 'disabled'}>${icon('down')}</button><button class="btn icon sm ghost danger" data-act="ed-campo-rm" ${a} aria-label="Remover ${rot}">${icon('trash')}</button></summary>
     <div class="ed-grade">
       <label class="f">Rótulo<input class="input" data-in="ed-f" ${a} data-k="rotulo" value="${esc(f.rotulo)}" spellcheck="true" lang="pt-BR"></label>
       <label class="f">Tipo<select class="input" data-ch="ed-f" ${a} data-k="tipo">${tipos}</select></label>
@@ -3777,7 +4020,7 @@ function docEdCampo(m, f, i) {
       ${f.tipo === 'escolha' ? `<label class="f">Opções<span class="hint">Uma por linha</span><textarea class="input" rows="3" data-in="ed-f" ${a} data-k="opcoes">${esc((f.opcoes || []).join('\n'))}</textarea></label>` : ''}
       ${f.tipo === 'setor' ? `<label class="f">Depende da unidade<select class="input" data-ch="ed-f" ${a} data-k="depende"><option value="">—</option>${uns}</select></label>` : ''}
       <label class="check"><input type="checkbox" data-ch="ed-f" ${a} data-k="obrigatorio" ${f.obrigatorio ? 'checked' : ''}>Obrigatório</label>
-    </div></li>`;
+    </div></details></li>`;
 }
 const DOC_AJUDA = `<details class="ed-ajuda"><summary>Como escrever o texto</summary><ul>
   <li>Linha em branco separa parágrafos. Começar com <code>&gt; </code> dá recuo na primeira linha.</li>
@@ -3791,8 +4034,10 @@ function docEdForm(m) {
   return `<section class="card"><header><h2>Modelo</h2></header><div class="doc-campos">
       <label class="f"><span>Título<span class="req" aria-hidden="true"> *</span></span><input class="input" id="ed-titulo" data-in="ed" data-k="titulo" value="${esc(m.titulo)}" spellcheck="true" lang="pt-BR"></label>
       <label class="f">Descrição<span class="hint">Aparece no catálogo</span><textarea class="input" rows="2" data-in="ed" data-k="descricao" spellcheck="true" lang="pt-BR">${esc(m.descricao)}</textarea></label>
+      <label class="f">Grupo<span class="hint">Agrupa os modelos no catálogo; em branco vai para "Outros modelos"</span><input class="input" data-in="ed" data-k="grupo" list="ed-grupos" value="${esc(m.grupo || '')}" spellcheck="true" lang="pt-BR"></label>
+      <datalist id="ed-grupos">${[...new Set([...DOC_GRUPOS, ...docModelos().map(x => x.grupo).filter(Boolean)])].map(g => `<option value="${esc(g)}">`).join('')}</datalist>
     </div></section>
-    <section class="card"><header><h2>Campos</h2></header>
+    <section class="card"><header><h2>Campos</h2><span class="ed-campos-dica">Clique num campo para abrir</span></header>
       <ol class="ed-campos">${m.campos.map((f, i) => docEdCampo(m, f, i)).join('') || '<li class="empty" style="padding:16px">Nenhum campo ainda.</li>'}</ol>
       <div class="ed-novo"><label class="f">Novo campo<input class="input" id="ed-novo-rot" placeholder="Rótulo, ex.: Nome do servidor" data-enter="ed-campo-add" spellcheck="true" lang="pt-BR"></label>
         <label class="f">Tipo<select class="input" id="ed-novo-tipo">${Object.entries(DOC_TIPOS).map(([k, r]) => `<option value="${k}">${esc(r)}</option>`).join('')}</select></label>
@@ -3816,13 +4061,17 @@ function docEdAtualiza(barra = false) {
 }
 function docEdRedesenha() {
   const y = window.scrollY;
+  const novos = [...(ui.docEd.ab || [])].filter(id => !$(`.ed-campo details[data-id="${id}"]`));
+  ui.docEd.ab = new Set([...$$('.ed-campo details[open]').map(x => x.dataset.id), ...novos]);
   $('#ed-form').innerHTML = docEdForm(ui.docEd.m);
   docEdAtualiza();
   window.scrollTo(0, y);
 }
 function docEdCampoSet(t) {
   const m = ui.docEd.m, f = m.campos[+t.dataset.i], k = t.dataset.k; if (!f) return;
-  if (k === 'obrigatorio') { if (t.checked) f.obrigatorio = true; else delete f.obrigatorio; return docEdAtualiza(); }
+  const topo = t.closest('details');
+  const resumo = () => { if (!topo) return; $('.ed-rot', topo).textContent = f.rotulo || f.id; $('.ed-tipo', topo).textContent = docEdTipo(f); };
+  if (k === 'obrigatorio') { if (t.checked) f.obrigatorio = true; else delete f.obrigatorio; resumo(); return docEdAtualiza(); }
   if (k === 'opcoes') { f.opcoes = docLinhas(t.value); return docEdAtualiza(); }
   if (k === 'tipo') {
     f.tipo = t.value;
@@ -3834,6 +4083,7 @@ function docEdCampoSet(t) {
   }
   const v = k === 'rotulo' ? t.value : t.value.trim();
   if (v || k === 'rotulo') f[k] = v; else delete f[k];
+  resumo();
   docEdAtualiza(k === 'rotulo');
 }
 function docEdIns(t) {
@@ -3855,6 +4105,7 @@ function docEdCampoAdd() {
   if (tipo === 'escolha') f.opcoes = ['Sim', 'Não'];
   if (tipo === 'setor') { const u = m.campos.find(c => c.tipo === 'unidade'); if (u) f.depende = u.id; }
   m.campos.push(f);
+  (ui.docEd.ab ||= new Set()).add(f.id);
   docEdRedesenha(); docEdAtualiza(true);
   $('#ed-novo-tipo').value = tipo; $('#ed-novo-rot').focus();
   toast(`Campo adicionado: {{${f.id}}}.`);
@@ -3872,6 +4123,7 @@ function docEdCampoRm(i) {
 function docEdSalvar() {
   const e = ui.docEd, m = e.m;
   m.titulo = m.titulo.trim(); m.descricao = String(m.descricao || '').trim();
+  if (String(m.grupo || '').trim()) m.grupo = m.grupo.trim(); else delete m.grupo;
   m.campos.forEach(f => { f.rotulo = String(f.rotulo || '').trim(); });
   const pb = docProblemas(m);
   if (pb.length) { $('#ed-erros').innerHTML = docEdErros(m); $('#ed-erros').scrollIntoView({ block: 'center', behavior: 'smooth' }); return toast(`Corrija antes de salvar: ${pb[0]}${pb.length > 1 ? ` (e mais ${pb.length - 1})` : ''}`, true); }
@@ -3979,14 +4231,18 @@ const ACTIONS = {
   'txt-limpar': () => { const de = ui.carro; ui.txt = ''; ui.carro = 0; render(); $('#txt-in').focus(); retorno(de); },
   'txt-registrar': () => { clearTimeout(ui.txtT); txtRegistrar(); },
   print: t => printProto(t.dataset.id),
-  'doc-novo': t => { ui.doc = docNovo(t.dataset.id); docEtapa('form'); const el = $('#view .doc-campos .input'); el && el.focus({ preventScroll: true }); },
-  'doc-modelos': () => {
-    const sair = () => { ui.doc = null; render(); window.scrollTo(0, 0); };
-    if (!docSujo(ui.doc)) return sair();
-    confirmDialog('Voltar aos modelos?', 'Os valores preenchidos neste documento serão descartados.', 'Descartar', () => { closeLayer(); sair(); }, true);
-  },
-  'doc-revisar': () => { if (docValida(ui.doc)) docEtapa('rev'); },
-  'doc-voltar': () => docEtapa('form'),
+  'doc-abrir': t => docAbrir(t.dataset.id),
+  'doc-de': t => docAbrir(t.dataset.id, ui.docSrc?.q),
+  'doc-de-proto': t => { const pr = db.protocolos.find(p => p.id === t.dataset.id); if (pr) docEscolher(docFonteProto(pr), 'proto=' + encodeURIComponent(pr.id)); },
+  'doc-de-pat': () => { const p = patById(ui.editPat); if (p) docEscolher(docFontePat(p), 'b=' + encodeURIComponent(p.id)); },
+  'doc-descartar': () => confirmDialog('Descartar o documento em andamento?', 'Os valores preenchidos serão descartados.', 'Descartar', () => { ui.doc = null; docGuarda(); closeLayer(); render(); }, true),
+  'doc-outro': () => { ui.doc = docNovo(ui.doc.id); docGuarda(); render(); window.scrollTo(0, 0); $('#view .doc-campos .input')?.focus({ preventScroll: true }); },
+  'doc-ger': () => { ui.docGer = !ui.docGer; render(); },
+  'doc-amplia': t => { ui.docAmplo = !ui.docAmplo; t.setAttribute('aria-pressed', ui.docAmplo); $('#doc-ed').classList.toggle('amplo', ui.docAmplo); },
+  'doc-aba': t => docAba(t.dataset.aba),
+  'doc-num-ini': t => { const n = parseInt($('#doc-ult').value, 10); if (!(n >= 0)) { toast('Informe o último nº usado (0 se nenhum).', true); return $('#doc-ult').focus(); } docNumIni(t.dataset.serie, t.dataset.ano, n); },
+  'doc-num-zero': t => docNumIni(t.dataset.serie, t.dataset.ano, 0),
+  'doc-pats-rm': t => { const c = t.dataset.campo; docSet(ui.doc, c, docPatIds(ui.doc.v[c]).filter(x => x !== t.dataset.id).join(' ')); docSync(ui.doc); $('#doc-f-' + c).focus(); },
   'doc-pdf': docPdf,
   'doc-restaurar': t => {
     const id = t.dataset.id, m = docModelo(ui.doc), f = m.campos.find(c => c.id === id);
@@ -4006,7 +4262,7 @@ const ACTIONS = {
     const m = docModelos().find(x => x.id === t.dataset.id); if (!m) return;
     confirmDialog(`Remover "${m.titulo}"?`, m.origem === 'padrao' ? 'O modelo sai do catálogo. Para trazê-lo de volta como veio com o app, use "Restaurar padrões".' : 'O modelo sai do catálogo e não tem como desfazer. Documentos já gerados não são afetados.', 'Remover modelo', () => {
       db.modelosDoc = docModelos().filter(x => x.id !== m.id);
-      if (ui.doc?.id === m.id) ui.doc = null;
+      if (ui.doc?.id === m.id) { ui.doc = null; docGuarda(); }
       commit(); closeLayer(); render(); toast(`Modelo "${m.titulo}" removido.`);
     }, true);
   },
@@ -4033,7 +4289,12 @@ const ACTIONS = {
     docEdRedesenha(); docEdAtualiza(true);
     const b = $(`#ed-form [data-act="ed-campo-mover"][data-i="${j}"][data-d="${t.dataset.d}"]:not([disabled])`) || $(`#ed-form [data-act="ed-campo-mover"][data-i="${j}"]:not([disabled])`); b && b.focus();
   },
-  'doc-pat': t => { const c = t.dataset.campo; docSet(ui.doc, c, t.dataset.id); docSync(ui.doc); $('#doc-c-' + c).hidden = true; $('#doc-f-' + c).focus(); },
+  'doc-pat': t => {
+    const c = t.dataset.campo, lista = docModelo(ui.doc).campos.find(f => f.id === c)?.tipo === 'pats';
+    docSet(ui.doc, c, lista ? [...new Set([...docPatIds(ui.doc.v[c]), t.dataset.id])].join(' ') : t.dataset.id);
+    if (lista) $('#doc-f-' + c).value = '';
+    docSync(ui.doc); $('#doc-c-' + c).hidden = true; $('#doc-f-' + c).focus();
+  },
   'doc-pat-1': t => { const b = $(`#doc-c-${t.dataset.id}:not([hidden]) button`); b && b.click(); },
   undo: t => undoProto(t.dataset.id),
   'mov-toggle': (t, e) => { if (e.target.closest('button')) return; const n = t.dataset.num; ui.open[n] = !ui.open[n]; $('#mtable').innerHTML = movTable(); },
@@ -4164,6 +4425,7 @@ async function texturas() {
   db = await loadDb();
   if (!db) { db = buildInitialDb(); await persist(); }
   fotosGc();
+  docRecupera();
   if (navigator.storage && navigator.storage.persist) navigator.storage.persist().catch(() => {});
   route();
   (window.requestIdleCallback || setTimeout)(() => somPronto(), { timeout: 3000 });
