@@ -8,7 +8,7 @@ Carga inicial: patrimônios da planilha importados (ativos e descartados), catá
 ## Pendências
 - Documentos: no banco real, responder ao aviso de numeração na primeira C.I do ano (no papel a C.I já ia no 08).
 
-O repositório git fica na pasta pai `Projetos/`; faça commit só dos caminhos desta pasta.
+O app fica na raiz do repositório git (`Projetos/`); as outras pastas ali (`Controle TI/`, `Manin/`, `teste/` etc.) são outros projetos, não rastreados: faça commit só dos arquivos do app.
 
 ## Limitações conhecidas
 - Dados só no navegador daquele PC; limpar dados do navegador apaga tudo. A proteção é o backup `.json` (o painel avisa após 7 dias sem backup).
