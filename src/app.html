@@ -701,6 +701,12 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .pasta-doc { position: absolute; top: 12px; left: 7%; width: 86%; aspect-ratio: 210 / 297; container-type: inline-size; background: var(--doc-papel); box-shadow: 0 0 0 1px rgba(22, 14, 4, .12), 0 -2px 6px rgba(22, 14, 4, .25); }
 .pasta-palco > .pasta-doc { position: fixed; z-index: 2; transform-origin: 0 0; }
 .pasta-doc .doc-folha { box-shadow: none; }
+.doc-espera { --k: .3; position: fixed; right: 34px; bottom: 0; z-index: 15; width: calc(400px * var(--k)); aspect-ratio: 210 / 297; }
+.espera-folha { position: absolute; inset: 0; display: block; padding: 0; border: 0; overflow: hidden; background: var(--doc-papel); cursor: pointer; translate: 0 44%; rotate: -4deg; box-shadow: 0 -4px 18px rgba(0, 0, 0, .5), 0 0 0 1px rgba(22, 14, 4, .2); transition: translate .32s var(--out), rotate .32s var(--out), box-shadow .32s var(--out); }
+.espera-folha:hover, .espera-folha:focus-visible { translate: 0 16%; rotate: -2deg; box-shadow: 0 -10px 30px rgba(0, 0, 0, .6), 0 0 0 1px rgba(22, 14, 4, .2); }
+.espera-folha:focus-visible { outline: 2px solid var(--accent); outline-offset: 3px; }
+.espera-escala { position: absolute; top: 0; left: 0; display: block; width: 400px; container-type: inline-size; transform-origin: 0 0; scale: var(--k); pointer-events: none; }
+.espera-escala .doc-folha { box-shadow: none; }
 .doc-grupo + .doc-grupo { margin-top: 30px; }
 .doc-grupo > .sect-title { margin-bottom: 14px; }
 .doc-dica { display: flex; align-items: center; gap: 8px; margin: -6px 0 22px; color: var(--text-2); font-size: 13px; }
@@ -961,6 +967,7 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   .g-kpi, .quick { grid-template-columns: minmax(0, 1fr); }
   .ed-grade { grid-template-columns: minmax(0, 1fr); }
   .ed-grupo > span { flex-basis: 100%; }
+  .doc-espera { --k: .22; right: 18px; }
   .row2 { grid-template-columns: 1fr; }
   .alavanca, .solta, .placa { display: none; }
   .frente { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
@@ -2785,7 +2792,10 @@ const ISQUEIRO = `<svg viewBox="0 0 116 144"><defs><linearGradient id="isq-m" x1
 async function queimarFolha(maq) {
   ui.carro = 0; maq.inert = true;
   const folha = $('.folha', maq), fr = folha.getBoundingClientRect(), fundo = Math.min($('.carro', maq).getBoundingClientRect().top, innerHeight);
-  const I = { x: fr.left, y: Math.max(Math.max(fr.top, 0) + 30, Math.min(fundo - 46, innerHeight - 124)) };
+  await queimar(folha, { x: fr.left, y: Math.max(Math.max(fr.top, 0) + 30, Math.min(fundo - 46, innerHeight - 124)) }, fundo);
+}
+// o isqueiro vem por baixo, acende na borda esquerda (I) e a folha queima até a borda de baixo visível (fundo)
+async function queimar(folha, I, fundo) {
   const isq = await acender(I);
   isq.animate([{ translate: '0 0' }, { translate: '16px -2px' }], { duration: 220, easing: OUT, fill: 'forwards' });
   await espera(200);
@@ -3958,7 +3968,8 @@ function docCatalogo() {
   lista.forEach(m => (grupos[String(m.grupo || '').trim() || 'Outros modelos'] ||= []).push(m));
   const pos = g => { const i = DOC_GRUPOS.indexOf(g); return i >= 0 ? i : g === 'Outros modelos' ? 999 : 100; };
   return head +
-    (em && !ger ? `<div class="banner info doc-andamento">${icon('doc')}<div><b>Documento em andamento:</b> ${esc(em.titulo)}</div><div class="actions"><button class="btn sm" data-act="doc-descartar">Descartar</button><button class="btn sm primary" data-act="doc-abrir" data-id="${esc(em.id)}">Continuar</button></div></div>` : '') +
+    (em && !ger ? `<div class="banner info doc-andamento">${icon('doc')}<div><b>Documento em andamento:</b> ${esc(em.titulo)}</div><div class="actions"><button class="btn sm" data-act="doc-descartar">Descartar</button><button class="btn sm primary" data-act="doc-continuar">Continuar</button></div></div>
+      <div class="doc-espera"><button class="espera-folha" data-act="doc-continuar" aria-label="Continuar ${esc(em.titulo)}" title="Continuar ${esc(em.titulo)}"><span class="espera-escala" aria-hidden="true">${docFolha(ui.doc, em)}</span></button></div>` : '') +
     (ger ? '' : `<p class="doc-dica">${icon('history')}<span>Para já vir preenchido, use <b>Gerar documento</b> num protocolo (Movimentações ou ao registrar) ou na ficha do patrimônio.</span></p>`) +
     Object.keys(grupos).sort((a, b) => pos(a) - pos(b)).map(g => `<section class="doc-grupo"><h2 class="sect-title">${esc(g)}</h2><div class="doc-cat">${grupos[g].map(m => docCard(m, ger)).join('')}</div></section>`).join('');
 }
@@ -3985,7 +3996,7 @@ const docFeitoHtml = d => d.feito ? `<div class="banner info doc-feito" role="st
 function docForm(d, m) {
   const { main, det } = docOrdem(m), abre = det.some(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
   const aba = ui.docAba || 'campos';
-  return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
+  return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos" data-act="doc-modelos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
     `<div id="doc-feito">${docFeitoHtml(d)}</div>
     <div class="seg doc-abas" role="group" aria-label="Mostrar">${[['campos', 'Campos', 'form'], ['folha', 'Folha', 'doc']].map(([k, l, ic]) => `<button data-act="doc-aba" data-aba="${k}" aria-pressed="${aba === k}">${icon(ic)}${l}</button>`).join('')}</div>
     <div class="doc-ed doc-fill${ui.docAmplo ? ' amplo' : ''}${aba === 'folha' ? ' ver-folha' : ''}" id="doc-ed"><section class="card doc-form papel bloco"><header><h2>Campos</h2></header><div id="doc-num-aviso">${docNumAvisoHtml(d, m)}</div>
@@ -4023,7 +4034,15 @@ const quadro = () => new Promise(r => requestAnimationFrame(r));
 async function pastaAbrir(bt) {
   const id = bt.dataset.id, pasta = bt.closest('.pasta');
   if (ui.pastaVoo) return;
-  if (parado() || (ui.doc && docSujo(ui.doc) && ui.doc.id !== id)) return docAbrir(id);
+  const sujo = ui.doc && docSujo(ui.doc), esp = $('.doc-espera');
+  if (sujo && esp && !parado()) {
+    if (ui.doc.id === id) return esperaVolta();
+    return confirmDialog('Descartar o documento em andamento?', `O preenchimento de "${esc(docModelo(ui.doc).titulo)}" será descartado.`, 'Descartar e abrir', async () => {
+      closeLayer(); await esperaQueima();
+      if ($('#view').contains(bt)) pastaAbrir(bt);
+    }, true);
+  }
+  if (parado() || (sujo && ui.doc.id !== id)) return docAbrir(id);
   ui.pastaVoo = true;
   const view = $('#view'), palco = document.createElement('div'), voo = pasta.cloneNode(true);
   const r = pasta.getBoundingClientRect(), W = pasta.offsetWidth, H = pasta.offsetHeight, tilt = getComputedStyle(pasta).getPropertyValue('--tilt').trim() || '0deg';
@@ -4035,10 +4054,7 @@ async function pastaAbrir(bt) {
   pasta.style.visibility = 'hidden';
   let alvo = null;
   try {
-    // as outras saem para a direita (a mais à direita primeiro) e o resto da página esmaece
-    $$('.pasta', view).filter(p => p !== pasta).sort((a, b) => b.getBoundingClientRect().left - a.getBoundingClientRect().left)
-      .forEach((p, i) => p.animate([{ translate: '0 0', opacity: 1 }, { translate: '170px -8px', rotate: '5deg', opacity: 0 }], { duration: 380, delay: Math.min(i * 26, 240), easing: SOLTA, fill: 'forwards' }));
-    $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 1 }, { opacity: 0, translate: '24px 0' }], { duration: 300, easing: SOLTA, fill: 'forwards' }));
+    catalogoSai(view, pasta);
     // a escolhida é pega: cede um pouco (antecipação), sobe num arco e chega perto
     const main = view.getBoundingClientRect(), vh = innerHeight, docH = W * .86 * 297 / 210;
     const k = Math.max(.9, Math.min(1.25, (vh - 60) / (H + docH * .78), main.width * .8 / W));
@@ -4059,9 +4075,7 @@ async function pastaAbrir(bt) {
     folha.className = 'pasta-doc';
     folha.innerHTML = alvo ? alvo.outerHTML : '';
     if (visivel) alvo.style.visibility = 'hidden';
-    const pecas = [$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean), chega = 1060;
-    pecas.forEach((e, i) => e.animate(e.classList.contains('doc-form') ? [{ opacity: 0, translate: '-30px 16px', rotate: '-1.4deg' }, { opacity: 1, translate: '0 0', rotate: '0deg' }] : [{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }],
-      { duration: 480, delay: chega + i * 70, easing: OUT, fill: 'backwards' }));
+    formEntra(view, 1060);
     view.style.opacity = '';
     // a folha sai com cuidado (a frente da pasta cede) e fica presa só pelo pé
     $('.pasta-bolso', voo).append(folha);
@@ -4096,6 +4110,162 @@ async function pastaAbrir(bt) {
     pasta.style.visibility = ''; view.style.opacity = '';
     palco.remove(); ui.pastaVoo = false;
   }
+}
+// as outras pastas saem para a direita (a mais à direita primeiro) e o resto do catálogo esmaece
+function catalogoSai(view, fica) {
+  $$('.pasta', view).filter(p => p !== fica).sort((a, b) => b.getBoundingClientRect().left - a.getBoundingClientRect().left)
+    .forEach((p, i) => p.animate([{ translate: '0 0', opacity: 1 }, { translate: '170px -8px', rotate: '5deg', opacity: 0 }], { duration: 380, delay: Math.min(i * 26, 240), easing: SOLTA, fill: 'forwards' }));
+  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 1 }, { opacity: 0, translate: '24px 0' }], { duration: 300, easing: SOLTA, fill: 'forwards' }));
+}
+// o inverso: as pastas voltam da direita, na ordem de leitura
+function catalogoEntra(view, delay) {
+  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 0, translate: '24px 0' }, { opacity: 1, translate: '0 0' }], { duration: 360, delay, easing: OUT, fill: 'backwards' }));
+  $$('.pasta', view).forEach((p, i) => p.animate([{ translate: '150px -8px', rotate: '5deg', opacity: 0 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 460, delay: delay + 60 + Math.min(i * 30, 270), easing: OUT, fill: 'backwards' }));
+}
+function formEntra(view, chega) {
+  [$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean).forEach((e, i) => e.animate(e.classList.contains('doc-form') ? [{ opacity: 0, translate: '-30px 16px', rotate: '-1.4deg' }, { opacity: 1, translate: '0 0', rotate: '0deg' }] : [{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }],
+    { duration: 480, delay: chega + i * 70, easing: OUT, fill: 'backwards' }));
+}
+
+/* ---------- papel em espera: voltar aos modelos guarda a folha no canto do catálogo; descartar queima ---------- */
+const ESPERA_SOMBRA = '0 -4px 18px rgba(0, 0, 0, .5)', MAO_SOMBRA = '0 30px 60px rgba(0, 0, 0, .55)';
+// centro, giro e largura do papel em espera como aparece agora (o giro é no centro, então vale para qualquer tamanho de folha)
+function esperaMede(f) {
+  const r = f.getBoundingClientRect();
+  return { x: r.left + r.width / 2, y: r.top + r.height / 2, a: parseFloat(getComputedStyle(f).rotate) || 0, w: f.offsetWidth };
+}
+// transform (origem no centro) que põe uma folha no retângulo P sobre o papel em espera g; k = quanto do caminho (0 = em P), ergue = arco
+function esperaPose(P, g, k = 1, ergue = 0) {
+  const s = 1 + (g.w / P.width - 1) * k;
+  return `translate(${(g.x - P.left - P.width / 2) * k}px, ${(g.y - P.top - P.height / 2) * k - ergue}px) rotate(${g.a * k + (k < 1 ? 3 * Math.sin(Math.PI * k) : 0)}deg) scale(${s})`;
+}
+function folhaVoo(html, P) {
+  const v = document.createElement('div');
+  v.className = 'pasta-doc'; v.innerHTML = html;
+  Object.assign(v.style, { left: `${P.left}px`, top: `${P.top}px`, width: `${P.width}px`, transformOrigin: '50% 50%' });
+  return v;
+}
+function palcoNovo() {
+  const p = document.createElement('div');
+  p.className = 'pasta-palco'; p.setAttribute('aria-hidden', 'true');
+  document.body.append(p); return p;
+}
+// "Modelos" com preenchimento em andamento: o bloco sai, a folha é erguida, encolhe num arco e fica no canto do catálogo
+async function esperaGuardar(e) {
+  const view = $('#view'), fonte = $('#doc-prev .doc-folha', view);
+  if (!ui.doc || !docSujo(ui.doc) || parado() || ui.pastaVoo) return;
+  e.preventDefault();
+  ui.pastaVoo = true;
+  const palco = palcoNovo(), P = fonte?.getClientRects().length ? fonte.getBoundingClientRect() : null, ergue = 'translateY(-10px) scale(1.012)';
+  let f = null;
+  try {
+    somPronto().then(() => som(...SOM.tirar));
+    const voo = P && folhaVoo(fonte.outerHTML, P);
+    if (voo) {
+      palco.append(voo); fonte.style.visibility = 'hidden';
+      voo.animate([{ transform: 'none' }, { transform: ergue, boxShadow: MAO_SOMBRA }], { duration: 300, easing: OUT, fill: 'forwards' });
+    }
+    await Promise.all([$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean).map((el, i) =>
+      el.animate([{ opacity: 1 }, { opacity: 0, translate: '-28px 4px' }], { duration: 260, delay: i * 30, easing: SOLTA, fill: 'forwards' }).finished));
+    view.style.opacity = 0;
+    docIr('#/documentos');
+    let esp = null;
+    for (let i = 0; i < 40 && !(esp = $('.doc-espera', view)); i++) await quadro();
+    view.style.opacity = '';
+    if (!esp) return;
+    f = $('.espera-folha', esp);
+    catalogoEntra(view, voo ? 120 : 0);
+    if (!voo) {
+      await f.animate([{ translate: '0 150%', rotate: '8deg', offset: 0 }], { duration: 560, delay: 200, easing: 'cubic-bezier(.2, .8, .3, 1)' }).finished;
+      return som(...SOM.pousa);
+    }
+    f.style.visibility = 'hidden';
+    const g = esperaMede(f);
+    setTimeout(() => som(...SOM.pousa), 660);
+    await voo.animate([
+      { transform: ergue, boxShadow: MAO_SOMBRA },
+      { transform: esperaPose(P, g, .45, 46), offset: .5 },
+      { transform: esperaPose(P, g), boxShadow: ESPERA_SOMBRA },
+    ], { duration: 780, easing: 'cubic-bezier(.3, .1, .2, 1)', fill: 'forwards' }).finished;
+    f.style.visibility = '';
+    f.animate([{ scale: 1.04 }, { scale: 1 }], { duration: 240, easing: OUT });
+  } catch (err) {
+    console.error(err); render();
+  } finally {
+    if (f) f.style.visibility = '';
+    view.style.opacity = ''; palco.remove(); ui.pastaVoo = false;
+  }
+}
+// "Continuar": o catálogo sai, o papel é puxado do canto e volta crescendo para o lugar da prévia
+async function esperaVolta() {
+  const view = $('#view'), esp = $('.doc-espera', view), d = ui.doc;
+  if (!d || ui.pastaVoo) return;
+  if (!esp || parado()) return docAbrir(d.id);
+  ui.pastaVoo = true; esp.inert = true;
+  const f = $('.espera-folha', esp), palco = palcoNovo();
+  let alvo = null;
+  try {
+    somPronto().then(() => som(...SOM.tirar));
+    catalogoSai(view);
+    // antecipação: afunda um pouco no canto antes de ser puxado e endireitar
+    await f.animate([{ translate: '0 52%', offset: .3 }, { translate: '0 -4%', rotate: '-1deg' }], { duration: 440, easing: CUIDADO, fill: 'forwards' }).finished;
+    const g = esperaMede(f), Q = { left: g.x - 200, top: g.y - 200 * 297 / 210, width: 400, height: 400 * 297 / 210 };
+    const voo = folhaVoo($('.doc-folha', f).outerHTML, Q);
+    voo.style.transform = esperaPose(Q, g); voo.style.boxShadow = ESPERA_SOMBRA;
+    palco.append(voo);
+    view.style.opacity = 0;
+    docAbrir(d.id);
+    for (let i = 0; i < 40 && !$('#doc-prev .doc-folha', view); i++) await quadro();
+    alvo = $('#doc-prev .doc-folha', view);
+    formEntra(view, 420);
+    view.style.opacity = '';
+    if (!alvo?.getClientRects().length) {
+      await voo.animate([{ opacity: 1 }, { opacity: 0, translate: '0 -60px' }], { duration: 420, easing: SOLTA, fill: 'forwards' }).finished;
+      return;
+    }
+    const P = alvo.getBoundingClientRect();
+    alvo.style.visibility = 'hidden';
+    Object.assign(voo.style, { left: `${P.left}px`, top: `${P.top}px`, width: `${P.width}px`, transform: esperaPose(P, g) });
+    setTimeout(() => som(...SOM.pousa), 680);
+    await voo.animate([
+      { transform: esperaPose(P, g), boxShadow: ESPERA_SOMBRA },
+      { transform: esperaPose(P, g, .4, 40), boxShadow: MAO_SOMBRA, offset: .55 },
+      { transform: 'translate(0, -5px) rotate(-.4deg)', offset: .86 },
+      { transform: 'none', boxShadow: '0 22px 56px rgba(0, 0, 0, .6), 0 3px 10px rgba(0, 0, 0, .45)' },
+    ], { duration: 840, easing: 'cubic-bezier(.25, .7, .3, 1)', fill: 'forwards' }).finished;
+  } catch (err) {
+    console.error(err); render();
+  } finally {
+    if (alvo) alvo.style.visibility = '';
+    view.style.opacity = ''; palco.remove(); ui.pastaVoo = false;
+  }
+}
+// descarta o preenchimento (já confirmado) e queima o papel em espera com o isqueiro do Lançar
+async function esperaQueima() {
+  ui.doc = null; docGuarda();
+  const esp = $('.doc-espera'), banner = $('.doc-andamento');
+  if (!esp || parado()) { esp?.remove(); banner?.remove(); return; }
+  ui.pastaVoo = true; esp.inert = true;
+  if (banner) banner.inert = true;
+  try {
+    somPronto();
+    const f = $('.espera-folha', esp);
+    await f.animate([{ translate: '0 6%', rotate: '-1.5deg' }], { duration: 420, easing: OUT, fill: 'forwards' }).finished;
+    const fr = f.getBoundingClientRect();
+    await queimar(f, { x: fr.left + 3, y: Math.min(fr.top + fr.height * .4, innerHeight - 124) }, innerHeight);
+    esp.remove();
+    if (banner) await recolhe(banner);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    esp.remove(); banner?.remove(); ui.pastaVoo = false;
+  }
+}
+function recolhe(el) {
+  const cs = getComputedStyle(el);
+  el.style.overflow = 'hidden';
+  return el.animate([{ height: `${el.offsetHeight}px`, marginBottom: cs.marginBottom, paddingTop: cs.paddingTop, paddingBottom: cs.paddingBottom, opacity: 1 },
+    { height: '0px', marginBottom: '0px', paddingTop: '0px', paddingBottom: '0px', opacity: 0 }], { duration: 280, easing: CUIDADO, fill: 'forwards' }).finished;
 }
 
 /* ---------- bloco de notas: o lápis passa a limpo o que foi escolhido ou escrito ---------- */
@@ -4533,7 +4703,9 @@ const ACTIONS = {
   'doc-de': t => docAbrir(t.dataset.id, ui.docSrc?.q),
   'doc-de-proto': t => { const pr = db.protocolos.find(p => p.id === t.dataset.id); if (pr) docEscolher(docFonteProto(pr), 'proto=' + encodeURIComponent(pr.id)); },
   'doc-de-pat': () => { const p = patById(ui.editPat); if (p) docEscolher(docFontePat(p), 'b=' + encodeURIComponent(p.id)); },
-  'doc-descartar': () => confirmDialog('Descartar o documento em andamento?', 'Os valores preenchidos serão descartados.', 'Descartar', () => { ui.doc = null; docGuarda(); closeLayer(); render(); }, true),
+  'doc-descartar': () => !ui.pastaVoo && confirmDialog('Descartar o documento em andamento?', 'Os valores preenchidos serão descartados.', 'Descartar', async () => { closeLayer(); await esperaQueima(); if (ui.route === 'documentos') render(); }, true),
+  'doc-modelos': (t, e) => esperaGuardar(e),
+  'doc-continuar': () => esperaVolta(),
   'doc-outro': () => { ui.doc = docNovo(ui.doc.id); docGuarda(); render(); window.scrollTo(0, 0); $('#view .doc-campos .input')?.focus({ preventScroll: true }); },
   'doc-ger': () => { ui.docGer = !ui.docGer; render(); },
   'doc-amplia': t => { ui.docAmplo = !ui.docAmplo; t.setAttribute('aria-pressed', ui.docAmplo); $('#doc-ed').classList.toggle('amplo', ui.docAmplo); },
