@@ -822,6 +822,7 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
 .lp-sulco { fill: none; stroke: color-mix(in srgb, var(--latao) 55%, var(--breu)); stroke-width: .8; }
 .lp-borracha { fill: color-mix(in srgb, var(--danger-ink) 65%, var(--papel)); }
 .doc-prev { container-type: inline-size; min-width: 0; }
+.doc-ler { max-width: 820px; margin: 0 auto; }
 .doc-folha { font-size: min(16px, calc(100cqw * 16 / 794)); width: 49.625em; max-width: 100%; aspect-ratio: 210 / 297; display: flex; flex-direction: column; margin: 0 auto; padding: 2.835em 5.906em 2.362em; background: var(--doc-papel); color: var(--doc-tinta); font-family: var(--doc-fonte); line-height: 1.5; box-shadow: var(--shadow-2); overflow-wrap: anywhere; }
 .doc-folha .doc-timbre { display: flex; align-items: center; gap: 1em; margin-bottom: 1.8em; }
 .doc-folha .doc-timbre div { display: flex; flex: 1; flex-direction: column; text-align: center; line-height: 1.25; }
@@ -1015,11 +1016,13 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   html.doc-imprimindo { color-scheme: light; }
   .doc-imprimindo body { page: doc; background: var(--doc-papel); }
   .doc-imprimindo body::before, .doc-imprimindo body::after { display: none; }
+  .doc-imprimindo #print { padding: 0 25mm; }
   #print .doc-pags { margin: 0; }
   #print .doc-pags > * > tr > td { padding: 0; border: 0; }
-  #print .doc-pe { height: 20mm; }
+  #print .doc-topo { height: 12mm; }
+  #print .doc-pe { height: 30mm; }
   #print .doc-folha { display: block; width: auto; max-width: none; aspect-ratio: auto; margin: 0; padding: 0; font-size: 12pt; box-shadow: none; }
-  #print .doc-folha .doc-rodape { position: fixed; left: 0; right: 0; bottom: 0; margin: 0; background: var(--doc-papel); }
+  #print .doc-folha .doc-rodape { position: fixed; left: 25mm; right: 25mm; bottom: 10mm; margin: 0; background: var(--doc-papel); }
   #print .doc-folha h1, #print .doc-folha h2 { margin: 1.6em 0 1.4em; font-size: 1em; }
   #print .doc-folha table { margin: .8em 0; }
   #print .doc-folha th, #print .doc-folha td { padding: .3em .5em; border-color: var(--doc-linha); font-size: 1em; }
@@ -1028,7 +1031,8 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   #print .doc-folha .doc-branco { background: none; }
   #print .doc-folha .doc-quebra { margin: 0; border: 0; break-after: page; }
 }
-@page doc { size: A4; margin: 12mm 25mm 10mm; }
+/* margem 0 some com o cabecalho e o rodape do navegador (data, titulo, endereco, pagina); as margens reais saem do #print */
+@page doc { size: A4; margin: 0; }
 </style>
 </head>
 <body>
@@ -1557,7 +1561,7 @@ function emptyDb() {
 
 /* ---------- domínio ---------- */
 let db;
-const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, itSel: [], mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, draft: null, open: {}, lancModo: 'form', txt: '', doc: null };
+const ui = { route: 'painel', query: new URLSearchParams(), pf: {}, itf: { q: '', st: '' }, itSel: [], mf: { q: '', tipo: '', un: '', de: '', ate: '' }, df: { q: '' }, bf: { q: '', m: '' }, draft: null, open: {}, lancModo: 'form', txt: '', doc: null };
 
 const patIdent = p => p.num || (p.locadora ? `Loc. ${p.locadora}` : 'S.P.');
 const patDesc = p => [p.cat, p.marca, p.modelo].filter(Boolean).join(' · ');
@@ -3445,6 +3449,7 @@ const docCopia = x => JSON.parse(JSON.stringify(x));
 function docModelosGarantir(base) {
   if (base && !Array.isArray(base.modelosDoc)) base.modelosDoc = docCopia(DOC_PADRAO);
   base?.modelosDoc.forEach(docMigra);
+  if (base && !Array.isArray(base.docsFeitos)) base.docsFeitos = [];
   return base;
 }
 // Modelos antigos: os campos fixos bem1..bem3 viram um campo "pats" (se o texto não os usa um a um); padrão sem grupo recebe o do app.
@@ -3962,7 +3967,7 @@ function docCatalogo() {
   const ger = ui.docGer, lista = docModelos(), em = ui.doc && docSujo(ui.doc) && docModelo(ui.doc);
   const head = pageHead(ger ? 'Gerenciar modelos' : 'Documentos', ger ? 'Crie, edite, duplique ou remova modelos. Cabeçalho e rodapé são fixos.' : 'Escolha um modelo, preencha e gere o PDF.',
     ger ? `<button class="btn" data-act="doc-padroes">${icon('undo')}Restaurar padrões</button><button class="btn" data-act="doc-ed-novo">${icon('plus')}Novo modelo</button><button class="btn primary" data-act="doc-ger">${icon('check')}Concluir</button>`
-      : `<button class="btn" data-act="doc-ger">${icon('settings')}Gerenciar modelos</button>`);
+      : `<a class="btn" href="#/documentos?lib">${icon('history')}Guardados${db.docsFeitos.length ? ` (${db.docsFeitos.length})` : ''}</a><button class="btn" data-act="doc-ger">${icon('settings')}Gerenciar modelos</button>`);
   if (!lista.length) return head + `<div class="card empty"><b>Nenhum modelo</b>${ger ? 'Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".' : 'Use "Gerenciar modelos" para criar um ou restaurar os padrão.'}</div>`;
   const grupos = {};
   lista.forEach(m => (grupos[String(m.grupo || '').trim() || 'Outros modelos'] ||= []).push(m));
@@ -3976,6 +3981,8 @@ function docCatalogo() {
 function viewDocumentos() {
   if (ui.docEd) return docEditor(ui.docEd);
   const q = docHash(), id = q.get('m');
+  if (q.has('lib')) return docBiblioteca();
+  if (q.has('ver')) return docRegVer(q.get('ver'));
   if (ui.doc && !docModelo(ui.doc)) { ui.doc = null; docGuarda(); toast('O modelo que estava em uso foi removido.', true); }
   const m = id && docModelos().find(x => x.id === id);
   if (id && !m) { history.replaceState(null, '', '#/documentos'); toast('Modelo não encontrado.', true); }
@@ -3985,7 +3992,9 @@ function viewDocumentos() {
   // Voltar/avançar do navegador para outro modelo não descarta um preenchimento em andamento: mostra o catálogo com "Continuar".
   if (!src && ui.doc && ui.doc.id !== id && docSujo(ui.doc)) { history.replaceState(null, '', '#/documentos'); return docCatalogo(); }
   if (src || ui.doc?.id !== id) {
-    ui.doc = docNovo(id, src); docGuarda();
+    ui.doc = docNovo(id, src);
+    if (pr) ui.doc.de = { proto: pr.id }; else if (pat) ui.doc.de = { b: pat.id };
+    docGuarda();
     setTimeout(() => { const el = $('#view .doc-campos .input'); el && el.focus({ preventScroll: true }); });
   }
   if (q.has('proto') || q.has('b')) history.replaceState(null, '', `#/documentos?m=${encodeURIComponent(id)}`);
@@ -4009,23 +4018,110 @@ function docAba(aba) {
   $('#doc-ed')?.classList.toggle('ver-folha', aba === 'folha');
   $$('.doc-abas button').forEach(b => b.setAttribute('aria-pressed', b.dataset.aba === aba));
 }
-async function docPdf() {
-  const d = ui.doc, m = docModelo(d);
-  if (!docValida(d)) return;
-  $('#print').innerHTML = `<table class="doc-pags"><tbody><tr><td>${docFolha(d, m)}</td></tr></tbody><tfoot><tr><td class="doc-pe"></td></tr></tfoot></table>`;
+async function docImprime(folha, titulo) {
+  $('#print').innerHTML = `<table class="doc-pags"><thead><tr><td class="doc-topo"></td></tr></thead><tbody><tr><td>${folha}</td></tr></tbody><tfoot><tr><td class="doc-pe"></td></tr></tfoot></table>`;
   const img = $('#print .doc-timbre img');
   if (img) await Promise.race([img.decode().catch(() => {}), new Promise(r => setTimeout(r, 800))]);
   const t = document.title;
-  document.title = `${m.titulo} ${today()}`;
+  document.title = titulo;
   document.documentElement.classList.add('doc-imprimindo');
   window.print();
   document.documentElement.classList.remove('doc-imprimindo');
   document.title = t;
+}
+async function docPdf() {
+  const d = ui.doc, m = docModelo(d);
+  if (!docValida(d)) return;
+  await docImprime(docFolha(d, m), `${m.titulo} ${today()}`);
   const nums = docNumeros(d, m), feito = () => { $('#doc-feito').innerHTML = docFeitoHtml(d); docSync(d); };
-  if (d.feito || !nums.length) { d.feito ||= m.titulo; return feito(); }
-  ui.onConfirm = () => { docNumGrava(d, m); d.feito = nums.join(' e '); closeLayer(); feito(); };
-  modal('O PDF foi salvo?', `<p style="margin:0">Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado e a numeração avança. Se cancelou a impressão, o número continua livre para o próximo documento.</p>`,
+  // Já feito: o registro guardado acompanha a correção (mesmo nº, sem duplicar).
+  if (d.feito) { docRegistra(d, m); return feito(); }
+  ui.onConfirm = () => { if (nums.length) docNumGrava(d, m); d.feito = nums.join(' e ') || m.titulo; docRegistra(d, m); closeLayer(); feito(); };
+  modal('O PDF foi salvo?', `<p style="margin:0">${nums.length ? `Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado, a numeração avança e o documento vai para os guardados. Se cancelou a impressão, o número continua livre para o próximo documento.`
+    : 'Se você salvou ou imprimiu, o documento vai para os guardados. Se cancelou a impressão, nada é guardado.'}</p>`,
     `<button class="btn" data-act="close-layer">Não, cancelei</button><button class="btn primary" data-act="confirm-ok" autofocus>${icon('check')}Sim, foi salvo</button>`);
+}
+
+/* ---------- documentos guardados (db.docsFeitos: valores + cópia do modelo e dos bens citados) ---------- */
+function docRegistra(d, m) {
+  const lista = db.docsFeitos, velho = d.reg && lista.find(r => r.id === d.reg);
+  const r = { id: velho ? velho.id : uid(), criado: velho ? velho.criado : new Date().toISOString(), modelo: m.id, num: docNumeros(d, m).join(' e '),
+    v: docCopia(d.v), manual: docCopia(d.manual), m: docCopia({ id: m.id, titulo: m.titulo, campos: m.campos, corpo: m.corpo }),
+    pats: docPats(db, d.v, m).map(({ fotos, ...p }) => docCopia(p)), ...(d.de ? { de: d.de } : {}) };
+  if (velho) lista[lista.indexOf(velho)] = r; else lista.push(r);
+  d.reg = r.id; commit();
+}
+const docReg = id => db.docsFeitos.find(r => r.id === id);
+// Os bens citados saem como estavam ao gerar (a cópia tem prioridade sobre o cadastro atual).
+function docComPats(r, fn) {
+  const real = db; db = { ...real, pats: [...(r.pats || []), ...real.pats] };
+  try { return fn(); } finally { db = real; }
+}
+const docFolhaReg = r => docComPats(r, () => docFolha({ id: r.modelo, v: r.v, manual: {} }, r.m));
+const docRegNome = r => r.num || r.m.titulo;
+function docRegResumo(r) {
+  const cs = r.m.campos, val = f => String(r.v[f.id] ?? '').trim();
+  const local = cs.filter(f => f.tipo === 'unidade' || f.tipo === 'setor').map(val).filter(Boolean).join(' · ');
+  return [local, val(cs.find(f => f.id === 'nome') || {})].filter(Boolean).join(' · ');
+}
+function docRegBusca(r) {
+  const vals = r.m.campos.filter(f => !['pat', 'pats'].includes(f.tipo)).map(f => r.v[f.id]);
+  return norm([r.num, r.m.titulo, fmtD(r.criado.slice(0, 10)), r.criado.slice(0, 10), ...vals, ...(r.pats || []).map(p => `${p.num} ${p.locadora || ''} ${p.cat} ${p.marca} ${p.modelo}`)].join(' '));
+}
+function docBiblioteca() {
+  const f = ui.bf, nomes = new Map(db.docsFeitos.map(r => [r.modelo, r.m.titulo]));
+  return pageHead('Documentos guardados', 'Documentos confirmados como salvos. Abra para ver, reimprimir ou usar como ponto de partida.', `<a class="btn" href="#/documentos">${icon('undo')}Modelos</a>`) +
+    `<section class="card"><div class="toolbar">
+      <div class="search">${icon('search')}<label class="sr" for="bq">Buscar</label><input id="bq" class="input" type="search" placeholder="Nº, modelo, setor, pessoa, data" value="${esc(f.q)}" data-in="bf" data-k="q"></div>
+      <label class="sr" for="bm">Modelo</label><select id="bm" class="input" data-ch="bf" data-k="m"><option value="">Todos os modelos</option>${[...nomes].map(([id, t]) => `<option value="${esc(id)}" ${f.m === id ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
+      <span class="count" id="bcount"></span>
+    </div><div class="tbl-wrap" id="btable">${docBibTabela()}</div></section>`;
+}
+function docBibTabela() {
+  const f = ui.bf, q = norm(f.q), todos = db.docsFeitos;
+  const rows = todos.filter(r => (!f.m || r.modelo === f.m) && (!q || hit(docRegBusca(r), q))).sort((a, b) => b.criado.localeCompare(a.criado));
+  setTimeout(() => { const c = $('#bcount'); if (c) c.textContent = plural(rows.length, 'documento'); });
+  if (!rows.length) return `<div class="empty"><b>${todos.length ? 'Nenhum documento encontrado' : 'Nenhum documento guardado'}</b>${todos.length ? 'Ajuste a busca ou o filtro.' : 'Ao gerar o PDF e confirmar que foi salvo, o documento aparece aqui.'}</div>`;
+  return `<table class="t"><thead><tr><th>Documento</th><th>Modelo</th><th>Data</th><th>Destino / pessoa</th><th class="n">Ações</th></tr></thead><tbody>
+    ${rows.map(r => { const id = esc(r.id), n = esc(docRegNome(r)); return `<tr class="click" data-act="doc-reg-ver" data-id="${id}"><td><b>${n}</b></td><td>${esc(r.m.titulo)}</td><td>${fmtD(r.criado.slice(0, 10))}</td><td class="muted">${esc(docRegResumo(r)) || '—'}</td>
+      <td class="n" style="white-space:nowrap">${docRegBotoes(id, n)}</td></tr>`; }).join('')}</tbody></table>`;
+}
+const docRegBotoes = (id, n) => `<button class="btn sm ghost" data-act="doc-reg-print" data-id="${id}" aria-label="Reimprimir ${n}" title="Reimprimir">${icon('print')}</button><button class="btn sm ghost" data-act="doc-reg-dup" data-id="${id}" aria-label="Usar ${n} como ponto de partida" title="Novo a partir deste">${icon('copy')}</button><button class="btn sm ghost danger" data-act="doc-reg-rm" data-id="${id}" aria-label="Excluir ${n}" title="Excluir">${icon('trash')}</button>`;
+function docRegVer(id) {
+  const r = docReg(id);
+  if (!r) { history.replaceState(null, '', '#/documentos?lib'); toast('Documento não encontrado.', true); return docBiblioteca(); }
+  const n = esc(docRegNome(r));
+  return pageHead(docRegNome(r), `${r.m.titulo} · gerado em ${fmtD(r.criado.slice(0, 10))}. Somente leitura.`,
+    `<a class="btn" href="#/documentos?lib">${icon('undo')}Guardados</a><button class="btn" data-act="doc-reg-dup" data-id="${esc(r.id)}">${icon('copy')}Novo a partir deste</button><button class="btn danger" data-act="doc-reg-rm" data-id="${esc(r.id)}" aria-label="Excluir ${n}">${icon('trash')}Excluir</button><button class="btn primary" data-act="doc-reg-print" data-id="${esc(r.id)}">${icon('print')}Reimprimir</button>`) +
+    `<div class="doc-prev doc-ler">${docFolhaReg(r)}</div>`;
+}
+// Ponto de partida: valores do antigo no modelo atual; nº e demais automáticos não editados voltam a ser gerados.
+function docDuplica(r) {
+  const m = docModelos().find(x => x.id === r.modelo), d = docNovo(r.modelo);
+  m.campos.forEach(f => {
+    if (DOC_AUTO[f.auto]?.serie || !(f.id in r.v)) return;
+    if (f.auto && !r.manual?.[f.id]) return;
+    d.v[f.id] = r.v[f.id]; if (f.auto) d.manual[f.id] = true;
+  });
+  for (let i = 0; i < 2; i++) m.campos.forEach(f => { if (f.auto && !d.manual[f.id]) d.v[f.id] = docAuto(f, d.v, m); });
+  return d;
+}
+function docRegDup(id) {
+  const r = docReg(id); if (!r) return;
+  if (!docModelos().some(x => x.id === r.modelo)) return toast(`O modelo "${r.m.titulo}" foi removido; não dá para usar como ponto de partida.`, true);
+  const ir = () => { closeLayer(); ui.doc = docDuplica(r); docGuarda(); docIr(`#/documentos?m=${encodeURIComponent(r.modelo)}`); };
+  if (ui.doc && docSujo(ui.doc)) return confirmDialog('Descartar o documento em andamento?', `O preenchimento de "${esc(docModelo(ui.doc).titulo)}" será descartado.`, 'Descartar e abrir', ir, true);
+  ir();
+}
+function docRegRm(id) {
+  const r = docReg(id); if (!r) return;
+  confirmDialog('Excluir documento guardado?', `<b>${esc(docRegNome(r))}</b> (${esc(r.m.titulo)}, de ${fmtD(r.criado.slice(0, 10))}) será apagado dos guardados. A numeração não volta: o próximo nº continua o mesmo.`, 'Excluir', () => {
+    db.docsFeitos = db.docsFeitos.filter(x => x.id !== id);
+    if (ui.doc?.reg === id) { delete ui.doc.reg; docGuarda(); }
+    commit(); closeLayer();
+    if (docHash().has('ver')) location.hash = '#/documentos?lib'; else render();
+    toast('Documento excluído dos guardados.');
+  }, true);
 }
 
 /* ---------- pastas: a escolhida é pega e o documento sai de dentro dela ---------- */
@@ -4714,6 +4810,10 @@ const ACTIONS = {
   'doc-num-zero': t => docNumIni(t.dataset.serie, t.dataset.ano, 0),
   'doc-pats-rm': t => { const c = t.dataset.campo; docSet(ui.doc, c, docPatIds(ui.doc.v[c]).filter(x => x !== t.dataset.id).join(' ')); docSync(ui.doc); $('#doc-f-' + c).focus(); },
   'doc-pdf': docPdf,
+  'doc-reg-ver': t => { location.hash = '#/documentos?ver=' + encodeURIComponent(t.dataset.id); },
+  'doc-reg-print': t => { const r = docReg(t.dataset.id); if (r) docImprime(docFolhaReg(r), `${docRegNome(r)} ${r.criado.slice(0, 10)}`); },
+  'doc-reg-dup': t => docRegDup(t.dataset.id),
+  'doc-reg-rm': t => docRegRm(t.dataset.id),
   'doc-restaurar': t => {
     const id = t.dataset.id, m = docModelo(ui.doc), f = m.campos.find(c => c.id === id);
     ui.doc.manual[id] = false; docSet(ui.doc, id, docAuto(f, ui.doc.v, m)); docSync(ui.doc);
@@ -4787,6 +4887,7 @@ const INPUTS = {
   itf: t => { ui.itf[t.dataset.k] = t.value; refreshItens(); },
   pf: t => { pf(ui.route)[t.dataset.k] = t.type === 'checkbox' ? t.checked : t.value; if (t.dataset.k === 'un') pf(ui.route).setor = ''; t.tagName === 'SELECT' && t.dataset.k === 'un' ? render() : refreshPats(); },
   mf: t => { ui.mf[t.dataset.k] = t.value; $('#mtable').innerHTML = movTable(); },
+  bf: t => { ui.bf[t.dataset.k] = t.value; $('#btable').innerHTML = docBibTabela(); },
   df: t => { ui.df.q = t.value; const pos = t.selectionStart; render(); const n = $('#dq'); n.focus(); n.setSelectionRange(pos, pos); },
   draft: t => {
     const k = t.dataset.k; ui.draft[k] = t.value;
