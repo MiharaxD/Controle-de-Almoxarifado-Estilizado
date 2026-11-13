@@ -33,6 +33,14 @@ colors:
   folder-2: "#BC9E66"
   folder-inside: "#957646"
   graphite: "#3A3C41"
+  steel-light: "#AEB7B5"
+  steel: "#8A9492"
+  steel-2: "#626C6B"
+  steel-dark: "#3C4546"
+  steel-inside: "#161E20"
+  ledger-cover: "#24443D"
+  ledger-cover-2: "#142925"
+  leather: "#4A2A1F"
 typography:
   display:
     fontFamily: "Cartaz, \"Sitka Banner\", \"Sitka Display\", Georgia, \"Times New Roman\", serif"
@@ -304,11 +312,16 @@ O protocolo é datilografado: a folha `.papel` (cabeçalho impresso "SASC · Tec
   - Transferência: a folha sai da máquina e encolhe para uma carta no centro, dobra em três (baixo para cima, depois cima para baixo, mostrando o verso), um envelope pardo entra e a carta desce no bolso; a aba fecha, o lacre roxo é pressionado, o envelope gira mostrando a frente (selo postal "TI", carimbo postal, nº e destino datilografados) e se abre no modal (morph do tamanho do envelope para o do modal).
   - Com movimento reduzido, todos usam só o som de arrancar a folha.
 
-### Documentos: pastas, bloco de notas e lápis
+### Documentos: pastas, bloco de notas, lápis e armário
 - **Pastas** (catálogo de modelos): pasta de arquivo parda (`--pasta`, `--pasta-2`, interior `--pasta-dentro`, fibra) com aba em trapézio que diz "Padrão" ou "Meu modelo" (aba à esquerda, no meio e à direita, alternando), folhas pautadas espiando do bolso, frente com recorte de polegar, etiqueta creme de filete duplo com o título em Courier caixa alta e descrição a lápis. Giradas ±.7°; no hover endireitam, sobem 4px, a frente cede 9° para fora, as folhas sobem 12px e acende o brilho verde.
 - **Abrir uma pasta** (~2,6s, WAAPI): as outras saem para a direita com giro (a mais à direita primeiro, 26ms entre elas) e o cabeçalho esmaece; a escolhida cede (antecipação), sobe num arco e chega perto (escala até 1,25, sombra alta) com o som de folha; a folha do documento de verdade sai do bolso com cuidado (hesita, balança ±1°, a frente cede), com o farfalhar de tirar a folha; a pasta cai de lado e a folha flutua até o lugar da prévia, passa um pouco, sobe 5px e pousa com o som de pousar. O bloco de notas entra pela esquerda girando 1,4°. Com movimento reduzido, abre direto.
+- **Voltar aos modelos** (~2,1s, WAAPI): o bloco de notas é erguido 9px e puxado para baixo, acelerando até sair da tela (640ms); a folha é erguida, a pasta do modelo volta de lado para perto, a folha voa num arco encolhendo até a boca da pasta e desce com cuidado para o bolso (a frente cede e volta) com o som de colocar o papel; a pasta fecha e volta num arco ao lugar dela, assentando com o som de pousar, enquanto as outras voltam da direita. Com preenchimento em andamento o bloco sai igual, mas a folha vai para o papel em espera no canto.
 - **Bloco de notas** (campos): papel `.papel` sem moldura Déco, espiral de arame (`--metal`) com furos no topo, picote pontilhado, margem dupla vermelha (`--margem`), páginas empilhadas embaixo. Campos sem caixa: linha azul de caderno (`--pauta-forte`), valor a lápis (`--mao`, `--grafite`), textarea pautada. Foco: linha verde de papel.
 - **Lápis:** lápis petróleo laqueado com virola de latão e borracha; cada alteração é passada a limpo: o valor fica claro (`--grafite-claro`, rascunho) e o lápis chega de cima, escreve da esquerda para a direita (linha a linha nos textos longos), com tremida leve e raspado de grafite sintetizado, e sobe ao terminar. Escolha passa na hora; texto digitado espera 1s sem digitar ou sair do campo; o campo que muda por consequência (ex.: Para) é escrito em seguida.
+- **Armário de arquivados** (à direita do catálogo, fixo ao rolar; no celular vai para o topo): arquivo de aço escovado (`--aco-*`) visto de frente e um pouco de cima e da esquerda (tampo e lateral em paralelogramo), etiqueta creme colada com fita "Arquivados" e a contagem a lápis, fechadura cromada, quatro gavetas com porta-etiqueta (I a IV a lápis) e puxador cromado. Hover: o armário sobe 3px com brilho verde e a gaveta sob o mouse desliza um pouco.
+- **Abrir o armário** (~2,8s, WAAPI): a gaveta destrava (cede), corre no trilho e bate no batente com repique (560ms), mostrando por cima as pastas suspensas; o caderno sobe de dentro dela (recortado na boca), voa num arco crescendo até o centro e assenta; a capa gira na lombada (860ms, sombra no meio do giro) enquanto o caderno desliza para o centro, as linhas do livro-razão são datilografadas e o índice aparece. Fechar faz o inverso (~1,9s): o índice some, a capa fecha, o caderno volta encolhendo até a gaveta, desce para dentro e a gaveta fecha com baque. Sons: o da gaveta é sintetizado (trinco, rolamento das esferas, baque e a chapa vibrando); caderno com os de folha e papel. Com movimento reduzido, abre e fecha direto.
+- **Caderno de capa dura** (o modal): capa de tecido verde (`--capa`) com lombada de couro (`--couro`), cantos de latão, elástico e etiqueta com o título-cartaz. Aberto: à esquerda o verso da capa com papel colado (cabeçalho, busca a lápis, índice por modelo com pontilhado e marca-texto verde no filtro ativo, contagem); à direita o livro-razão (papel do Lançar, pauta azul, margem dupla vermelha com nº de ordem): cada registro ocupa duas pautas (nº datilografado e modelo; data; destino/pessoa a lápis). No celular vira uma página só. Clicar fora ou Esc fecha.
+- **Mesa** (documento escolhido): o caderno recua e escurece, uma cópia do armário acende acima do véu e a folha A4 é puxada da gaveta aberta, voa em arco até o centro, passa um pouco e pousa; título acima e ações embaixo (Guardar, Editar, Novo a partir deste, Excluir, Reimprimir). Guardar/Esc/clicar fora devolvem a folha à gaveta; Excluir confirma na própria mesa e queima a folha com o isqueiro do Lançar.
 
 ### Selo do protocolo (assinatura)
 O texto e a tinta do selo dependem do tipo (`SELO_TIPO`): Recebido (verde), Entregue (azul), Transferido (roxo), Descartado (vermelho); vários protocolos de tipos diferentes ficam "Registrados" em verde. A batida toca o som do carimbo. Vindo do envelope (`.envelopado`), o carimbo começa 440ms depois.

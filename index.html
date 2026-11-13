@@ -31,6 +31,8 @@
   --doc-papel: #FFFFFF; --doc-tinta: #111111; --doc-tinta-2: #4A4A4A; --doc-linha: #6B6B6B; --doc-falta: rgba(243, 174, 72, .28); --doc-orfao: rgba(220, 38, 38, .16); --doc-orfao-tinta: #B42318;
   --doc-fonte: Arial, "Helvetica Neue", Helvetica, sans-serif;
   --pasta: #D3B987; --pasta-2: #BC9E66; --pasta-dentro: #957646; --pasta-borda: rgba(74, 52, 20, .42); --pasta-sombra: rgba(58, 38, 12, .45);
+  --aco-claro: #AEB7B5; --aco: #8A9492; --aco-2: #626C6B; --aco-escuro: #3C4546; --aco-fundo: #161E20;
+  --capa: #24443D; --capa-2: #142925; --couro: #4A2A1F;
   --grafite: #3A3C41; --grafite-claro: color-mix(in srgb, var(--grafite) 38%, transparent);
   --pauta: color-mix(in srgb, var(--papel-azul) 20%, transparent); --pauta-forte: color-mix(in srgb, var(--papel-azul) 48%, transparent); --margem: color-mix(in srgb, var(--danger-ink) 45%, transparent);
   --mao: "Ink Free", "Segoe Print", "Segoe Script", "Comic Sans MS", cursive;
@@ -476,6 +478,8 @@ textarea.txt-in { min-height: 200px; font: 14px/1.7 var(--mono); }
 .layer-out.desce .overlay { animation: fade-out .34s .1s ease-in forwards; }
 .layer-out .drawer { animation: drawer-out .22s var(--in) forwards; }
 .layer-out .lightbox { animation: fade-out .18s ease-in forwards; }
+.layer-out.cad-sai .overlay { animation: fade-out .45s .72s ease-in forwards; }
+.layer-out.cad-rapido .cad-boca, .layer-out.cad-rapido .arq-mesa { animation: fade-out .2s ease-in forwards; }
 .modal.papel { background: var(--papel-fundo); border-color: color-mix(in srgb, var(--papel-mancha) 45%, transparent); }
 .modal.papel > footer { border-top: 1px dashed var(--border-strong); }
 .modal.carimbado { width: min(640px, calc(100vw - 32px)); animation: papel-pousa .42s var(--out), thud .14s .58s ease-out; }
@@ -711,6 +715,129 @@ details[open] > :not(summary) { animation: unfold .22s var(--out); }
 .doc-grupo > .sect-title { margin-bottom: 14px; }
 .doc-dica { display: flex; align-items: center; gap: 8px; margin: -6px 0 22px; color: var(--text-2); font-size: 13px; }
 .doc-dica .i { flex: none; color: var(--sage); }
+/* armário de arquivados: aço escovado, etiqueta colada e gavetas com puxador cromado; a aberta mostra as pastas suspensas */
+.doc-catalogo { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 0 48px; align-items: start; }
+.arq-col { position: sticky; top: 92px; display: flex; flex-direction: column; align-items: center; gap: 18px; padding: 30px 4px 0 22px; }
+.arq-dica { max-width: 220px; margin: 0; color: var(--text-3); font-size: 12.5px; text-align: center; }
+.armario {
+  --cromo: linear-gradient(180deg, var(--text), var(--metal) 38%, color-mix(in srgb, var(--metal) 35%, var(--breu)));
+  --escovado: repeating-linear-gradient(90deg, color-mix(in srgb, var(--text) 5%, transparent) 0 1px, transparent 1px 3px);
+  position: relative; display: block; width: 13em; padding: 0; border: 0; background: none; color: var(--papel-tinta); font-size: 16px; text-align: left; cursor: pointer;
+  filter: drop-shadow(0 18px 16px rgba(0, 0, 0, .5)); transition: translate .3s var(--out), filter .3s var(--out);
+}
+.armario:hover, .armario:focus-visible { translate: 0 -3px; filter: drop-shadow(0 24px 20px rgba(0, 0, 0, .5)) drop-shadow(0 8px 24px var(--accent-glow)); }
+.armario:focus-visible { outline: 2px solid var(--focus); outline-offset: 12px; }
+.arm-tampo, .arm-lado { position: absolute; pointer-events: none; }
+.arm-tampo { left: -1.3em; right: 0; top: -.8em; height: .8em; clip-path: polygon(0 0, calc(100% - 1.3em) 0, 100% 100%, 1.3em 100%); background: var(--escovado), linear-gradient(90deg, var(--aco-2), var(--aco-claro) 62%, var(--aco)); }
+.arm-lado { left: -1.3em; top: -.8em; bottom: 0; width: 1.3em; clip-path: polygon(0 0, 100% .8em, 100% 100%, 0 calc(100% - 1.5em)); background: linear-gradient(180deg, var(--aco-2), var(--aco-escuro) 70%, color-mix(in srgb, var(--aco-escuro) 60%, var(--breu))); }
+.arm-corpo { position: relative; display: flex; flex-direction: column; gap: .32em; padding: .2em .5em .5em; border-radius: .15em .15em 0 0; background: var(--escovado), linear-gradient(90deg, var(--aco-2), var(--aco) 14%, var(--aco-claro) 52%, var(--aco) 86%, var(--aco-2)); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 40%, transparent), inset -1px 0 0 color-mix(in srgb, var(--breu) 30%, transparent); }
+.arm-cabeca { position: relative; display: flex; align-items: center; justify-content: center; height: 2.6em; }
+.arm-etq { position: relative; display: flex; flex-direction: column; align-items: center; gap: .12em; padding: .34em .9em .3em; background: var(--fibra) 0 0 / 260px 260px, var(--foto-papel); rotate: -1.4deg; box-shadow: 0 1px 2px rgba(22, 14, 4, .45); font: 700 .95em/1 var(--maquina); letter-spacing: .14em; text-transform: uppercase; text-shadow: 0 0 .6px var(--papel-tinta); }
+.arm-etq small { color: var(--grafite); font: 400 .82em/1 var(--mao); letter-spacing: 0; text-transform: none; text-shadow: 0 0 .4px var(--grafite); }
+.arm-etq::before, .arm-etq::after { content: ""; position: absolute; top: -.28em; width: 1.4em; height: .6em; background: color-mix(in srgb, var(--foto-papel) 52%, transparent); box-shadow: 0 0 0 1px color-mix(in srgb, var(--papel-mancha) 14%, transparent); }
+.arm-etq::before { left: -.55em; rotate: -24deg; }
+.arm-etq::after { right: -.55em; rotate: 20deg; }
+.arm-trava { position: absolute; right: .25em; top: 50%; width: .72em; height: .72em; margin-top: -.36em; border-radius: 50%; background: linear-gradient(var(--breu), var(--breu)) 50% 50% / .1em .34em no-repeat, radial-gradient(circle at 40% 35%, var(--text), var(--metal) 45%, color-mix(in srgb, var(--metal) 35%, var(--breu))); box-shadow: 0 1px 2px rgba(0, 0, 0, .5); }
+.gaveta { position: relative; height: 5.1em; }
+.gav-frente { position: absolute; inset: 0; z-index: 1; border-radius: .16em; background: var(--escovado), linear-gradient(180deg, var(--aco-claro), var(--aco) 45%, color-mix(in srgb, var(--aco) 78%, var(--aco-2))); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 45%, transparent), inset 0 -2px 0 color-mix(in srgb, var(--breu) 28%, transparent), 0 0 0 1px color-mix(in srgb, var(--breu) 35%, transparent), 0 2px 3px rgba(0, 0, 0, .3); transition: transform .3s var(--out), box-shadow .3s var(--out); }
+.gav-porta { position: absolute; left: 50%; top: .62em; width: 2.9em; height: 1.05em; margin-left: -1.45em; padding: .12em; border-radius: .1em; background: var(--cromo); box-shadow: 0 1px 1px rgba(0, 0, 0, .4); }
+.gav-porta i { display: flex; align-items: center; justify-content: center; height: 100%; background: var(--foto-papel); color: var(--grafite); font: 400 .74em/1 var(--mao); font-style: normal; }
+.gav-puxador { position: absolute; left: 50%; top: 2.6em; width: 3.8em; height: .55em; margin-left: -1.9em; border-radius: .28em; background: var(--cromo); box-shadow: 0 .28em .3em rgba(0, 0, 0, .42), inset 0 -1px 0 color-mix(in srgb, var(--breu) 40%, transparent); }
+.gav-puxador::before, .gav-puxador::after { content: ""; position: absolute; top: -.14em; width: .5em; height: .82em; border-radius: .12em; background: linear-gradient(180deg, var(--metal), color-mix(in srgb, var(--metal) 40%, var(--breu))); box-shadow: 0 .15em .2em rgba(0, 0, 0, .35); }
+.gav-puxador::before { left: .12em; }
+.gav-puxador::after { right: .12em; }
+.gav-dentro { position: absolute; z-index: 0; left: .14em; right: .14em; bottom: calc(100% - .3em); height: 3.3em; pointer-events: none; clip-path: polygon(0 100%, 100% 100%, 100% 100%, 0 100%);
+  background: linear-gradient(90deg, color-mix(in srgb, var(--aco-2) 60%, var(--breu)) 0 .45em, transparent .45em calc(100% - .45em), color-mix(in srgb, var(--aco-2) 48%, var(--breu)) calc(100% - .45em)), linear-gradient(180deg, var(--aco-fundo), color-mix(in srgb, var(--aco-2) 55%, var(--aco-fundo))); }
+.gav-dentro::after { content: ""; position: absolute; left: 0; right: 0; bottom: 0; height: .55em; background: linear-gradient(180deg, var(--aco-claro), var(--aco)); }
+.gp { position: absolute; height: .95em; border-radius: .06em .06em 0 0; background: var(--pc); box-shadow: 0 -1px 2px rgba(0, 0, 0, .35); }
+.gp::before { content: ""; position: absolute; bottom: 100%; left: var(--x); width: 2.1em; height: .5em; background: linear-gradient(180deg, var(--foto-papel) 0 50%, var(--pc) 50%); clip-path: polygon(.25em 0, calc(100% - .25em) 0, 100% 100%, 0 100%); }
+.gp:nth-child(1) { --pc: color-mix(in srgb, var(--pasta-2) 45%, var(--breu)); --x: 12%; bottom: 2.15em; left: 1em; right: 1em; }
+.gp:nth-child(2) { --pc: color-mix(in srgb, var(--pasta-2) 70%, var(--breu)); --x: 56%; bottom: 1.3em; left: .7em; right: .7em; }
+.gp:nth-child(3) { --pc: var(--pasta-2); --x: 24%; bottom: .45em; left: .45em; right: .45em; }
+.gaveta.aberta { z-index: 2; }
+.gaveta.aberta .gav-frente { transform: translateY(.3em) scale(1.065); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 45%, transparent), inset 0 -2px 0 color-mix(in srgb, var(--breu) 28%, transparent), 0 0 0 1px color-mix(in srgb, var(--breu) 35%, transparent), 0 .7em .9em rgba(0, 0, 0, .5); }
+.gaveta.aberta .gav-dentro { clip-path: polygon(5% 0, 95% 0, 100% 100%, 0 100%); }
+.armario:not(.voo):not(.aberto) .gaveta:hover .gav-frente { transform: translateY(.05em) scale(1.014); box-shadow: inset 0 1px 0 color-mix(in srgb, var(--text) 45%, transparent), inset 0 -2px 0 color-mix(in srgb, var(--breu) 28%, transparent), 0 0 0 1px color-mix(in srgb, var(--breu) 35%, transparent), 0 .3em .5em rgba(0, 0, 0, .4); }
+.armario.voo *, .armario.voo { transition: none !important; }
+.armario.voo { translate: none; filter: drop-shadow(0 18px 16px rgba(0, 0, 0, .5)); }
+.arm-base { display: block; height: .9em; margin: 0 .35em; background: linear-gradient(180deg, var(--aco-escuro), color-mix(in srgb, var(--aco-escuro) 45%, var(--breu))); }
+.arm-voo { position: fixed; z-index: 0; margin: 0; translate: none; pointer-events: none; }
+/* caderno de capa dura (modal dos arquivados): abre como livro, índice no verso da capa e livro-razão na página da direita */
+.cad-boca { position: fixed; inset: 0; z-index: 41; pointer-events: none; }
+.caderno { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; width: min(1120px, calc(100vw - 48px)); height: min(740px, calc(100vh - 48px)); margin: auto; perspective: 2600px; pointer-events: auto; outline: none; }
+.cad-esq, .cad-dir { position: relative; display: flex; min-width: 0; min-height: 0; background: var(--fibra) 0 0 / 260px 260px, linear-gradient(200deg, var(--capa), var(--capa-2)); box-shadow: 0 30px 60px -20px rgba(0, 0, 0, .75); }
+.cad-esq { padding: 12px 4px 12px 12px; border-radius: 8px 3px 3px 8px; }
+.cad-dir { padding: 12px 12px 12px 4px; border-radius: 3px 8px 8px 3px; }
+.caderno:not(.aberto) .cad-esq { visibility: hidden; }
+.cad-folha { position: relative; display: flex; flex: 1; flex-direction: column; min-width: 0; min-height: 0; overflow: hidden; }
+.cad-esq .cad-folha, .capa-dentro > span { box-shadow: inset -22px 0 26px -20px color-mix(in srgb, var(--papel-mancha) 75%, transparent); }
+.cad-esq .cad-folha { gap: 14px; padding: 30px 30px 22px 34px; }
+.cad-dir .cad-folha { box-shadow: inset 22px 0 26px -20px color-mix(in srgb, var(--papel-mancha) 75%, transparent), 1px 1px 0 var(--papel-2), 2px 2px 0 color-mix(in srgb, var(--papel-2) 75%, var(--papel-mancha)), 3px 3px 0 var(--papel-2), 4px 4px 0 color-mix(in srgb, var(--papel-2) 70%, var(--papel-mancha)); }
+.cad-org { color: var(--papel-impresso); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .2em; text-transform: uppercase; }
+.cad-cab { padding-bottom: 12px; border-bottom: 3px double var(--border-strong); }
+.cad-cab h2 { margin: 8px 0 6px; font: 600 34px/1 var(--display); letter-spacing: .04em; text-transform: uppercase; text-shadow: 1.5px 1.5px 0 color-mix(in srgb, var(--danger-ink) 55%, transparent); }
+.cad-cab p { margin: 0; color: var(--text-2); font-size: 13px; }
+.cad-busca { position: relative; }
+.cad-busca .i { position: absolute; left: 2px; top: 11px; color: var(--papel-impresso); pointer-events: none; }
+.cad-busca .input { width: 100%; height: 40px; padding: 6px 4px 0 30px; border: 0; border-bottom: 1.5px solid var(--pauta-forte); border-radius: 0; background: transparent; box-shadow: none; color: var(--grafite); font: 400 19px/1.2 var(--mao); }
+.cad-busca .input::placeholder { color: var(--text-3); font: 400 13px var(--font); }
+.cad-busca .input:focus { border-bottom-color: var(--papel-verde); box-shadow: 0 1.5px 0 var(--papel-verde); }
+.cad-sub { margin: 4px 0 -4px; color: var(--papel-impresso); font: 600 11.5px/1 var(--cond); font-stretch: condensed; letter-spacing: .2em; text-transform: uppercase; }
+.cad-ind { display: flex; flex-direction: column; min-height: 0; margin: 0 -6px; overflow-y: auto; }
+.cad-ind-i { display: flex; align-items: baseline; gap: 6px; width: 100%; padding: 7px 6px; border: 0; background: none; color: var(--text); font: 700 13.5px/1.25 var(--maquina); text-align: left; text-shadow: 0 0 .5px currentColor; cursor: pointer; transition: background-color .15s; }
+.cad-ind-i span { min-width: 0; padding: 0 2px; }
+.cad-ind-i i { flex: 1; min-width: 14px; translate: 0 -4px; border-bottom: 2px dotted var(--border-strong); }
+.cad-ind-i b { font: 600 15px/1 var(--cond); font-variant-numeric: tabular-nums; }
+.cad-ind-i:hover, .cad-ind-i:focus-visible { background: var(--accent-soft); outline: none; }
+.cad-ind-i[aria-pressed="true"] span { background: linear-gradient(transparent 58%, color-mix(in srgb, var(--papel-verde) 26%, transparent) 58% 94%, transparent 94%); }
+.cad-total { margin: auto 0 0; padding-top: 10px; border-top: 1px dashed var(--border-strong); color: var(--grafite); font: 400 18px/1.2 var(--mao); }
+.cad-x { position: absolute; z-index: 2; top: 24px; right: 24px; }
+.razao-folha { --linha: 38px; background: linear-gradient(90deg, transparent 46px, var(--margem) 46px 47px, transparent 47px 50px, var(--margem) 50px 51px, transparent 51px), var(--papel-fundo); }
+.razao-cab { display: grid; grid-template-columns: 50px minmax(0, 1.45fr) 80px minmax(0, 1fr); column-gap: 14px; padding: 34px 60px 9px 0; border-bottom: 3px double var(--border-strong); color: var(--papel-impresso); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .16em; text-transform: uppercase; }
+.razao-rolo { flex: 1; min-height: 0; overflow-y: auto; background: repeating-linear-gradient(180deg, transparent 0 calc(var(--linha) - 1px), var(--pauta-forte) calc(var(--linha) - 1px) var(--linha)) 0 0 / 100% var(--linha) local; }
+.razao { margin: 0; padding: 0; list-style: none; }
+.razao-l { display: grid; grid-template-columns: 50px minmax(0, 1.45fr) 80px minmax(0, 1fr); grid-template-rows: var(--linha) var(--linha); grid-template-areas: "o n d p" "o m . p"; column-gap: 14px; align-items: start; width: 100%; height: calc(var(--linha) * 2); padding: 0 16px 0 0; border: 0; background: none; color: var(--text); font: inherit; text-align: left; cursor: pointer; transition: background-color .15s; }
+.razao-l > span { overflow: hidden; padding-top: 7px; line-height: 28px; white-space: nowrap; text-overflow: ellipsis; }
+.rz-o { grid-area: o; color: var(--danger-ink); font: 600 11.5px/28px var(--mono); text-align: center; opacity: .75; }
+.rz-n { grid-area: n; font: 700 14px/28px var(--maquina); text-shadow: 0 0 .6px currentColor; }
+.rz-n i { color: var(--text-3); font: italic 400 13px var(--font); text-shadow: none; }
+.rz-m { grid-area: m; color: var(--text-2); font-size: 13px; }
+.rz-d { grid-area: d; color: var(--text-2); font: 600 14px/28px var(--cond); font-variant-numeric: tabular-nums; }
+.razao-l > .rz-p { grid-area: p; display: -webkit-box; padding-top: 1px; color: var(--grafite); font: 400 17px/var(--linha) var(--mao); white-space: normal; text-shadow: 0 0 .4px var(--grafite); -webkit-line-clamp: 2; -webkit-box-orient: vertical; }
+.razao-l:hover, .razao-l:focus-visible { background: color-mix(in srgb, var(--papel-verde) 9%, transparent); outline: none; }
+.razao-l:focus-visible { box-shadow: inset 3px 0 0 var(--papel-verde); }
+.razao-l.tirando { background: color-mix(in srgb, var(--papel-verde) 16%, transparent); }
+.razao-vazio { padding: 46px 30px 0 72px; color: var(--text-3); font-size: 13px; }
+.razao-vazio b { display: block; margin-bottom: 6px; color: var(--grafite); font: 400 24px/1.2 var(--mao); }
+.cad-capa { position: absolute; z-index: 3; top: 0; bottom: 0; left: 50%; right: 0; transform-origin: 0 50%; transform-style: preserve-3d; pointer-events: none; }
+.caderno.aberto .cad-capa { display: none; }
+.capa-fora, .capa-dentro { position: absolute; inset: 0; display: flex; -webkit-backface-visibility: hidden; backface-visibility: hidden; }
+.capa-fora { align-items: flex-start; justify-content: center; padding-top: 24%; border-radius: 3px 8px 8px 3px;
+  background: linear-gradient(90deg, color-mix(in srgb, var(--breu) 45%, transparent), transparent 2.5%),
+    linear-gradient(90deg, var(--couro) 0 9%, color-mix(in srgb, var(--couro) 60%, var(--breu)) 9% calc(9% + 2px), transparent calc(9% + 2px)),
+    linear-gradient(225deg, color-mix(in srgb, var(--latao) 55%, var(--breu)) 0 46px, var(--latao) 46px 50px, transparent 50px),
+    linear-gradient(315deg, color-mix(in srgb, var(--latao) 55%, var(--breu)) 0 46px, var(--latao) 46px 50px, transparent 50px),
+    var(--fibra) 0 0 / 260px 260px, linear-gradient(160deg, var(--capa), var(--capa-2));
+  box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--text) 8%, transparent), 0 30px 60px -20px rgba(0, 0, 0, .75); }
+.capa-fora::before { content: ""; position: absolute; top: 0; bottom: 0; right: 11%; width: 10px; background: linear-gradient(90deg, var(--breu), color-mix(in srgb, var(--capa-2) 50%, var(--breu)) 45%, var(--breu)); box-shadow: 2px 0 3px rgba(0, 0, 0, .45); }
+.capa-etq { position: relative; display: flex; flex-direction: column; align-items: center; gap: 8px; width: 62%; padding: 18px 14px 16px; background: var(--fibra) 0 0 / 260px 260px, var(--foto-papel); box-shadow: inset 0 0 0 4px var(--foto-papel), inset 0 0 0 7px var(--pasta-borda), 0 2px 5px rgba(0, 0, 0, .45); color: var(--papel-tinta); rotate: -1deg; text-align: center; }
+.capa-etq small { color: var(--papel-impresso); font: 600 11px/1 var(--cond); font-stretch: condensed; letter-spacing: .22em; text-transform: uppercase; }
+.capa-etq b { font: 600 clamp(22px, 2.8vw, 34px)/1 var(--display); letter-spacing: .05em; text-transform: uppercase; text-shadow: 1.5px 1.5px 0 color-mix(in srgb, var(--danger-ink) 55%, transparent); }
+.capa-etq i { color: var(--grafite); font: 400 18px/1 var(--mao); font-style: normal; }
+.capa-dentro { transform: rotateY(180deg); padding: 12px 4px 12px 12px; border-radius: 8px 3px 3px 8px; background: var(--fibra) 0 0 / 260px 260px, linear-gradient(200deg, var(--capa), var(--capa-2)); }
+.capa-dentro > span { flex: 1; background: var(--papel-fundo); }
+.capa-luz { position: absolute; inset: 0; border-radius: inherit; background: var(--breu); opacity: 0; pointer-events: none; }
+/* mesa: o documento tirado do arquivo fica em evidência, com as ações embaixo */
+.arq-mesa { position: fixed; inset: 0; z-index: 42; display: grid; align-content: center; justify-items: center; gap: 14px; padding: 16px; pointer-events: none; }
+.mesa-veu { position: absolute; inset: 0; pointer-events: auto; background: radial-gradient(ellipse 70% 70% at 50% 50%, color-mix(in srgb, var(--overlay) 30%, transparent), color-mix(in srgb, var(--overlay) 88%, transparent)); }
+.mesa-info, .mesa-folha, .mesa-acoes { position: relative; z-index: 1; pointer-events: auto; }
+.mesa-info { text-align: center; }
+.mesa-info h2 { margin: 0; font: 600 26px/1.05 var(--display); letter-spacing: .03em; text-transform: uppercase; text-shadow: 1.5px 1.5px 0 color-mix(in srgb, var(--danger-ink) 75%, transparent); }
+.mesa-info p { margin: 5px 0 0; color: var(--text-2); font-size: 13px; }
+.mesa-folha { width: min(calc(100vw - 32px), calc((100vh - 196px) * 210 / 297)); container-type: inline-size; }
+.mesa-folha .doc-folha { box-shadow: 0 30px 70px rgba(0, 0, 0, .65), 0 3px 10px rgba(0, 0, 0, .45); }
+.mesa-acoes { display: flex; flex-wrap: wrap; align-items: center; justify-content: center; gap: 10px; }
+.mesa-acoes p { flex-basis: 100%; margin: 0 0 2px; text-align: center; }
 .doc-escolhe { display: flex; flex-direction: column; gap: 4px; width: 100%; min-height: 44px; padding: 10px 18px; border: 0; background: none; color: inherit; font: inherit; text-align: left; cursor: pointer; transition: background-color .12s, padding .2s var(--out); }
 .doc-escolhe:hover, .doc-escolhe:focus-visible { background: var(--accent-soft); padding-left: 22px; outline: none; }
 .doc-escolhe b { display: flex; align-items: center; gap: 8px; }
@@ -930,8 +1057,35 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   .doc-fill.ver-folha .doc-folha { font-size: max(10px, min(16px, calc(100cqw * 16 / 794))); max-width: none; }
   .fl-campos { padding-right: 0; }
   .fl-itens { padding: 20px 0 0; margin-top: 22px; border-left: 0; border-top: 1px dashed var(--border-strong); }
+  .doc-catalogo { gap: 0 28px; }
+  .armario { font-size: 13.5px; }
 }
 @media (max-width: 860px) {
+  .doc-catalogo { grid-template-columns: minmax(0, 1fr); }
+  .arq-col { position: relative; top: auto; order: -1; flex-direction: row; justify-content: flex-start; gap: 26px; padding: 18px 0 30px 20px; }
+  .armario { font-size: 8px; }
+  .arq-dica { text-align: left; }
+  .caderno { grid-template-columns: minmax(0, 1fr); grid-template-rows: auto minmax(0, 1fr); width: calc(100vw - 20px); height: calc(100dvh - 28px); }
+  .cad-esq { padding: 10px 10px 0; border-radius: 8px 8px 0 0; box-shadow: none; }
+  .cad-dir { padding: 0 10px 10px; border-radius: 0 0 8px 8px; }
+  .cad-esq .cad-folha { gap: 10px; padding: 18px 16px 10px; box-shadow: none; }
+  .cad-dir .cad-folha { box-shadow: 1px 1px 0 var(--papel-2), 2px 2px 0 color-mix(in srgb, var(--papel-2) 75%, var(--papel-mancha)), 3px 3px 0 var(--papel-2); }
+  .cad-cab { padding-bottom: 8px; }
+  .cad-cab h2 { font-size: 26px; }
+  .cad-cab p, .cad-sub, .cad-total { display: none; }
+  .cad-ind { flex-direction: row; gap: 6px; margin: 0; padding-bottom: 4px; overflow-x: auto; }
+  .cad-ind-i { flex: none; width: auto; min-height: 40px; align-items: center; border: 1px dashed var(--border-strong); }
+  .cad-ind-i i { display: none; }
+  .cad-x { top: 16px; right: 16px; width: 44px; height: 44px; }
+  .razao-cab { display: none; }
+  .razao-folha { --linha: 34px; background: linear-gradient(90deg, transparent 30px, var(--margem) 30px 31px, transparent 31px 34px, var(--margem) 34px 35px, transparent 35px), var(--papel-fundo); }
+  .razao-l { grid-template-columns: 34px minmax(0, 1.6fr) minmax(0, 1fr); grid-template-areas: "o n d" "o m p"; column-gap: 10px; padding: 0 12px 0 0; }
+  .razao-l > span { padding-top: 5px; line-height: 26px; }
+  .razao-l > .rz-p { display: block; padding-top: 5px; line-height: 26px; white-space: nowrap; }
+  .rz-d, .razao-l > .rz-p { text-align: right; }
+  .razao-vazio { padding: 30px 16px 0 50px; }
+  .cad-capa { left: 0; }
+  .capa-fora { border-radius: 8px; }
   .doc-fill .btn.sm, .pasta .btn.sm, .doc-sel .btn, .doc-abas button, .doc-num-in .btn { min-height: 44px; }
   .bloco::before { left: 24px; }
   .bloco > header { padding-left: 40px; }
@@ -969,6 +1123,9 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
   .ed-grade { grid-template-columns: minmax(0, 1fr); }
   .ed-grupo > span { flex-basis: 100%; }
   .doc-espera { --k: .22; right: 18px; }
+  .mesa-folha { width: min(calc(100vw - 32px), calc((100dvh - 250px) * 210 / 297)); }
+  .mesa-info h2 { font-size: 21px; }
+  .mesa-acoes .btn { flex: 1 1 40%; }
   .row2 { grid-template-columns: 1fr; }
   .alavanca, .solta, .placa { display: none; }
   .frente { grid-template-columns: minmax(0, 1fr); padding: 14px 16px; }
@@ -1003,7 +1160,7 @@ details[open] > .ed-campo-top .ed-seta { rotate: 45deg; }
 #print { display: none; }
 @media print {
   body { background: #fff; color: #000; font-size: 12pt; }
-  .app, .toasts, .overlay, .drawer, .modal { display: none !important; }
+  .app, .toasts, .overlay, .drawer, .modal, .cad-boca, .arq-mesa, .layer-out { display: none !important; }
   #print { display: block; }
   #print h1 { font-size: 18pt; margin: 0 0 4pt; }
   #print table { width: 100%; border-collapse: collapse; margin: 12pt 0; }
@@ -1627,6 +1784,7 @@ function closeLayer(saida = 'dobra') {
   const layer = $('#layer');
   ui.layerSujo = false;
   $$('.dobra', layer).forEach(el => el.remove());
+  if ($(':scope > .cad-boca', layer)) return arqFecha(layer, saida);
   if (layer.innerHTML && !matchMedia('(prefers-reduced-motion: reduce)').matches) {
     const out = document.createElement('div');
     out.className = 'layer-out'; out.inert = true;
@@ -1642,6 +1800,8 @@ function closeLayer(saida = 'dobra') {
 }
 function marcaSujo(e) { if (e.target.type !== 'file' && e.target.closest('#layer .modal, #layer .drawer')) ui.layerSujo = true; }
 function layerFora() {
+  if (ui.arqVoo) return;
+  if ($('#layer .arq-mesa')) return arqDevolve();
   if (!ui.layerSujo) return closeLayer();
   const box = $('#layer .modal, #layer .drawer');
   box.classList.remove('nudge'); void box.offsetWidth; box.classList.add('nudge');
@@ -2661,7 +2821,52 @@ function som(fonte, ini, dur, ganho, taxa = 1) {
   g.gain.setValueAtTime(0, t); g.gain.linearRampToValueAtTime(ganho, t + .004); g.gain.setValueAtTime(ganho, fim - .06); g.gain.linearRampToValueAtTime(0, fim);
   s.connect(g).connect(somCtx.destination); s.start(t, ini, dur);
 }
-const somTecla = forte => som('maquina', SOM.teclas[Math.floor(Math.random() * SOM.teclas.length)], .14, forte ? .9 : .5, .95 + Math.random() * .1);
+let somRuido = null;
+function ruido(c) {
+  if (!somRuido) { somRuido = c.createBuffer(1, c.sampleRate, c.sampleRate); const d = somRuido.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
+  return somRuido;
+}
+// Gaveta de aço sintetizada (não há MP3): trinco, rolamento no trilho (ruído com a vibração das esferas) e batente com a chapa vibrando.
+function somGaveta(abre) {
+  if (ui.mudo) return;
+  somPronto();
+  const c = somCtx; if (!c) return;
+  if (c.state === 'suspended') c.resume();
+  const t0 = c.currentTime + .01, ini = t0 + (abre ? .07 : 0), bate = t0 + (abre ? .45 : .32);
+  const src = c.createBufferSource(), bp = c.createBiquadFilter(), lp = c.createBiquadFilter(), am = c.createGain(), lfo = c.createOscillator(), prof = c.createGain(), g = c.createGain();
+  src.buffer = ruido(c); src.loop = true;
+  bp.type = 'bandpass'; bp.Q.value = 1.4;
+  bp.frequency.setValueAtTime(abre ? 380 : 880, ini); bp.frequency.linearRampToValueAtTime(abre ? 880 : 420, bate);
+  lp.type = 'lowpass'; lp.frequency.value = 2600;
+  lfo.type = 'triangle'; lfo.frequency.setValueAtTime(abre ? 24 : 38, ini); lfo.frequency.linearRampToValueAtTime(abre ? 40 : 22, bate);
+  prof.gain.value = .4; am.gain.value = .6;
+  lfo.connect(prof).connect(am.gain);
+  g.gain.setValueAtTime(0, ini); g.gain.linearRampToValueAtTime(.45, ini + .06); g.gain.setValueAtTime(.45, bate - .04); g.gain.linearRampToValueAtTime(0, bate + .015);
+  src.connect(bp).connect(lp).connect(am).connect(g).connect(c.destination);
+  src.start(ini, Math.random() * .5); src.stop(bate + .05); lfo.start(ini); lfo.stop(bate + .05);
+  if (abre) estalo(c, t0, .3);
+  baque(c, bate, abre ? .75 : 1);
+}
+function baque(c, t, forca) {
+  const o = c.createOscillator(), g = c.createGain();
+  o.frequency.setValueAtTime(140, t); o.frequency.exponentialRampToValueAtTime(50, t + .15);
+  g.gain.setValueAtTime(.0001, t); g.gain.exponentialRampToValueAtTime(.85 * forca, t + .005); g.gain.exponentialRampToValueAtTime(.0001, t + .22);
+  o.connect(g).connect(c.destination); o.start(t); o.stop(t + .24);
+  estalo(c, t, .45 * forca);
+  [1150, 1830, 2870, 3940].forEach((f, i) => {
+    const p = c.createOscillator(), pg = c.createGain(), fim = t + .38 - i * .06;
+    p.frequency.value = f * (.98 + Math.random() * .04);
+    pg.gain.setValueAtTime(.0001, t); pg.gain.exponentialRampToValueAtTime(.045 * forca / (i + 1), t + .004); pg.gain.exponentialRampToValueAtTime(.0001, fim);
+    p.connect(pg).connect(c.destination); p.start(t); p.stop(fim + .02);
+  });
+}
+function estalo(c, t, v) {
+  const s = c.createBufferSource(), hp = c.createBiquadFilter(), g = c.createGain();
+  s.buffer = ruido(c); hp.type = 'highpass'; hp.frequency.value = 2400;
+  g.gain.setValueAtTime(v, t); g.gain.exponentialRampToValueAtTime(.0001, t + .04);
+  s.connect(hp).connect(g).connect(c.destination); s.start(t, Math.random() * .5); s.stop(t + .05);
+}
+const somTecla = forte =>som('maquina', SOM.teclas[Math.floor(Math.random() * SOM.teclas.length)], .14, forte ? .9 : .5, .95 + Math.random() * .1);
 function adicionar(k, id) {
   const antes = JSON.stringify(ui.draft.itens);
   addItem(k, id); renderLancarKeepFocus();
@@ -3967,22 +4172,29 @@ function docCatalogo() {
   const ger = ui.docGer, lista = docModelos(), em = ui.doc && docSujo(ui.doc) && docModelo(ui.doc);
   const head = pageHead(ger ? 'Gerenciar modelos' : 'Documentos', ger ? 'Crie, edite, duplique ou remova modelos. Cabeçalho e rodapé são fixos.' : 'Escolha um modelo, preencha e gere o PDF.',
     ger ? `<button class="btn" data-act="doc-padroes">${icon('undo')}Restaurar padrões</button><button class="btn" data-act="doc-ed-novo">${icon('plus')}Novo modelo</button><button class="btn primary" data-act="doc-ger">${icon('check')}Concluir</button>`
-      : `<a class="btn" href="#/documentos?lib">${icon('history')}Guardados${db.docsFeitos.length ? ` (${db.docsFeitos.length})` : ''}</a><button class="btn" data-act="doc-ger">${icon('settings')}Gerenciar modelos</button>`);
-  if (!lista.length) return head + `<div class="card empty"><b>Nenhum modelo</b>${ger ? 'Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".' : 'Use "Gerenciar modelos" para criar um ou restaurar os padrão.'}</div>`;
+      : `<button class="btn" data-act="doc-ger">${icon('settings')}Gerenciar modelos</button>`);
   const grupos = {};
   lista.forEach(m => (grupos[String(m.grupo || '').trim() || 'Outros modelos'] ||= []).push(m));
   const pos = g => { const i = DOC_GRUPOS.indexOf(g); return i >= 0 ? i : g === 'Outros modelos' ? 999 : 100; };
+  const cat = lista.length ? Object.keys(grupos).sort((a, b) => pos(a) - pos(b)).map(g => `<section class="doc-grupo"><h2 class="sect-title">${esc(g)}</h2><div class="doc-cat">${grupos[g].map(m => docCard(m, ger)).join('')}</div></section>`).join('')
+    : `<div class="card empty"><b>Nenhum modelo</b>${ger ? 'Crie um em "Novo modelo" ou traga os que vêm com o app em "Restaurar padrões".' : 'Use "Gerenciar modelos" para criar um ou restaurar os padrão.'}</div>`;
   return head +
     (em && !ger ? `<div class="banner info doc-andamento">${icon('doc')}<div><b>Documento em andamento:</b> ${esc(em.titulo)}</div><div class="actions"><button class="btn sm" data-act="doc-descartar">Descartar</button><button class="btn sm primary" data-act="doc-continuar">Continuar</button></div></div>
       <div class="doc-espera"><button class="espera-folha" data-act="doc-continuar" aria-label="Continuar ${esc(em.titulo)}" title="Continuar ${esc(em.titulo)}"><span class="espera-escala" aria-hidden="true">${docFolha(ui.doc, em)}</span></button></div>` : '') +
     (ger ? '' : `<p class="doc-dica">${icon('history')}<span>Para já vir preenchido, use <b>Gerar documento</b> num protocolo (Movimentações ou ao registrar) ou na ficha do patrimônio.</span></p>`) +
-    Object.keys(grupos).sort((a, b) => pos(a) - pos(b)).map(g => `<section class="doc-grupo"><h2 class="sect-title">${esc(g)}</h2><div class="doc-cat">${grupos[g].map(m => docCard(m, ger)).join('')}</div></section>`).join('');
+    (ger ? cat : `<div class="doc-catalogo"><div class="doc-grupos">${cat}</div>${armarioHtml()}</div>`);
 }
 function viewDocumentos() {
   if (ui.docEd) return docEditor(ui.docEd);
   const q = docHash(), id = q.get('m');
-  if (q.has('lib')) return docBiblioteca();
-  if (q.has('ver')) return docRegVer(q.get('ver'));
+  // endereços antigos da biblioteca: abrem o armário (e o documento pedido)
+  if (q.has('lib') || q.has('ver')) {
+    const ver = q.get('ver');
+    history.replaceState(null, '', '#/documentos');
+    setTimeout(() => { const a = $('#view .armario'); a && arqAbrir(a, null, ver); });
+    ui.docGer = false;
+    return docCatalogo();
+  }
   if (ui.doc && !docModelo(ui.doc)) { ui.doc = null; docGuarda(); toast('O modelo que estava em uso foi removido.', true); }
   const m = id && docModelos().find(x => x.id === id);
   if (id && !m) { history.replaceState(null, '', '#/documentos'); toast('Modelo não encontrado.', true); }
@@ -4005,7 +4217,7 @@ const docFeitoHtml = d => d.feito ? `<div class="banner info doc-feito" role="st
 function docForm(d, m) {
   const { main, det } = docOrdem(m), abre = det.some(f => f.obrigatorio && !String(d.v[f.id] ?? '').trim());
   const aba = ui.docAba || 'campos';
-  return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos" data-act="doc-modelos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
+  return pageHead(m.titulo, 'Preencha os campos; a folha mostra o resultado. Gerar PDF abre a impressão: escolha "Salvar como PDF".', `<a class="btn" href="#/documentos" data-act="doc-modelos">${icon('undo')}Modelos</a><button class="btn doc-amplia" data-act="doc-amplia" aria-pressed="${!!ui.docAmplo}">${icon('zoom')}Ampliar folha</button><button class="btn" data-act="doc-salvar">${icon('check')}Salvar</button><button class="btn primary" data-act="doc-pdf">${icon('print')}Gerar PDF</button>`) +
     `<div id="doc-feito">${docFeitoHtml(d)}</div>
     <div class="seg doc-abas" role="group" aria-label="Mostrar">${[['campos', 'Campos', 'form'], ['folha', 'Folha', 'doc']].map(([k, l, ic]) => `<button data-act="doc-aba" data-aba="${k}" aria-pressed="${aba === k}">${icon(ic)}${l}</button>`).join('')}</div>
     <div class="doc-ed doc-fill${ui.docAmplo ? ' amplo' : ''}${aba === 'folha' ? ' ver-folha' : ''}" id="doc-ed"><section class="card doc-form papel bloco"><header><h2>Campos</h2></header><div id="doc-num-aviso">${docNumAvisoHtml(d, m)}</div>
@@ -4037,9 +4249,19 @@ async function docPdf() {
   // Já feito: o registro guardado acompanha a correção (mesmo nº, sem duplicar).
   if (d.feito) { docRegistra(d, m); return feito(); }
   ui.onConfirm = () => { if (nums.length) docNumGrava(d, m); d.feito = nums.join(' e ') || m.titulo; docRegistra(d, m); closeLayer(); feito(); };
-  modal('O PDF foi salvo?', `<p style="margin:0">${nums.length ? `Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado, a numeração avança e o documento vai para os guardados. Se cancelou a impressão, o número continua livre para o próximo documento.`
-    : 'Se você salvou ou imprimiu, o documento vai para os guardados. Se cancelou a impressão, nada é guardado.'}</p>`,
+  modal('O PDF foi salvo?', `<p style="margin:0">${nums.length ? `Se você salvou ou imprimiu, <b>${esc(nums.join(' e '))}</b> fica registrado, a numeração avança e o documento é guardado no armário de Arquivados. Se cancelou a impressão, o número continua livre para o próximo documento.`
+    : 'Se você salvou ou imprimiu, o documento é guardado no armário de Arquivados. Se cancelou a impressão, nada é guardado.'}</p>`,
     `<button class="btn" data-act="close-layer">Não, cancelei</button><button class="btn primary" data-act="confirm-ok" autofocus>${icon('check')}Sim, foi salvo</button>`);
+}
+// Salvar sem imprimir: arquiva já (o nº fica registrado e a numeração avança); se já foi feito, atualiza o mesmo registro.
+function docSalvar() {
+  const d = ui.doc, m = docModelo(d);
+  if (!docValida(d)) return;
+  const nums = docNumeros(d, m), novo = !d.feito;
+  if (novo) { if (nums.length) docNumGrava(d, m); d.feito = nums.join(' e ') || m.titulo; }
+  docRegistra(d, m);
+  $('#doc-feito').innerHTML = docFeitoHtml(d); docSync(d);
+  toast(novo ? `${d.feito} guardado no armário de Arquivados.` : 'Alterações salvas no documento arquivado.');
 }
 
 /* ---------- documentos guardados (db.docsFeitos: valores + cópia do modelo e dos bens citados) ---------- */
@@ -4068,32 +4290,21 @@ function docRegBusca(r) {
   const vals = r.m.campos.filter(f => !['pat', 'pats'].includes(f.tipo)).map(f => r.v[f.id]);
   return norm([r.num, r.m.titulo, fmtD(r.criado.slice(0, 10)), r.criado.slice(0, 10), ...vals, ...(r.pats || []).map(p => `${p.num} ${p.locadora || ''} ${p.cat} ${p.marca} ${p.modelo}`)].join(' '));
 }
-function docBiblioteca() {
-  const f = ui.bf, nomes = new Map(db.docsFeitos.map(r => [r.modelo, r.m.titulo]));
-  return pageHead('Documentos guardados', 'Documentos confirmados como salvos. Abra para ver, reimprimir ou usar como ponto de partida.', `<a class="btn" href="#/documentos">${icon('undo')}Modelos</a>`) +
-    `<section class="card"><div class="toolbar">
-      <div class="search">${icon('search')}<label class="sr" for="bq">Buscar</label><input id="bq" class="input" type="search" placeholder="Nº, modelo, setor, pessoa, data" value="${esc(f.q)}" data-in="bf" data-k="q"></div>
-      <label class="sr" for="bm">Modelo</label><select id="bm" class="input" data-ch="bf" data-k="m"><option value="">Todos os modelos</option>${[...nomes].map(([id, t]) => `<option value="${esc(id)}" ${f.m === id ? 'selected' : ''}>${esc(t)}</option>`).join('')}</select>
-      <span class="count" id="bcount"></span>
-    </div><div class="tbl-wrap" id="btable">${docBibTabela()}</div></section>`;
+function docBibIndice() {
+  const cont = new Map();
+  db.docsFeitos.forEach(r => { const c = cont.get(r.modelo) || { t: r.m.titulo, n: 0 }; c.n++; cont.set(r.modelo, c); });
+  const item = (m, t, n) => `<button class="cad-ind-i" data-act="arq-filtro" data-m="${esc(m)}" aria-pressed="${ui.bf.m === m}"><span>${esc(t)}</span><i></i><b>${n}</b></button>`;
+  return item('', 'Todos', db.docsFeitos.length) + [...cont].sort((a, b) => b[1].n - a[1].n || a[1].t.localeCompare(b[1].t)).map(([m, c]) => item(m, c.t, c.n)).join('');
 }
 function docBibTabela() {
   const f = ui.bf, q = norm(f.q), todos = db.docsFeitos;
   const rows = todos.filter(r => (!f.m || r.modelo === f.m) && (!q || hit(docRegBusca(r), q))).sort((a, b) => b.criado.localeCompare(a.criado));
-  setTimeout(() => { const c = $('#bcount'); if (c) c.textContent = plural(rows.length, 'documento'); });
-  if (!rows.length) return `<div class="empty"><b>${todos.length ? 'Nenhum documento encontrado' : 'Nenhum documento guardado'}</b>${todos.length ? 'Ajuste a busca ou o filtro.' : 'Ao gerar o PDF e confirmar que foi salvo, o documento aparece aqui.'}</div>`;
-  return `<table class="t"><thead><tr><th>Documento</th><th>Modelo</th><th>Data</th><th>Destino / pessoa</th><th class="n">Ações</th></tr></thead><tbody>
-    ${rows.map(r => { const id = esc(r.id), n = esc(docRegNome(r)); return `<tr class="click" data-act="doc-reg-ver" data-id="${id}"><td><b>${n}</b></td><td>${esc(r.m.titulo)}</td><td>${fmtD(r.criado.slice(0, 10))}</td><td class="muted">${esc(docRegResumo(r)) || '—'}</td>
-      <td class="n" style="white-space:nowrap">${docRegBotoes(id, n)}</td></tr>`; }).join('')}</tbody></table>`;
-}
-const docRegBotoes = (id, n) => `<button class="btn sm ghost" data-act="doc-reg-print" data-id="${id}" aria-label="Reimprimir ${n}" title="Reimprimir">${icon('print')}</button><button class="btn sm ghost" data-act="doc-reg-dup" data-id="${id}" aria-label="Usar ${n} como ponto de partida" title="Novo a partir deste">${icon('copy')}</button><button class="btn sm ghost danger" data-act="doc-reg-rm" data-id="${id}" aria-label="Excluir ${n}" title="Excluir">${icon('trash')}</button>`;
-function docRegVer(id) {
-  const r = docReg(id);
-  if (!r) { history.replaceState(null, '', '#/documentos?lib'); toast('Documento não encontrado.', true); return docBiblioteca(); }
-  const n = esc(docRegNome(r));
-  return pageHead(docRegNome(r), `${r.m.titulo} · gerado em ${fmtD(r.criado.slice(0, 10))}. Somente leitura.`,
-    `<a class="btn" href="#/documentos?lib">${icon('undo')}Guardados</a><button class="btn" data-act="doc-reg-dup" data-id="${esc(r.id)}">${icon('copy')}Novo a partir deste</button><button class="btn danger" data-act="doc-reg-rm" data-id="${esc(r.id)}" aria-label="Excluir ${n}">${icon('trash')}Excluir</button><button class="btn primary" data-act="doc-reg-print" data-id="${esc(r.id)}">${icon('print')}Reimprimir</button>`) +
-    `<div class="doc-prev doc-ler">${docFolhaReg(r)}</div>`;
+  setTimeout(() => { const c = $('#bcount'); if (c) c.textContent = !todos.length ? 'Nenhum documento' : rows.length === todos.length ? `${armN(todos.length)} no arquivo` : `${rows.length} de ${todos.length} documentos`; });
+  if (!rows.length) return `<div class="razao-vazio"><b>${todos.length ? 'Nada encontrado' : 'Arquivo vazio'}</b>${todos.length ? 'Ajuste a busca ou escolha outro modelo no índice.' : 'Ao gerar o PDF e confirmar que foi salvo, o documento é arquivado aqui.'}</div>`;
+  return `<ol class="razao">${rows.map((r, i) => {
+    const data = fmtD(r.criado.slice(0, 10)), res = docRegResumo(r);
+    return `<li><button class="razao-l" data-act="arq-ver" data-id="${esc(r.id)}" title="${esc([docRegNome(r), r.num ? r.m.titulo : '', data, res].filter(Boolean).join(' · '))}"><span class="rz-o" aria-hidden="true">${String(i + 1).padStart(2, '0')}</span><span class="rz-n">${r.num ? esc(r.num) : '<i>s/ nº</i>'}</span><span class="rz-m">${esc(r.m.titulo)}</span><span class="rz-d">${data}</span><span class="rz-p">${esc(res) || '—'}</span></button></li>`;
+  }).join('')}</ol>`;
 }
 // Ponto de partida: valores do antigo no modelo atual; nº e demais automáticos não editados voltam a ser gerados.
 function docDuplica(r) {
@@ -4109,19 +4320,382 @@ function docDuplica(r) {
 function docRegDup(id) {
   const r = docReg(id); if (!r) return;
   if (!docModelos().some(x => x.id === r.modelo)) return toast(`O modelo "${r.m.titulo}" foi removido; não dá para usar como ponto de partida.`, true);
-  const ir = () => { closeLayer(); ui.doc = docDuplica(r); docGuarda(); docIr(`#/documentos?m=${encodeURIComponent(r.modelo)}`); };
+  docRegAbre(() => docDuplica(r), r.modelo);
+}
+// Editar: o rascunho volta ligado ao registro (mesmo nº); gerar o PDF de novo atualiza o documento arquivado.
+function docRegEdita(id) {
+  const r = docReg(id); if (!r) return;
+  if (!docModelos().some(x => x.id === r.modelo)) return toast(`O modelo "${r.m.titulo}" foi removido; não dá para editar este documento.`, true);
+  docRegAbre(() => ({ id: r.modelo, v: docCopia(r.v), manual: docCopia(r.manual || {}), feito: r.num || r.m.titulo, reg: r.id, ...(r.de ? { de: docCopia(r.de) } : {}) }), r.modelo);
+}
+function docRegAbre(novo, modelo) {
+  const ir = () => { closeLayer('direto'); ui.doc = novo(); docGuarda(); docIr(`#/documentos?m=${encodeURIComponent(modelo)}`); };
+  closeLayer('direto');
   if (ui.doc && docSujo(ui.doc)) return confirmDialog('Descartar o documento em andamento?', `O preenchimento de "${esc(docModelo(ui.doc).titulo)}" será descartado.`, 'Descartar e abrir', ir, true);
   ir();
 }
-function docRegRm(id) {
-  const r = docReg(id); if (!r) return;
-  confirmDialog('Excluir documento guardado?', `<b>${esc(docRegNome(r))}</b> (${esc(r.m.titulo)}, de ${fmtD(r.criado.slice(0, 10))}) será apagado dos guardados. A numeração não volta: o próximo nº continua o mesmo.`, 'Excluir', () => {
-    db.docsFeitos = db.docsFeitos.filter(x => x.id !== id);
-    if (ui.doc?.reg === id) { delete ui.doc.reg; docGuarda(); }
-    commit(); closeLayer();
-    if (docHash().has('ver')) location.hash = '#/documentos?lib'; else render();
-    toast('Documento excluído dos guardados.');
-  }, true);
+
+/* ---------- armário de arquivados: a gaveta abre, o caderno sai dela e abre como modal; ao fechar, volta para a gaveta ---------- */
+const ARQ_GAV = ['I', 'II', 'III', 'IV'], GAV_FECHADA = 'polygon(0 100%, 100% 100%, 100% 100%, 0 100%)', GAV_ABERTA = 'polygon(5% 0, 95% 0, 100% 100%, 0 100%)';
+const armN = n => n ? plural(n, 'documento') : 'vazio';
+const tf = (x, y, k = 1, r = 0) => `translate(${x}px, ${y}px) scale(${k}) rotate(${r}deg)`;
+function armarioHtml() {
+  const n = db.docsFeitos.length, gi = ui.arqGav;
+  return `<aside class="arq-col"><button class="armario${gi != null ? ' aberto' : ''}" data-act="arq-abrir" aria-haspopup="dialog" aria-label="Abrir o armário de arquivados (${armN(n)})">
+    <span class="arm-tampo" aria-hidden="true"></span><span class="arm-lado" aria-hidden="true"></span>
+    <span class="arm-corpo" aria-hidden="true"><span class="arm-cabeca"><span class="arm-etq">Arquivados<small class="arm-n">${armN(n)}</small></span><span class="arm-trava"></span></span>
+      ${ARQ_GAV.map((g, i) => `<span class="gaveta${gi === i ? ' aberta' : ''}" data-g="${i}"><span class="gav-dentro"><span class="gp"></span><span class="gp"></span><span class="gp"></span></span><span class="gav-frente"><span class="gav-porta"><i>${g}</i></span><span class="gav-puxador"></span></span></span>`).join('')}</span>
+    <span class="arm-base" aria-hidden="true"></span></button>
+    <p class="arq-dica">Documentos gerados e salvos ficam arquivados aqui.</p></aside>`;
+}
+function cadernoHtml() {
+  return `<div class="cad-boca"><section class="caderno" role="dialog" aria-modal="true" aria-labelledby="cad-t" tabindex="-1" autofocus>
+    <div class="cad-esq"><div class="cad-folha papel">
+      <header class="cad-cab"><span class="cad-org">SASC · Tecnologia da Informação</span><h2 id="cad-t">Arquivados</h2><p>Documentos gerados e confirmados como salvos. Escolha um para tirá-lo do arquivo.</p></header>
+      <div class="cad-busca">${icon('search')}<label class="sr" for="bq">Buscar nos arquivados</label><input id="bq" class="input" type="search" placeholder="Nº, modelo, setor, pessoa, data" value="${esc(ui.bf.q)}" data-in="bf" data-k="q"></div>
+      <h3 class="cad-sub">Índice</h3><nav class="cad-ind" id="bind" aria-label="Filtrar por modelo">${docBibIndice()}</nav>
+      <p class="cad-total" id="bcount"></p></div></div>
+    <div class="cad-dir"><div class="cad-folha papel razao-folha">
+      <div class="razao-cab" aria-hidden="true"><span></span><span>Documento · modelo</span><span>Data</span><span>Destino / pessoa</span></div>
+      <div class="razao-rolo" id="btable">${docBibTabela()}</div></div></div>
+    <button class="btn icon sm ghost cad-x" data-act="close-layer" aria-label="Fechar arquivados">${icon('x')}</button>
+    <div class="cad-capa" aria-hidden="true"><div class="capa-fora"><span class="capa-etq"><small>Almoxarifado · TI</small><b>Arquivados</b><i>${esc(armN(db.docsFeitos.length))}</i></span><span class="capa-luz"></span></div><div class="capa-dentro"><span></span><span class="capa-luz"></span></div></div>
+  </section></div>`;
+}
+function arqAtualiza() {
+  const n = db.docsFeitos.length, t = $('#btable'), ind = $('#bind'), a = $('#view .armario');
+  if (t) t.innerHTML = docBibTabela();
+  if (ind) ind.innerHTML = docBibIndice();
+  if (a) { $('.arm-n', a).textContent = armN(n); a.setAttribute('aria-label', `Abrir o armário de arquivados (${armN(n)})`); }
+}
+function arqFiltra(m) {
+  ui.bf.m = m; arqAtualiza();
+  $(`#bind [data-m="${CSS.escape(m)}"]`)?.focus({ preventScroll: true });
+  if (!parado()) $$('#btable .razao-l').slice(0, 14).forEach((b, i) => b.animate([{ opacity: 0, translate: '-8px 0' }, { opacity: 1, translate: '0 0' }], { duration: 220, delay: i * 22, easing: OUT, fill: 'backwards' }));
+}
+// medidas do caderno sem transformação; a origem das poses é o centro do caderno fechado (a capa)
+function cadMede(cad) {
+  const r = cad.getBoundingClientRect(), capa = $('.cad-capa', cad);
+  const g = { L: r.left, T: r.top, bw: capa.offsetWidth, bh: capa.offsetHeight, ox: capa.offsetLeft + capa.offsetWidth / 2, oy: capa.offsetTop + capa.offsetHeight / 2, largo: capa.offsetLeft > 0 };
+  cad.style.transformOrigin = `${g.ox}px ${g.oy}px`;
+  return g;
+}
+const cadPose = (g, x, y, k = 1, r = 0) => tf(x - g.L - g.ox, y - g.T - g.oy, k, r);
+// boca da gaveta (borda de cima da frente aberta) e o caderno pequeno lá dentro: centro x, escala, altura, centro dentro e fora
+function gavGeo(arm, gav, g) {
+  const f = $('.gav-frente', gav).getBoundingClientRect(), fs = parseFloat(getComputedStyle(arm).fontSize), aberta = gav.classList.contains('aberta');
+  const w = aberta ? f.width / 1.065 : f.width, boca = aberta ? f.top : f.top + .134 * fs, k = w * .6 / g.bw, h = g.bh * k;
+  return { x: f.left + f.width / 2, boca, k, h, dentro: boca + h / 2 + 6, fora: boca - h / 2 };
+}
+// a gaveta de onde o caderno consegue sair inteiro sem passar do topo da tela (de preferência a clicada)
+function gavEscolhe(arm, g, quer) {
+  const gs = $$('.gaveta', arm), cabe = i => { const G = gavGeo(arm, gs[i], g); return G.boca - G.h >= 14 && G.boca < innerHeight - 10; };
+  if (quer != null && cabe(quer)) return quer;
+  const i = gs.findIndex((_, j) => cabe(j));
+  return i < 0 ? gs.length - 1 : i;
+}
+function gavAbre(arm, gav) {
+  const o = { duration: 560, fill: 'backwards' };
+  gav.classList.add('aberta'); arm.classList.add('aberto');
+  somGaveta(true);
+  arm.animate([{ transform: 'none' }, { transform: 'none', offset: .79 }, { transform: 'translateY(1.5px)', offset: .84 }, { transform: 'none' }], { duration: 560 });
+  $('.gav-dentro', gav).animate([{ clipPath: GAV_FECHADA, easing: 'ease-out' }, { clipPath: GAV_FECHADA, offset: .14, easing: 'cubic-bezier(.3, 0, .25, 1)' }, { clipPath: GAV_ABERTA, offset: .8 }, { clipPath: GAV_ABERTA }], o);
+  // destrava (cede um pouco), corre no trilho e bate no batente com um leve repique
+  return $('.gav-frente', gav).animate([
+    { transform: 'translateY(0) scale(1)', easing: 'ease-out' },
+    { transform: 'translateY(-.03em) scale(.997)', offset: .14, easing: 'cubic-bezier(.3, 0, .25, 1)' },
+    { transform: 'translateY(.34em) scale(1.072)', offset: .8, easing: 'ease-out' },
+    { transform: 'translateY(.3em) scale(1.065)' }], o).finished;
+}
+function gavFecha(arm, gav) {
+  const o = { duration: 460, fill: 'backwards' };
+  gav.classList.remove('aberta'); arm.classList.remove('aberto');
+  somGaveta(false);
+  arm.animate([{ transform: 'none' }, { transform: 'none', offset: .66 }, { transform: 'translateY(2px)', offset: .72 }, { transform: 'translateY(-.5px)', offset: .82 }, { transform: 'none' }], { duration: 460 });
+  $('.gav-dentro', gav).animate([{ clipPath: GAV_ABERTA, easing: 'cubic-bezier(.55, 0, .9, .5)' }, { clipPath: GAV_FECHADA, offset: .7 }, { clipPath: GAV_FECHADA }], o);
+  return $('.gav-frente', gav).animate([
+    { transform: 'translateY(.3em) scale(1.065)', easing: 'cubic-bezier(.55, 0, .9, .5)' },
+    { transform: 'translateY(-.04em) scale(.995)', offset: .7, easing: 'ease-out' },
+    { transform: 'translateY(0) scale(1)' }], o).finished;
+}
+async function arqAbrir(t, e, ver) {
+  const arm = t.closest('.armario'), layer = $('#layer');
+  if (!arm || ui.arqVoo || ui.pastaVoo || layer.innerHTML) return;
+  ui.bf = { q: '', m: '' };
+  openLayer(cadernoHtml());
+  const cad = $('.caderno', layer), boca = $('.cad-boca', layer);
+  if (parado()) { cad.classList.add('aberto'); return ver && arqVerId(ver); }
+  ui.arqVoo = true; arm.classList.add('voo');
+  const g = cadMede(cad), quer = e?.target?.closest?.('.gaveta'), gi = gavEscolhe(arm, g, quer ? +quer.dataset.g : null), gav = $$('.gaveta', arm)[gi], G = gavGeo(arm, gav, g);
+  const cx = innerWidth / 2, cy = innerHeight / 2;
+  cad.style.visibility = 'hidden';
+  $(':scope > .overlay', layer).animate([{ opacity: 0 }, { opacity: 1 }], { duration: 560, delay: 880, easing: 'ease-out', fill: 'backwards' });
+  try {
+    ui.arqGav = gi;
+    const abre = gavAbre(arm, gav);
+    await espera(320);
+    // o caderno é puxado para cima; abaixo da boca da gaveta ele fica escondido
+    boca.style.clipPath = `inset(0 0 ${Math.max(0, innerHeight - G.boca)}px 0)`;
+    cad.style.visibility = '';
+    somPronto().then(() => som(...SOM.tirar));
+    await cad.animate([
+      { transform: cadPose(g, G.x, G.dentro, G.k) },
+      { transform: cadPose(g, G.x, G.fora + G.h * .1, G.k, -1.2), offset: .72 },
+      { transform: cadPose(g, G.x, G.fora, G.k) }], { duration: 540, easing: CUIDADO, fill: 'forwards' }).finished;
+    boca.style.clipPath = '';
+    await abre;
+    // vem para o centro crescendo, num arco, e assenta
+    somPronto().then(() => som(...SOM.pasta));
+    await cad.animate([
+      { transform: cadPose(g, G.x, G.fora, G.k) },
+      { transform: cadPose(g, G.x * .55 + cx * .45, Math.min(G.fora, cy) - 46, G.k + (1 - G.k) * .5, -3), offset: .5 },
+      { transform: cadPose(g, cx, cy, 1.015, .5), offset: .84 },
+      { transform: cadPose(g, cx, cy) }], { duration: 780, easing: PEGA, fill: 'forwards' }).finished;
+    if (cad.isConnected) await cadAbre(cad, g, cx, cy);
+  } catch (err) {
+    console.error(err);
+  } finally {
+    ui.arqVoo = false; arm.classList.remove('voo'); boca.style.clipPath = ''; cad.style.visibility = '';
+    if (!cad.classList.contains('aberto')) { cad.classList.add('aberto'); cad.getAnimations({ subtree: true }).forEach(a => a.cancel()); }
+  }
+  if (ver && cad.isConnected) arqVerId(ver);
+}
+// a capa gira na lombada; no caderno de duas páginas ele desliza para o centro enquanto abre
+async function cadAbre(cad, g, cx, cy) {
+  const capa = $('.cad-capa', cad), [luzF, luzD] = $$('.capa-luz', capa), ms = 860;
+  somPronto().then(() => som(...SOM.abrir));
+  if (g.largo) cad.animate([{ transform: cadPose(g, cx, cy) }, { transform: tf(0, 0) }], { duration: ms, easing: CUIDADO, fill: 'forwards' });
+  luzF.animate([{ opacity: 0 }, { opacity: .6 }], { duration: ms / 2, easing: 'ease-in', fill: 'forwards' });
+  luzD.animate([{ opacity: .6 }, { opacity: 0 }], { duration: ms / 2, delay: ms / 2, easing: 'ease-out', fill: 'both' });
+  $$('.razao-l', cad).slice(0, 16).forEach((b, i) => b.animate([{ clipPath: 'inset(0 100% 0 0)' }, { clipPath: 'inset(0 0 0 0)' }], { duration: 300, delay: ms * .5 + i * 26, easing: 'steps(12, end)', fill: 'backwards' }));
+  await capa.animate([{ transform: 'rotateY(0deg)' }, { transform: 'rotateY(-180deg)' }], { duration: ms, easing: CUIDADO, fill: 'forwards' }).finished;
+  cad.classList.add('aberto');
+  cad.getAnimations().forEach(a => a.cancel());
+  capa.getAnimations({ subtree: true }).forEach(a => a.cancel());
+  $$('.cad-esq .cad-folha > *', cad).forEach((el, i) => el.animate([{ opacity: 0, translate: '0 6px' }, { opacity: 1, translate: '0 0' }], { duration: 260, delay: i * 45, easing: OUT, fill: 'backwards' }));
+  if (matchMedia('(pointer: fine)').matches) $('#bq', cad)?.focus({ preventScroll: true });
+}
+// closeLayer com o caderno aberto: fecha a capa, o caderno volta para a gaveta e ela fecha ('direto' só esmaece)
+function arqFecha(layer, saida) {
+  const gi = ui.arqGav, arm = $('#view .armario'), gav = arm && gi != null ? $$('.gaveta', arm)[gi] : null;
+  const rapido = saida === 'direto' || ui.arqVoo || parado() || !gav;
+  ui.arqGav = null; ui.arqRecua = null;
+  const out = document.createElement('div');
+  out.className = 'layer-out ' + (rapido ? 'cad-rapido' : 'cad-sai'); out.inert = true;
+  out.append(...layer.childNodes);
+  $$('[id]', out).forEach(el => el.removeAttribute('id'));
+  layer.after(out); layer.innerHTML = ''; layer.classList.remove('swap');
+  lastFocus && lastFocus.focus && lastFocus.focus({ preventScroll: true });
+  if (rapido) {
+    ui.arqVoo = false;
+    if (gav?.classList.contains('aberta')) { if (parado()) { gav.classList.remove('aberta'); arm.classList.remove('aberto'); } else gavFecha(arm, gav); }
+    setTimeout(() => out.remove(), parado() ? 0 : 240);
+    return;
+  }
+  ui.arqVoo = true;
+  Promise.race([arqGuarda(out, arm, gav), espera(6000)]).catch(err => console.error(err)).then(() => {
+    out.remove(); ui.arqVoo = false;
+    if (arm.isConnected) { arm.classList.remove('voo', 'aberto'); gav.classList.remove('aberta'); }
+  });
+}
+async function arqGuarda(out, arm, gav) {
+  const cad = $('.caderno', out), boca = $('.cad-boca', out), capa = $('.cad-capa', cad), ms = 640;
+  $('.arq-mesa', out)?.remove();
+  cad.style.filter = '';
+  // o índice some e a capa fecha (no de duas páginas, o caderno volta a ficar centrado)
+  await Promise.all($$('.cad-esq .cad-folha > *', cad).map(el => el.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 140, easing: 'ease-in', fill: 'forwards' }).finished));
+  capa.style.transform = 'rotateY(-180deg)';
+  cad.classList.remove('aberto');
+  const g = cadMede(cad), cx = innerWidth / 2, cy = innerHeight / 2, [luzF, luzD] = $$('.capa-luz', capa);
+  somPronto().then(() => som(...SOM.fechar));
+  if (g.largo) cad.animate([{ transform: tf(0, 0) }, { transform: cadPose(g, cx, cy) }], { duration: ms, easing: CUIDADO, fill: 'forwards' });
+  luzD.animate([{ opacity: 0 }, { opacity: .6 }], { duration: ms / 2, easing: 'ease-in', fill: 'forwards' });
+  luzF.animate([{ opacity: .6 }, { opacity: 0 }], { duration: ms / 2, delay: ms / 2, easing: 'ease-out', fill: 'both' });
+  await capa.animate([{ transform: 'rotateY(-180deg)' }, { transform: 'rotateY(0deg)' }], { duration: ms, easing: CUIDADO, fill: 'forwards' }).finished;
+  if (!arm.isConnected || !gav.classList.contains('aberta')) {
+    await cad.animate([{ transform: cadPose(g, cx, cy), opacity: 1 }, { transform: cadPose(g, cx, cy + 50, .9), opacity: 0 }], { duration: 320, easing: SOLTA, fill: 'forwards' }).finished;
+    return;
+  }
+  // volta encolhendo num arco até a boca da gaveta e desce para dentro
+  const G = gavGeo(arm, gav, g);
+  somPronto().then(() => som(...SOM.pasta));
+  await cad.animate([
+    { transform: cadPose(g, cx, cy) },
+    { transform: cadPose(g, cx * .45 + G.x * .55, Math.min(cy, G.fora) - 40, G.k + (1 - G.k) * .45, 2.5), offset: .5 },
+    { transform: cadPose(g, G.x, G.fora, G.k) }], { duration: 640, easing: 'cubic-bezier(.45, 0, .25, 1)', fill: 'forwards' }).finished;
+  boca.style.clipPath = `inset(0 0 ${Math.max(0, innerHeight - G.boca)}px 0)`;
+  somPronto().then(() => som(...SOM.colocar));
+  await cad.animate([{ transform: cadPose(g, G.x, G.fora, G.k) }, { transform: cadPose(g, G.x, G.dentro, G.k) }], { duration: 340, easing: SOLTA, fill: 'forwards' }).finished;
+  cad.style.visibility = 'hidden';
+  arm.classList.add('voo');
+  await gavFecha(arm, gav);
+  arm.classList.remove('voo');
+}
+
+/* ---------- mesa: o documento escolhido é tirado da gaveta e fica em evidência ---------- */
+function mesaHtml(r) {
+  const res = docRegResumo(r), data = fmtD(r.criado.slice(0, 10));
+  return `<div class="arq-mesa" role="dialog" aria-modal="true" aria-labelledby="mesa-t"><div class="mesa-veu" data-act="arq-devolve"></div>
+    <header class="mesa-info"><h2 id="mesa-t">${esc(r.num || r.m.titulo)}</h2><p>${esc([r.num ? r.m.titulo : '', `gerado em ${data}`, res].filter(Boolean).join(' · '))}</p></header>
+    <div class="mesa-folha">${docFolhaReg(r)}</div>
+    <div class="mesa-acoes">${mesaBotoes(r)}</div></div>`;
+}
+function mesaBotoes(r) {
+  const id = esc(r.id), pode = docModelos().some(x => x.id === r.modelo);
+  return `<button class="btn" data-act="arq-devolve">${icon('undo')}Guardar</button>${pode ? `<button class="btn" data-act="doc-reg-edit" data-id="${id}">${icon('edit')}Editar</button><button class="btn" data-act="doc-reg-dup" data-id="${id}">${icon('copy')}Novo a partir deste</button>` : ''}<button class="btn danger" data-act="arq-rm" data-id="${id}">${icon('trash')}Excluir</button><button class="btn primary" data-act="doc-reg-print" data-id="${id}">${icon('print')}Reimprimir</button>`;
+}
+function mesaExclui(id, sim) {
+  const a = $('#layer .mesa-acoes'), r = docReg(id); if (!a || !r) return;
+  a.innerHTML = sim ? `<p>Excluir do arquivo? A numeração não volta: o próximo nº continua o mesmo.</p><button class="btn" data-act="arq-rm-nao" data-id="${esc(id)}">Cancelar</button><button class="btn danger" data-act="arq-rm-ok" data-id="${esc(id)}">${icon('trash')}Excluir</button>` : mesaBotoes(r);
+  $(sim ? '[data-act="arq-rm-nao"]' : '[data-act="arq-rm"]', a).focus();
+}
+// cópia do armário acima do véu (o de verdade fica embaixo do modal)
+function armClone(arm, mesa) {
+  const r = arm.getBoundingClientRect(), c = arm.cloneNode(true);
+  c.removeAttribute('data-act'); c.removeAttribute('aria-label'); c.classList.add('arm-voo'); c.classList.remove('voo'); c.inert = true; c.setAttribute('aria-hidden', 'true');
+  Object.assign(c.style, { left: `${r.left}px`, top: `${r.top}px` });
+  mesa.insertBefore(c, $('.mesa-info', mesa));
+  return c;
+}
+// pose (origem no canto) da folha pequena na gaveta aberta e o recorte na boca; null se o armário não está à vista
+function mesaGaveta(mesa, folha) {
+  const arm = $('#view .armario'), gi = ui.arqGav;
+  if (!arm || gi == null) return null;
+  const ar = arm.getBoundingClientRect();
+  if (ar.bottom < 40 || ar.top > innerHeight - 40) return null;
+  const cl = armClone(arm, mesa), f = $(`.gaveta[data-g="${gi}"] .gav-frente`, cl).getBoundingClientRect(), F = folha.getBoundingClientRect();
+  const k = f.width / 1.065 * .56 / F.width, h = F.height * k, boca = f.top;
+  return { cl, k, x: f.left + f.width / 2 - F.width * k / 2 - F.left, y0: boca + 6 - F.top, y1: boca - h - F.top, clip: y => `inset(0 0 ${F.height - (boca - F.top - y) / k}px 0)` };
+}
+// o caderno é posto de lado (longe do armário) e escurece enquanto a folha está na mesa
+function cadRecuo(cad) {
+  const r = cad.getBoundingClientRect(), s = .9, w = r.width * s, arm = $('#view .armario');
+  let dx = 0;
+  if (arm && innerWidth > 860) {
+    const a = arm.getBoundingClientRect(), dir = r.left + (r.width + w) / 2;
+    dx = Math.max(Math.min(0, a.left - 48 - dir), -(r.left + (r.width - w) / 2) - w * .3);
+  }
+  cad.style.transformOrigin = '0 0';
+  return [{ transform: tf(0, 0), filter: 'brightness(1)' }, { transform: tf(dx + r.width * (1 - s) / 2, r.height * (1 - s) / 2 + 16, s), filter: 'brightness(.55)' }];
+}
+function arqVerId(id) {
+  const b = $(`#layer .razao-l[data-id="${CSS.escape(id)}"]`);
+  b ? arqVer(b) : toast('Documento não encontrado no arquivo.', true);
+}
+async function arqVer(t) {
+  const r = docReg(t.dataset.id), layer = $('#layer'), cad = $('.caderno', layer);
+  if (!r || !cad || ui.arqVoo || $('.arq-mesa', layer)) return;
+  layer.insertAdjacentHTML('beforeend', mesaHtml(r));
+  ui.arqVer = r.id;
+  const mesa = $('.arq-mesa', layer), folha = $('.mesa-folha', mesa), partes = [$('.mesa-info', mesa), $('.mesa-acoes', mesa)];
+  cad.inert = true; t.classList.add('tirando');
+  const foco = () => $('.mesa-acoes .primary', mesa)?.focus({ preventScroll: true });
+  if (parado()) return foco();
+  ui.arqVoo = true;
+  try {
+    partes.forEach(p => { p.style.opacity = 0; });
+    $('.mesa-veu', mesa).animate([{ opacity: 0 }, { opacity: 1 }], { duration: 420, easing: 'ease-out', fill: 'backwards' });
+    ui.arqRecua = cad.animate(cadRecuo(cad), { duration: 500, easing: OUT, fill: 'forwards' });
+    const F = folha.getBoundingClientRect(), P = mesaGaveta(mesa, folha);
+    folha.style.transformOrigin = '0 0';
+    let de;
+    if (P) {
+      // o armário acende acima do véu e a folha é puxada da gaveta aberta
+      P.cl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 280, easing: 'ease-out', fill: 'backwards' });
+      setTimeout(() => som(...SOM.tirar), 260);
+      await folha.animate([{ transform: tf(P.x, P.y0, P.k), clipPath: P.clip(P.y0) }, { transform: tf(P.x, P.y1, P.k), clipPath: P.clip(P.y1) }], { duration: 540, delay: 260, easing: CUIDADO, fill: 'both' }).finished;
+      P.cl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 340, delay: 240, easing: 'ease-in', fill: 'forwards' });
+      de = { x: P.x, y: P.y1, k: P.k };
+    } else {
+      const lr = t.getBoundingClientRect(), k = lr.width * .25 / F.width;
+      de = { x: lr.left + lr.width / 2 - F.width * k / 2 - F.left, y: lr.top - F.top, k };
+    }
+    // vem para perto num arco, passa um pouco e pousa
+    setTimeout(() => som(...SOM.pousa), 620);
+    await folha.animate([
+      { transform: tf(de.x, de.y, de.k), clipPath: 'inset(0 0 0 0)', opacity: P ? 1 : 0 },
+      { transform: tf(de.x * .4, Math.min(de.y, 0) * .4 - 34, de.k + (1 - de.k) * .72, -2.2), offset: .55, opacity: 1 },
+      { transform: tf(0, -6, 1, .4), offset: .86 },
+      { transform: tf(0, 0), clipPath: 'inset(0 0 0 0)', opacity: 1 }], { duration: 780, easing: 'cubic-bezier(.25, .7, .3, 1)', fill: 'forwards' }).finished;
+    partes.forEach((p, i) => { p.style.opacity = ''; p.animate([{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }], { duration: 300, delay: i * 70, easing: OUT, fill: 'backwards' }); });
+  } catch (err) {
+    console.error(err); partes.forEach(p => { p.style.opacity = ''; });
+  } finally {
+    folha.getAnimations().forEach(a => a.cancel());
+    ui.arqVoo = false;
+  }
+  foco();
+}
+// "Guardar" (ou Esc, ou clicar fora): a folha volta para a gaveta e o caderno volta ao lugar
+async function arqDevolve() {
+  const layer = $('#layer'), mesa = $('.arq-mesa', layer), cad = $('.caderno', layer);
+  if (!mesa || ui.arqVoo) return;
+  const folha = $('.mesa-folha', mesa), id = ui.arqVer;
+  if (!parado()) {
+    ui.arqVoo = true;
+    try {
+      $$('.mesa-info, .mesa-acoes', mesa).forEach(p => p.animate([{ opacity: 1 }, { opacity: 0, translate: '0 8px' }], { duration: 160, easing: 'ease-in', fill: 'forwards' }));
+      $('.mesa-veu', mesa).animate([{ opacity: 1 }, { opacity: 0 }], { duration: 420, delay: 480, easing: 'ease-in', fill: 'forwards' });
+      folha.style.transformOrigin = '0 0';
+      const P = mesaGaveta(mesa, folha);
+      if (P) {
+        P.cl.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 260, easing: 'ease-out', fill: 'backwards' });
+        await folha.animate([
+          { transform: tf(0, 0) },
+          { transform: tf(P.x * .45, Math.min(P.y1, 0) * .45 - 30, P.k + (1 - P.k) * .6, 2), offset: .45 },
+          { transform: tf(P.x, P.y1, P.k) }], { duration: 600, easing: 'cubic-bezier(.45, 0, .25, 1)', fill: 'forwards' }).finished;
+        som(...SOM.colocar);
+        ui.arqRecua?.reverse();
+        await folha.animate([{ transform: tf(P.x, P.y1, P.k), clipPath: P.clip(P.y1) }, { transform: tf(P.x, P.y0, P.k), clipPath: P.clip(P.y0) }], { duration: 360, easing: SOLTA, fill: 'forwards' }).finished;
+        await P.cl.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 240, easing: 'ease-in', fill: 'forwards' }).finished;
+      } else {
+        ui.arqRecua?.reverse();
+        await folha.animate([{ transform: tf(0, 0), opacity: 1 }, { transform: tf(0, 30, .9), opacity: 0 }], { duration: 360, easing: SOLTA, fill: 'forwards' }).finished;
+      }
+      await ui.arqRecua?.finished;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      ui.arqVoo = false;
+    }
+  }
+  mesaSai(mesa, cad);
+  const b = cad && $(`.razao-l[data-id="${CSS.escape(id)}"]`, cad);
+  b?.classList.remove('tirando');
+  (b || cad)?.focus({ preventScroll: true });
+}
+function mesaSai(mesa, cad) {
+  mesa.remove(); ui.arqRecua?.cancel(); ui.arqRecua = null; ui.arqVer = null;
+  if (cad) cad.inert = false;
+}
+// excluir: o registro sai do arquivo e a folha queima na mesa com o isqueiro do Lançar
+async function arqQueima(id) {
+  const r = docReg(id), layer = $('#layer'), mesa = $('.arq-mesa', layer), cad = $('.caderno', layer);
+  if (!r || !mesa || ui.arqVoo) return;
+  db.docsFeitos = db.docsFeitos.filter(x => x.id !== id);
+  if (ui.doc?.reg === id) { delete ui.doc.reg; docGuarda(); }
+  commit();
+  if (!db.docsFeitos.some(x => x.modelo === ui.bf.m)) ui.bf.m = '';
+  arqAtualiza();
+  if (!parado()) {
+    ui.arqVoo = true;
+    try {
+      $$('.mesa-info, .mesa-acoes', mesa).forEach(p => p.animate([{ opacity: 1 }, { opacity: 0 }], { duration: 200, easing: 'ease-in', fill: 'forwards' }));
+      const folha = $('.mesa-folha', mesa), fr = folha.getBoundingClientRect();
+      somPronto();
+      await queimar(folha, { x: fr.left + 3, y: Math.min(fr.top + fr.height * .42, innerHeight - 124) }, innerHeight);
+      $('.mesa-veu', mesa).animate([{ opacity: 1 }, { opacity: 0 }], { duration: 380, easing: 'ease-in', fill: 'forwards' });
+      ui.arqRecua?.reverse();
+      await ui.arqRecua?.finished;
+    } catch (err) {
+      console.error(err);
+    } finally {
+      ui.arqVoo = false;
+    }
+  }
+  mesaSai(mesa, cad);
+  ($('.razao-l', cad) || $('#bq', cad) || cad)?.focus({ preventScroll: true });
+  toast('Documento excluído do arquivo.');
 }
 
 /* ---------- pastas: a escolhida é pega e o documento sai de dentro dela ---------- */
@@ -4211,16 +4785,119 @@ async function pastaAbrir(bt) {
 function catalogoSai(view, fica) {
   $$('.pasta', view).filter(p => p !== fica).sort((a, b) => b.getBoundingClientRect().left - a.getBoundingClientRect().left)
     .forEach((p, i) => p.animate([{ translate: '0 0', opacity: 1 }, { translate: '170px -8px', rotate: '5deg', opacity: 0 }], { duration: 380, delay: Math.min(i * 26, 240), easing: SOLTA, fill: 'forwards' }));
-  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 1 }, { opacity: 0, translate: '24px 0' }], { duration: 300, easing: SOLTA, fill: 'forwards' }));
+  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title, .arq-col', view).forEach(e => e.animate([{ opacity: 1 }, { opacity: 0, translate: '24px 0' }], { duration: 300, easing: SOLTA, fill: 'forwards' }));
 }
 // o inverso: as pastas voltam da direita, na ordem de leitura
 function catalogoEntra(view, delay) {
-  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title', view).forEach(e => e.animate([{ opacity: 0, translate: '24px 0' }, { opacity: 1, translate: '0 0' }], { duration: 360, delay, easing: OUT, fill: 'backwards' }));
+  $$('.page-head, .doc-dica, .doc-andamento, .doc-grupo > .sect-title, .arq-col', view).forEach(e => e.animate([{ opacity: 0, translate: '24px 0' }, { opacity: 1, translate: '0 0' }], { duration: 360, delay, easing: OUT, fill: 'backwards' }));
   $$('.pasta', view).forEach((p, i) => p.animate([{ translate: '150px -8px', rotate: '5deg', opacity: 0 }, { translate: '0 0', rotate: '0deg', opacity: 1 }], { duration: 460, delay: delay + 60 + Math.min(i * 30, 270), easing: OUT, fill: 'backwards' }));
 }
 function formEntra(view, chega) {
   [$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean).forEach((e, i) => e.animate(e.classList.contains('doc-form') ? [{ opacity: 0, translate: '-30px 16px', rotate: '-1.4deg' }, { opacity: 1, translate: '0 0', rotate: '0deg' }] : [{ opacity: 0, translate: '0 10px' }, { opacity: 1, translate: '0 0' }],
     { duration: 480, delay: chega + i * 70, easing: OUT, fill: 'backwards' }));
+}
+// o bloco de notas é erguido um pouco e puxado para baixo até sumir (cópia num palco fixo, para não criar rolagem)
+function blocoDesce(view, palco) {
+  const b = $('.doc-form', view), fim = [$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view)].filter(Boolean).map((el, i) =>
+    el.animate([{ opacity: 1 }, { opacity: 0, translate: '0 -10px' }], { duration: 240, delay: i * 30, easing: SOLTA, fill: 'forwards' }).finished);
+  if (b?.getClientRects().length) {
+    const r = b.getBoundingClientRect(), c = b.cloneNode(true);
+    c.inert = true; c.removeAttribute('id'); $$('[id]', c).forEach(el => el.removeAttribute('id'));
+    Object.assign(c.style, { position: 'fixed', left: `${r.left}px`, top: `${r.top}px`, width: `${r.width}px`, margin: 0, zIndex: 1 });
+    palco.append(c); b.style.visibility = 'hidden';
+    fim.push(c.animate([
+      { transform: 'none', easing: 'cubic-bezier(.3, 0, .2, 1)' },
+      { transform: 'translateY(-9px) rotate(-.5deg)', offset: .2, easing: 'cubic-bezier(.6, 0, .85, .45)' },
+      { transform: `translateY(${innerHeight - r.top + 80}px) rotate(2.5deg)` },
+    ], { duration: 640, fill: 'forwards' }).finished);
+  }
+  return Promise.all(fim);
+}
+// "Modelos" sem preenchimento em andamento: o bloco é puxado para baixo, a pasta volta, a folha desce para dentro dela e a pasta volta ao lugar
+async function pastaGuardar(e) {
+  const view = $('#view'), d = ui.doc, fonte = $('#doc-prev .doc-folha', view);
+  if (!d || parado() || ui.pastaVoo) return;
+  e.preventDefault();
+  ui.pastaVoo = true;
+  const palco = palcoNovo(), P = fonte?.getClientRects().length ? fonte.getBoundingClientRect() : null, ergue = 'translateY(-10px) scale(1.012)';
+  let pasta = null;
+  try {
+    somPronto().then(() => som(...SOM.tirar));
+    const html = fonte?.outerHTML, folha = P && folhaVoo(html, P);
+    if (folha) {
+      folha.style.transformOrigin = '0 0';
+      palco.append(folha); fonte.style.visibility = 'hidden';
+      folha.animate([{ transform: 'none' }, { transform: ergue, boxShadow: MAO_SOMBRA }], { duration: 300, easing: OUT, fill: 'forwards' });
+    }
+    const sai = blocoDesce(view, palco);
+    await espera(300);
+    view.style.opacity = 0;
+    docIr('#/documentos');
+    for (let i = 0; i < 40 && $('#doc-ed', view); i++) await quadro();
+    const bt = $(`.pasta-bt[data-act="doc-abrir"][data-id="${CSS.escape(d.id)}"]`, view);
+    pasta = bt?.closest('.pasta');
+    if (!folha || !pasta) {
+      view.style.opacity = '';
+      catalogoEntra(view, 0);
+      if (folha) await folha.animate([{ transform: ergue, opacity: 1 }, { transform: 'translateY(-70px)', opacity: 0 }], { duration: 420, easing: SOLTA, fill: 'forwards' }).finished;
+      await sai; return;
+    }
+    // a pasta volta de lado para perto, como foi deixada ao abrir
+    const r = pasta.getBoundingClientRect(), W = pasta.offsetWidth, H = pasta.offsetHeight, tilt = getComputedStyle(pasta).getPropertyValue('--tilt').trim() || '0deg', voo = pasta.cloneNode(true);
+    pasta.style.visibility = 'hidden';
+    voo.classList.add('voando'); voo.inert = true; $('.pasta-bt', voo).removeAttribute('data-act');
+    Object.assign(voo.style, { left: `${r.left + (r.width - W) / 2}px`, top: `${r.top + (r.height - H) / 2}px`, width: `${W}px`, height: `${H}px` });
+    voo.style.setProperty('--tilt', tilt);
+    palco.prepend(voo);
+    const main = view.getBoundingClientRect(), vh = innerHeight, docH = W * .86 * 297 / 210;
+    const k = Math.max(.9, Math.min(1.25, (vh - 60) / (H + docH * .78), main.width * .8 / W));
+    const dx = main.left + main.width / 2 - (r.left + r.width / 2), dy = Math.min(vh * .7, vh - 24 - H * k / 2) - (r.top + r.height / 2);
+    const perto = `translate(${dx}px, ${dy}px) scale(${k}) rotate(-1deg)`, alto = 'drop-shadow(0 34px 30px rgba(0, 0, 0, .55))', baixo = 'drop-shadow(0 3px 4px rgba(0, 0, 0, .5))';
+    // onde a folha fica, já saindo do bolso, com a pasta perto
+    const dentro = document.createElement('div');
+    dentro.className = 'pasta-doc'; dentro.innerHTML = html;
+    $('.pasta-bolso', voo).append(dentro);
+    const sobe = dentro.offsetHeight * .78 + 30;
+    dentro.style.transform = `translateY(${-sobe}px)`; voo.style.transform = perto;
+    const fr = dentro.getBoundingClientRect(), x = fr.left - P.left, y = fr.top - P.top, s = fr.width / P.width;
+    voo.style.transform = ''; dentro.style.visibility = 'hidden';
+    voo.animate([{ transform: `translate(${dx - 30}px, ${dy + 190}px) scale(${k}) rotate(-7deg)`, opacity: 0, filter: alto }, { transform: perto, opacity: 1, filter: alto }], { duration: 460, easing: OUT, fill: 'forwards' });
+    // a folha flutua num arco até a boca da pasta, encolhendo
+    folha.getAnimations().forEach(a => a.cancel());
+    await folha.animate([
+      { transform: ergue, boxShadow: MAO_SOMBRA },
+      { transform: `translate(${x * .55}px, ${y * .55 - 40}px) scale(${1 + (s - 1) * .6}) rotate(-1.8deg)`, offset: .5 },
+      { transform: `translate(${x}px, ${y}px) scale(${s}) rotate(-1deg)`, boxShadow: '0 0 0 1px rgba(22, 14, 4, .12), 0 -2px 6px rgba(22, 14, 4, .25)' },
+    ], { duration: 700, delay: 80, easing: 'cubic-bezier(.45, 0, .3, 1)', fill: 'forwards' }).finished;
+    // desce para dentro do bolso com cuidado (a frente cede e volta) até sumir atrás da frente
+    folha.remove(); dentro.style.visibility = '';
+    somPronto().then(() => som(...SOM.colocar));
+    $('.pasta-frente', voo).animate([{ transform: 'perspective(700px) rotateX(-9deg)' }, { transform: 'perspective(700px) rotateX(-17deg)', offset: .3 }, { transform: 'perspective(700px) rotateX(-5deg)' }], { duration: 560, easing: CUIDADO, fill: 'forwards' });
+    dentro.animate([
+      { transform: `translateY(${-sobe}px)` },
+      { transform: `translateY(${-sobe * .92}px) rotate(.8deg)`, offset: .22 },
+      { transform: `translateY(${-sobe * .15}px) rotate(-.3deg)`, offset: .8 },
+      { transform: 'translateY(46px)' },
+    ], { duration: 560, easing: CUIDADO, fill: 'forwards' });
+    await espera(420);
+    // a pasta fecha e volta num arco para o lugar dela; as outras voltam da direita
+    view.style.opacity = '';
+    catalogoEntra(view, 0);
+    $('.pasta-frente', voo).animate([{ transform: 'perspective(700px) rotateX(-5deg)' }, { transform: 'perspective(700px) rotateX(0deg)' }], { duration: 360, delay: 140, easing: OUT, fill: 'forwards' });
+    $('.pasta-papel', voo).animate([{ translate: '0 -12px' }, { translate: '0 0' }], { duration: 360, delay: 140, easing: OUT, fill: 'forwards' });
+    setTimeout(() => som(...SOM.pousa), 520);
+    await voo.animate([
+      { transform: perto, filter: alto },
+      { transform: `translate(${dx * .5}px, ${dy * .5 - 36}px) scale(${(1 + k) / 2 + .03}) rotate(-2.5deg)`, offset: .45 },
+      { transform: `translate(0, 4px) rotate(${tilt})`, filter: baixo, offset: .84 },
+      { transform: `rotate(${tilt})`, filter: baixo },
+    ], { duration: 640, easing: 'cubic-bezier(.3, .1, .25, 1)', fill: 'forwards' }).finished;
+  } catch (err) {
+    console.error(err); render();
+  } finally {
+    if (pasta) pasta.style.visibility = '';
+    view.style.opacity = ''; palco.remove(); ui.pastaVoo = false;
+  }
 }
 
 /* ---------- papel em espera: voltar aos modelos guarda a folha no canto do catálogo; descartar queima ---------- */
@@ -4261,8 +4938,8 @@ async function esperaGuardar(e) {
       palco.append(voo); fonte.style.visibility = 'hidden';
       voo.animate([{ transform: 'none' }, { transform: ergue, boxShadow: MAO_SOMBRA }], { duration: 300, easing: OUT, fill: 'forwards' });
     }
-    await Promise.all([$('.page-head', view), $('#doc-feito', view), $('.doc-abas', view), $('.doc-form', view)].filter(Boolean).map((el, i) =>
-      el.animate([{ opacity: 1 }, { opacity: 0, translate: '-28px 4px' }], { duration: 260, delay: i * 30, easing: SOLTA, fill: 'forwards' }).finished));
+    blocoDesce(view, palco);
+    await espera(300);
     view.style.opacity = 0;
     docIr('#/documentos');
     let esp = null;
@@ -4484,15 +5161,13 @@ function lapisSai() {
   });
 }
 // Raspado de grafite sintetizado (ruído filtrado em traços curtos, um por letra); não há MP3 de lápis.
-let somRuido = null;
 function somLapis(ms) {
   if (ui.mudo) return () => {};
   somPronto();
   const c = somCtx; if (!c) return () => {};
   if (c.state === 'suspended') c.resume();
-  if (!somRuido) { somRuido = c.createBuffer(1, c.sampleRate, c.sampleRate); const d = somRuido.getChannelData(0); for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1; }
   const src = c.createBufferSource(), hp = c.createBiquadFilter(), bp = c.createBiquadFilter(), g = c.createGain(), t0 = c.currentTime + .01, fim = t0 + ms / 1000;
-  src.buffer = somRuido; src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; bp.type = 'bandpass'; bp.Q.value = .8;
+  src.buffer = ruido(c); src.loop = true; hp.type = 'highpass'; hp.frequency.value = 1500; bp.type = 'bandpass'; bp.Q.value = .8;
   g.gain.setValueAtTime(0, t0);
   let t = t0;
   while (t < fim) {
@@ -4800,7 +5475,7 @@ const ACTIONS = {
   'doc-de-proto': t => { const pr = db.protocolos.find(p => p.id === t.dataset.id); if (pr) docEscolher(docFonteProto(pr), 'proto=' + encodeURIComponent(pr.id)); },
   'doc-de-pat': () => { const p = patById(ui.editPat); if (p) docEscolher(docFontePat(p), 'b=' + encodeURIComponent(p.id)); },
   'doc-descartar': () => !ui.pastaVoo && confirmDialog('Descartar o documento em andamento?', 'Os valores preenchidos serão descartados.', 'Descartar', async () => { closeLayer(); await esperaQueima(); if (ui.route === 'documentos') render(); }, true),
-  'doc-modelos': (t, e) => esperaGuardar(e),
+  'doc-modelos': (t, e) => ui.doc && docSujo(ui.doc) ? esperaGuardar(e) : pastaGuardar(e),
   'doc-continuar': () => esperaVolta(),
   'doc-outro': () => { ui.doc = docNovo(ui.doc.id); docGuarda(); render(); window.scrollTo(0, 0); $('#view .doc-campos .input')?.focus({ preventScroll: true }); },
   'doc-ger': () => { ui.docGer = !ui.docGer; render(); },
@@ -4810,10 +5485,17 @@ const ACTIONS = {
   'doc-num-zero': t => docNumIni(t.dataset.serie, t.dataset.ano, 0),
   'doc-pats-rm': t => { const c = t.dataset.campo; docSet(ui.doc, c, docPatIds(ui.doc.v[c]).filter(x => x !== t.dataset.id).join(' ')); docSync(ui.doc); $('#doc-f-' + c).focus(); },
   'doc-pdf': docPdf,
-  'doc-reg-ver': t => { location.hash = '#/documentos?ver=' + encodeURIComponent(t.dataset.id); },
+  'doc-salvar': docSalvar,
+  'doc-reg-edit': t => docRegEdita(t.dataset.id),
   'doc-reg-print': t => { const r = docReg(t.dataset.id); if (r) docImprime(docFolhaReg(r), `${docRegNome(r)} ${r.criado.slice(0, 10)}`); },
   'doc-reg-dup': t => docRegDup(t.dataset.id),
-  'doc-reg-rm': t => docRegRm(t.dataset.id),
+  'arq-abrir': (t, e) => arqAbrir(t, e),
+  'arq-ver': t => arqVer(t),
+  'arq-devolve': () => arqDevolve(),
+  'arq-filtro': t => arqFiltra(t.dataset.m),
+  'arq-rm': t => mesaExclui(t.dataset.id, true),
+  'arq-rm-nao': t => mesaExclui(t.dataset.id, false),
+  'arq-rm-ok': t => arqQueima(t.dataset.id),
   'doc-restaurar': t => {
     const id = t.dataset.id, m = docModelo(ui.doc), f = m.campos.find(c => c.id === id);
     ui.doc.manual[id] = false; docSet(ui.doc, id, docAuto(f, ui.doc.v, m)); docSync(ui.doc);
